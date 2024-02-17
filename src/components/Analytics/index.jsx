@@ -6,7 +6,7 @@ import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { app } from "../../base";
 import ComplainCards from "./components/ComplainCards";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 // import geojson from "../data/Municipal_Spatial/Pune/pune-electoral-wards_current.geojson"
 
 import Box from "@mui/material/Box";
@@ -40,7 +40,7 @@ function Analytics() {
   const fullscreenHandle = useFullScreenHandle();
   const [zoom, setzoom] = useState(15);
   const [map, setMap] = useState(null);
-  const [sortByTimeOption, setsortByTimeOption] = useState(1);
+  const [sortByTimeOption, setsortByTimeOption] = useState("24 hours");
   const [sortByTimeValue, setsortByTimeValue] = useState([
     dayjs("2022-04-17"),
     dayjs("2022-04-21"),
@@ -55,6 +55,26 @@ function Analytics() {
   const [citygeojson, setcitygeojson] = useState();
   const [showgeojson, setshowgeojson] = useState(false);
   const [activeWard, setactiveWard] = useState();
+  const [sortBySeverityOption, setsortBySeverityOption] = useState({
+    low: true,
+    medium: true,
+    high: true,
+  });
+  const [sortByTypeOption, setsortByTypeOption] = useState({
+    "dry waste": true,
+    "wet waste": true,
+    "construction waste": true,
+    "plant waste": true,
+    "clothes": true,
+    "medical waste": true,
+  });
+
+  const handleSeverity = (e) => {
+    setsortBySeverityOption({
+      ...sortBySeverityOption,
+      [e.target.name]: e.target.checked,
+    });
+  };
 
   const handleComplaintStatus = (e) => {
     setcomplaintStatus({
@@ -185,6 +205,7 @@ function Analytics() {
   const getNewData = () => {
     const status = [];
     const locations = [];
+    const severity = [];
     var time1 = sortByTimeValue[0].unix();
     var time2 = sortByTimeValue[1].unix();
     if (complaintStatus.completed) {
@@ -204,6 +225,14 @@ function Analytics() {
       time1 = dayjs().subtract(1, "week").unix();
     }
 
+    if (sortBySeverityOption.low) {
+      severity.push("LOW");
+    } else if (sortBySeverityOption.medium) {
+      severity.push("MEDIUM");
+    } else if (sortBySeverityOption.high) {
+      severity.push("HIGH");
+    }
+
     citygeojson.map((ward) => {
       if (ward.properties.ward === sortByWardOption)
         locations.push(ward.properties["name-mr"]);
@@ -214,6 +243,7 @@ function Analytics() {
       time2,
       locations,
     };
+    if (severity.length > 0) reqbody.severity = severity;
     console.log({ reqbody });
     if (process.env.REACT_APP_FRONTEND_ONLY === "true") return;
 
@@ -314,7 +344,80 @@ function Analytics() {
                       label="Not Completed"
                     />
                   </FormGroup>
-                  <Button onClick={getNewData}>Get Data</Button>
+                </div>
+              </div>
+              <div className="left-panel-row">
+                <div className="left-panel-row-title">Sort by garbage type</div>
+                <div className="left-panel-row-body">
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          defaultChecked
+                          name="completed"
+                          checked={complaintStatus.completed}
+                          onChange={handleComplaintStatus}
+                          value={complaintStatus.completed}
+                        />
+                      }
+                      label="Completed"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          defaultChecked
+                          name="notCompleted"
+                          checked={complaintStatus.notCompleted}
+                          onChange={handleComplaintStatus}
+                          value={complaintStatus.notCompleted}
+                        />
+                      }
+                      label="Not Completed"
+                    />
+                  </FormGroup>
+                </div>
+              </div>
+              <div className="left-panel-row">
+                <div className="left-panel-row-title">Severity</div>
+                <div className="left-panel-row-body">
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          defaultChecked
+                          name="low"
+                          checked={sortBySeverityOption.low}
+                          onChange={handleSeverity}
+                          value={sortBySeverityOption.low}
+                        />
+                      }
+                      label="Low"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          defaultChecked
+                          name="medium"
+                          checked={sortBySeverityOption.medium}
+                          onChange={handleSeverity}
+                          value={sortBySeverityOption.medium}
+                        />
+                      }
+                      label="Medium"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          defaultChecked
+                          name="high"
+                          checked={sortBySeverityOption.high}
+                          onChange={handleSeverity}
+                          value={sortBySeverityOption.high}
+                        />
+                      }
+                      label="High"
+                    />
+                  </FormGroup>
                 </div>
               </div>
               <div className="left-panel-row">
@@ -443,14 +546,21 @@ function Analytics() {
                   )}
                 </div>
               </div>
+              <Button onClick={getNewData}>Get Data</Button>
             </div>
             <div className="right-panel-main-parent">right hello</div>
           </div>
         </div>
       </FullScreen>
 
-      <div style={{display:'flex',justifyContent:'center'}}>
-      <Button onClick={fullscreenHandle.enter} sx={{margin:'10px'}} variant="contained">Enter FUll Screen</Button>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Button
+          onClick={fullscreenHandle.enter}
+          sx={{ margin: "10px" }}
+          variant="contained"
+        >
+          Enter FUll Screen
+        </Button>
       </div>
       {queryData && <ComplainCards data={queryData} />}
     </>
