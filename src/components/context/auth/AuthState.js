@@ -24,7 +24,7 @@ const AuthState = (props) => {
           })
           .then((data) => {
             console.log(data);
-            if (data && data.uer) {
+            if (data && data.userID) {
               setcurrentUser(data);
               if (data.status) {
                 setcurrentUserRole(data.status);
