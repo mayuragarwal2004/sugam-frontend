@@ -20,13 +20,13 @@ function App() {
               <Route index element={<Home />} />
               {/* <Route path="about" element={<About />} /> */}
               <Route path="" element={<RequireAuth />}>
+                <Route path="profile" element={<Profile />} />
               </Route>
-                <Route path="analytics" element={<Analytics />} />
+              <Route path="analytics" element={<Analytics />} />
               {/* <Route path="form" element={<Form />} /> */}
               {/* <Route path="dashboard" element={<Dashboard />} /> */}
               {/* <Route path="auth" element={<LoginSignUp />} /> */}
               <Route path="complaints" element={<Complaints />} />
-              <Route path="profile" element={<Profile />} />
               <Route path="login" element={<Login />} />
               <Route path="aboutUs" element={<AboutUs />} />
               {/* <Route path="*" element={<NoPage />} /> */}
