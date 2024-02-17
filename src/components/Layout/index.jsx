@@ -197,7 +197,7 @@ const Layout = () => {
         <div className="footer-big">
           <div className="footer-containermain">
             <div className="row">
-              <div className="col-lg-3 col-sm-6">
+              <div className="col-lg-3 col-sm-6" >
                 <div className="footer-widget">
                   <div className="widget-about">
                     <img
@@ -233,7 +233,7 @@ const Layout = () => {
                 </div>
               </div>
 
-              <div className="col-lg-3 col-sm-6" >
+              <div className="col-lg-3 col-sm-6" style={{marginTop:'100px'}}>
                 <div className="footer-widget">
                   <div className="footer-menu">
                     <h4 className="footer-widget-title">Popular Category</h4>
@@ -253,7 +253,7 @@ const Layout = () => {
                 </div>
               </div>
 
-              <div className="col-lg-3 col-sm-6">
+              <div className="col-lg-3 col-sm-6" style={{marginTop:'100px'}}>
                 <div className="footer-widget">
                   <div className="footer-menu">
                     <h4 className="footer-widget-title">Our Team</h4>

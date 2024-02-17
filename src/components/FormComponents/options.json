@@ -1,0 +1,62 @@
+{
+    "majorComponents":[
+        { "value": "Dry Waste", "label": "Dry Waste" },
+        { "value": "Plant Waste", "label": "Plant Waste" },
+        { "value": "Construction Waste", "label": "Construction Waste" },
+        { "value": "Wet Waste", "label": "Wet Waste" },
+        { "value": "Clothes", "label": "Clothes" },
+        { "value": "Sanitary Waste", "label": "Sanitary Waste" },
+        { "value": "Medical Waste", "label": "Medical Waste" }
+      ],
+      
+      "siteClean":[
+        { "value": "Never", "label": "Never" },
+        { "value": "Rarely", "label": "Rarely" },
+        { "value": "Some time", "label": "Some time" },
+        { "value": "Many times", "label": "Many times" }
+      ],
+      "percentRecycle":[
+        { "value": "10%-20%", "label": "10%-20%" },
+        { "value": "20%-40%", "label": "20%-40%" },
+        { "value": "40%-60%", "label": "40%-60%" },
+        { "value": "60%-80%", "label": "60%-80%" },
+        { "value": "80%-100%", "label": "80%-100%" }
+      ],
+      "overflowingWaste":[
+        { "value": "1 Day", "label": "1 Day" },
+        { "value": "2-3 Days", "label": "2-3 Days" },
+        { "value": "1 Week", "label": "1 Week" },
+        { "value": "More than 1 week", "label": "More than 1 week" }
+      ],
+      "dustbin":[
+        { "value": "Yes", "label": "Yes" },
+        { "value": "No", "label": "No" }
+      ],
+      "dustbinFilled":[
+        { "value": "Yes", "label": "Yes" },
+        { "value": "No", "label": "No" },
+        { "value": "NA", "label": "NA", "isDisabled":true }
+      ],
+      "PMCCollecting":[
+        { "value": "Yes", "label": "Yes" },
+        { "value": "No", "label": "No" }
+      ],
+      "garbageCollected":[
+        { "value": "Daily", "label": "Daily" },
+        { "value": "Once in 2 days", "label": "Once in 2 days" },
+        { "value": "Once in 3 days", "label": "Once in 3 days" },
+        { "value": "Weekly", "label": "Weekly" },
+        { "value": "Fortnightly", "label": "Fortnightly" },
+        { "value": "Randomly", "label": "Randomly" },
+        { "value": "NA", "label": "NA", "isDisabled":true }
+      ],
+      "siteCategory":[
+        { "value": "Roadside", "label": "Roadside" },
+        { "value": "Highway side", "label": "Highway side" },
+        { "value": "Market Area", "label": "Market Area" },
+        { "value": "Contruction area", "label": "Contruction area" },
+        { "value": "Residential area", "label": "Residential area" },
+        { "value": "Private area", "label": "Private area" },
+        { "value": "Park & Playground", "label": "Park & Playground" }
+      ]
+}

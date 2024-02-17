@@ -150,6 +150,8 @@ h3 {
 label{
 	font-size: 15px;
 	cursor: pointer;
+  font-size: 20px;
+  font-weight: 500;
 }
 .footer-button{
 	margin-top: 20px;
@@ -209,4 +211,13 @@ svg {
     fill: #fff;
     height: 9px;
     margin-right: 6px;
+}
+.field:focus-within label {
+  color: #000;
+  letter-spacing: 2px;
+}
+
+.field:focus-within label {
+  color: #000;
+  letter-spacing: normal;
 }
