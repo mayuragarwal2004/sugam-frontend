@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
-  GoogleMap,
-  useLoadScript,
   Marker,
-  InfoWindow,
+  InfoWindowF,
+  PolygonF,
   MarkerClusterer,
 } from "@react-google-maps/api";
 import greencircle from "./analytics/greencircle.png";
@@ -23,7 +22,16 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function Map(props) {
-  const { data, activeMarker, setActiveMarker, handleActiveMarker } = props;
+  const {
+    data,
+    activeMarker,
+    setActiveMarker,
+    handleActiveMarker,
+    geojson,
+    activeWard,
+    setactiveWard,
+    handleActiveWard,
+  } = props;
   const [open, setOpen] = useState({
     state: false,
     lastClicked: null,
@@ -32,6 +40,7 @@ export default function Map(props) {
   const [currImg, setCurrImg] = useState(null);
   const [activeDocID, setActiveDocID] = useState(null);
   const [lastClicked, setlastClicked] = useState(null);
+
   console.log(activeMarker);
   function imgClick(src) {
     setCurrImg(src);
@@ -65,6 +74,8 @@ export default function Map(props) {
     console.log("Reported Resolved");
   }
 
+  console.log({ activeWard });
+
   return (
     <>
       <MapWidgets />
@@ -79,6 +90,43 @@ export default function Map(props) {
         />
       )}
       {currImg && <ImageOverlay src={currImg} handleClose={handleImgCLose} />}
+
+      {activeWard && (
+        <InfoWindowF
+          onCloseClick={() => {
+            setactiveWard(null);
+          }}
+          position={activeWard.location}
+        >
+          <>
+            <div>Ward </div>
+          </>
+        </InfoWindowF>
+      )}
+      {geojson &&
+        geojson.map((shape, i) => (
+          <PolygonF
+            paths={shape.geometry.coordinates}
+            onClick={() => {
+              handleActiveWard({
+                location: shape.center,
+              });
+              console.log("clicked");
+            }}
+          >
+            {activeWard === i ? (
+              <InfoWindowF
+                onCloseClick={() => {
+                  setactiveWard(null);
+                }}
+              >
+                <>
+                  <h1>Ward {shape.properties.WARD_NO}</h1>
+                </>
+              </InfoWindowF>
+            ) : null}
+          </PolygonF>
+        ))}
       <MarkerClusterer>
         {(clusterer) =>
           data.map((doc, i) => {
@@ -91,7 +139,7 @@ export default function Map(props) {
                 icon={doc.resolved?.isResolved ? greencircle : redcircle}
               >
                 {activeMarker === i ? (
-                  <InfoWindow
+                  <InfoWindowF
                     onCloseClick={() => {
                       setActiveMarker(null);
                       setActiveDocID(null);
@@ -200,7 +248,7 @@ export default function Map(props) {
                         </p>
                       </div>
                     </>
-                  </InfoWindow>
+                  </InfoWindowF>
                 ) : null}
               </Marker>
             );

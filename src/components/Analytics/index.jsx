@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import Map from "./components/Map";
 import "./analytics.css";
 import { collection, query, getDocs, getFirestore } from "firebase/firestore";
-import { GoogleMap, useLoadScript, PolygonF } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { app } from "../base";
 import ComplainCards from "./components/ComplainCards";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
@@ -50,6 +50,7 @@ function Analytics() {
   });
   const [sortByAddessOption, setsortByAddessOption] = useState(1);
   const [geojson, setgeojson] = useState();
+  const [activeWard, setactiveWard] = useState();
 
   const handleComplaintStatus = (e) => {
     setcomplaintStatus({
@@ -65,6 +66,13 @@ function Analytics() {
       return;
     }
     setActiveMarker(marker);
+  };
+
+  const handleActiveWard = (ward) => {
+    // if (ward === activeWard) {
+    //   return;
+    // }
+    setactiveWard(ward);
   };
 
   const center = useMemo(() => ({ lat: 18.4807627, lng: 73.8724301 }), []);
@@ -101,14 +109,28 @@ function Analytics() {
     fetch("/data/Municipal_Spatial/Pune/pune-electoral-wards_current.geojson")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        setgeojson(data);
+        console.log({ data });
+        const formattedData = [];
+        data.features.map((shape) => {
+          const formattedShape = { properites: shape.properties };
+          var latsum = 0;
+          var lngsum = 0;
+          const formattedCoordinates = [];
+          shape.geometry.coordinates[0].map((coord) => {
+            formattedCoordinates.push({ lat: coord[1], lng: coord[0] });
+            latsum += coord[1];
+            lngsum += coord[0];
+          });
+          formattedShape.geometry = { coordinates: formattedCoordinates };
+          formattedShape.center = {
+            lat: latsum / shape.geometry.coordinates[0].length,
+            lng: lngsum / shape.geometry.coordinates[0].length,
+          };
+          formattedData.push(formattedShape);
+        });
+        setgeojson(formattedData);
       });
   }
-
-  useEffect(() => {
-    getGeoJson();
-  }, []);
 
   console.log({ geojson });
 
@@ -141,16 +163,16 @@ function Analytics() {
                 }}
               >
                 <>
-                  {geojson &&
-                    geojson.features.map((shape) => (
-                      <PolygonF paths={shape.geometry.coordinates} />
-                    ))}
                   {queryData && (
                     <Map
                       data={queryData}
                       activeMarker={activeMarker}
                       setActiveMarker={setActiveMarker}
                       handleActiveMarker={handleActiveMarker}
+                      activeWard={activeWard}
+                      setactiveWard={setactiveWard}
+                      geojson={geojson}
+                      handleActiveWard={handleActiveWard}
                     />
                   )}
                 </>
@@ -258,7 +280,14 @@ function Analytics() {
                       id="demo-simple-select"
                       value={sortByAddessOption}
                       label="View data by"
-                      onChange={(e) => setsortByAddessOption(e.target.value)}
+                      onChange={(e) => {
+                        setsortByAddessOption(e.target.value);
+                        if (e.target.value === 2) {
+                          getGeoJson();
+                        } else {
+                          setgeojson(null);
+                        }
+                      }}
                     >
                       <MenuItem value={1}>Ward</MenuItem>
                       <MenuItem value={2}>City</MenuItem>
