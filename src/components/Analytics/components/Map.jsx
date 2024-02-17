@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
-  GoogleMap,
-  useLoadScript,
   Marker,
-  InfoWindow,
+  InfoWindowF,
+  PolygonF,
   MarkerClusterer,
 } from "@react-google-maps/api";
 import greencircle from "./analytics/greencircle.png";
@@ -23,7 +22,18 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function Map(props) {
-  const { data, activeMarker, setActiveMarker, handleActiveMarker } = props;
+  const {
+    data,
+    activeMarker,
+    setActiveMarker,
+    handleActiveMarker,
+    geojson,
+    activeWard,
+    setactiveWard,
+    handleActiveWard,
+    showgeojson,
+    handlePolygonClick,
+  } = props;
   const [open, setOpen] = useState({
     state: false,
     lastClicked: null,
@@ -32,6 +42,7 @@ export default function Map(props) {
   const [currImg, setCurrImg] = useState(null);
   const [activeDocID, setActiveDocID] = useState(null);
   const [lastClicked, setlastClicked] = useState(null);
+
   console.log(activeMarker);
   function imgClick(src) {
     setCurrImg(src);
@@ -65,6 +76,8 @@ export default function Map(props) {
     console.log("Reported Resolved");
   }
 
+  console.log({ activeWard });
+
   return (
     <>
       <MapWidgets />
@@ -79,19 +92,45 @@ export default function Map(props) {
         />
       )}
       {currImg && <ImageOverlay src={currImg} handleClose={handleImgCLose} />}
+
+      {activeWard && (
+        <InfoWindowF
+          onCloseClick={() => {
+            setactiveWard(null);
+          }}
+          position={activeWard.location}
+        >
+          <>
+            <div>Ward </div>
+          </>
+        </InfoWindowF>
+      )}
+      {geojson &&
+        showgeojson &&
+        geojson.length > 0 &&
+        geojson.map((shape, i) => (
+          <PolygonF
+            paths={shape.geometry.coordinates}
+            onClick={() => {
+              console.log("shape");
+              console.log(shape.properties);
+              handlePolygonClick(shape.properties.ward);
+            }}
+          />
+        ))}
       <MarkerClusterer>
         {(clusterer) =>
           data.map((doc, i) => {
             return (
               <Marker
                 key={i}
-                position={{ lat: doc.latitude, lng: doc.longitude }}
+                position={{ lat: doc.coordX, lng: doc.coordY }}
                 onClick={() => handleActiveMarker(i)}
                 clusterer={clusterer}
-                icon={doc.resolved?.isResolved ? greencircle : redcircle}
+                icon={doc.status === "COMPLETED" ? greencircle : redcircle}
               >
                 {activeMarker === i ? (
-                  <InfoWindow
+                  <InfoWindowF
                     onCloseClick={() => {
                       setActiveMarker(null);
                       setActiveDocID(null);
@@ -136,36 +175,33 @@ export default function Map(props) {
                       <div className="row">
                         <div className="column">
                           <img
-                            src={doc.userImage}
+                            src={doc.imageURL}
                             loading="lazy"
                             alt="not found"
                             width="100%"
                             style={{ float: "left" }}
-                            onClick={() => imgClick(doc.userImage)}
+                            onClick={() => imgClick(doc.imageURL)}
                           />
                         </div>
                         <p>
-                          {doc.notValid && (
-                            <p>Not Valid Reported: {doc.notValid.length}</p>
-                          )}
                           <b>Name: </b> {doc.fullname}
                           <br />
                           <b>Components Of Garbage: </b>{" "}
-                          {doc.majorComponents.map((x, i) =>
-                            doc.majorComponentsNumber - 1 === i ? x : x + ", "
+                          {doc.wasteType.map((x, i) =>
+                            doc.wasteType.length - 1 === i ? x : x + ", "
                           )}
                           <br />
                           <b>Chronic Site: </b>
-                          {parseInt(doc.majorComponentsNumber) > 3
+                          {parseInt(doc.wasteType) > 3
                             ? "Yes"
                             : "No"}
                           <br />
-                          <b>How often the site is cleaned: </b> {doc.siteClean}
+                          <b>How often the site is cleaned: </b> {doc.siteCleanFrequency}
                           <br />
-                          <b>Recycle% : </b> {doc.percentRecycle}
+                          <b>Recycle% : </b> {doc.wasteRecyclable}
                           <br />
                           <b>Since when is garbage overflowing?: </b>
-                          {doc.overflowingWaste}
+                          {doc.siteUncleanDuration}
                           <br />
                           There is{" "}
                           {doc.dustbin === "Yes" ? (
@@ -182,7 +218,7 @@ export default function Map(props) {
                           )}
                           <br />
                           PMC is{" "}
-                          {doc.PMCCollecting === "Yes" ? (
+                          {doc.pmcCleanSite ? (
                             <>
                               <b>seen cleaning</b> in this area.{" "}
                               {doc.garbageCollected}
@@ -194,13 +230,11 @@ export default function Map(props) {
                           )}
                           <br />
                           <b>Site Category: </b>{" "}
-                          {doc.siteCategory.map((x, i) =>
-                            doc.siteCategory.length - 1 === i ? x : x + ", "
-                          )}
+                          {doc.siteCategory}
                         </p>
                       </div>
                     </>
-                  </InfoWindow>
+                  </InfoWindowF>
                 ) : null}
               </Marker>
             );
