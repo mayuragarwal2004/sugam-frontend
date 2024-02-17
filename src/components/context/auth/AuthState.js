@@ -18,13 +18,15 @@ const AuthState = (props) => {
           .getReader()
           .read()
           .then(({ value, done }) => {
-            new TextDecoder().decode(value);
+            console.log(new TextDecoder().decode(value));
+            console.log({value});
+            return JSON.parse(new TextDecoder().decode(value));
           })
           .then((data) => {
             console.log(data);
             setcurrentUser(data);
-            if (data.staus) {
-              setcurrentUserRole(data.staus);
+            if (data.status) {
+              setcurrentUserRole(data.status);
             }
           });
       })
