@@ -19,7 +19,7 @@ const AuthState = (props) => {
           .read()
           .then(({ value, done }) => {
             console.log(new TextDecoder().decode(value));
-            console.log({value});
+            console.log({ value });
             return JSON.parse(new TextDecoder().decode(value));
           })
           .then((data) => {
@@ -37,6 +37,7 @@ const AuthState = (props) => {
   };
 
   useEffect(() => {
+    if (process.env.REACT_APP_FRONTEND_ONLY === "true") return;
     getUserData();
   }, []);
 

@@ -9,8 +9,8 @@ import { db } from "../../base";
 import "./Profile.css"
 
 const Profile = () => {
-  // const { currentUser } = useAuth();
-  const currentUser = { displayName: "Sugam User" };
+  const { currentUser } = useAuth();
+  // const currentUser = { displayName: "Sugam User" };
   const [userData, setUserData] = useState({
     apiCalledFails: 6,
     apiKey: "e4417de1-09fa-7b0d-184a-7bb2cf399a20",
@@ -19,6 +19,7 @@ const Profile = () => {
   });
 
   async function getUserData() {
+    ///sugam/user/getIssueSum
     const docRef = doc(db, "users", currentUser.uid);
     const docSnap = await getDoc(docRef);
 
@@ -65,7 +66,7 @@ const Profile = () => {
         {/* Name and position */}
         <div className="mt-16 flex flex-col items-center">
           <h4 className="text-xl font-bold text-navy-700">
-            {currentUser.displayName}
+            {currentUser.username}
           </h4>
           {/* <p className="text-base font-normal text-gray-600">Product Manager</p> */}
         </div>
