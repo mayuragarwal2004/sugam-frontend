@@ -204,6 +204,8 @@
   padding: 10px;
   border-radius: 10px;
   flex-direction: column;
+  overflow: auto;
+  height: calc(var(--maps-body-height) - 150px);
 }
 
 .right-panel-main-parent {

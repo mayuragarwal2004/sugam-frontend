@@ -5,7 +5,7 @@ import AuthContext from "./AuthContext";
 import { auth } from "../../../base";
 
 const AuthState = (props) => {
-  const [currentUser, setcurrentUser] = useState();
+  const [currentUser, setcurrentUser] = useState(0);
   const [currentUserRole, setcurrentUserRole] = useState();
 
   console.log({ currentUser, currentUserRole });
@@ -24,9 +24,13 @@ const AuthState = (props) => {
           })
           .then((data) => {
             console.log(data);
-            setcurrentUser(data);
-            if (data.status) {
-              setcurrentUserRole(data.status);
+            if (data && data.userID) {
+              setcurrentUser(data);
+              if (data.status) {
+                setcurrentUserRole(data.status);
+              }
+            } else {
+              setcurrentUser(null);
             }
           });
       })

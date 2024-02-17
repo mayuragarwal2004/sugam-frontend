@@ -12,10 +12,8 @@ const Profile = () => {
   const { currentUser } = useAuth();
   // const currentUser = { displayName: "Sugam User" };
   const [userData, setUserData] = useState({
-    apiCalledFails: 6,
-    apiKey: "e4417de1-09fa-7b0d-184a-7bb2cf399a20",
-    apiCalled: 19,
-    apiCalledSuccess: 13,
+    Complete: 6,
+    Pending: 19,
   });
 
   async function getUserData() {
@@ -96,7 +94,7 @@ const Profile = () => {
         >
           <div className="flex flex-col items-center justify-center">
             <p className="text-2xl font-bold text-navy-700 dark:text-white">
-              {userData && userData.apiCalled}
+              {userData && userData.Complete + userData.Pending}
             </p>
             <p className="text-sm font-normal text-gray-600">
               Compaints Registered
@@ -104,7 +102,7 @@ const Profile = () => {
           </div>
           <div className="flex flex-col items-center justify-center">
             <p className="text-2xl font-bold text-navy-700 dark:text-white">
-              {userData && userData.apiCalledSuccess}
+              {userData && userData.Complete}
             </p>
             <p className="text-sm font-normal text-gray-600">
               Complaints Solved
@@ -112,7 +110,7 @@ const Profile = () => {
           </div>
           <div className="flex flex-col items-center justify-center">
             <p className="text-2xl font-bold text-navy-700 dark:text-white">
-              {userData && userData.apiCalledFails}
+              {userData && userData.Pending}
             </p>
             <p className="text-sm font-normal text-gray-600">
               Complaints pending
@@ -121,7 +119,7 @@ const Profile = () => {
         </div>
       </Card>
       <div className="generalinfo" style={{ paddingTop: "40px" }}>
-        {userData && <General apiKey={userData.apiKey} />}
+        {userData && <General apiKey="kl" />}
       </div>
     </div>
   );

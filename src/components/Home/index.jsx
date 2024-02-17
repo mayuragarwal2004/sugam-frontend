@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -6,12 +6,18 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 // import Link from "@mui/material/Link";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import "./Home.css";
 import MenuIcon from "@mui/icons-material/Menu";
 
 const Home = () => {
   const [img, setimg] = useState(1);
+  const [analyticdata, setanalyticdata] = useState({
+    uniqueUsers: 0,
+    complete: 0,
+    workers: 0,
+    complaints: 0,
+  });
   function plusSlides(v) {
     console.log("clicked");
     if (img + v > 3) {
@@ -25,6 +31,35 @@ const Home = () => {
   function currentSlide(v) {
     setimg(v);
   }
+
+  const getAnalyticData = async () => {
+    fetch("/sugam/api/footer")
+      .then((response) => {
+        console.log(response);
+        response.body
+          .getReader()
+          .read()
+          .then(({ value, done }) => {
+            console.log(new TextDecoder().decode(value));
+            console.log({ value });
+            return JSON.parse(new TextDecoder().decode(value));
+          })
+          .then((data) => {
+            console.log(data);
+            setanalyticdata(data);
+          });
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  useEffect(() => {
+    if(process.env.REACT_APP_FRONTEND_ONLY === "true") return;
+    getAnalyticData();
+  }
+  , []);
+
   return (
     <>
       <div style={{ position: "relative", height: "60vh" }}>
@@ -52,10 +87,11 @@ const Home = () => {
             wordBreak: "break-word",
             textAlign: "center",
             backgroundColor: "rgba(0, 0, 0, 0.5)",
-          
           }}
         >
-          <h1 style={{fontFamily:'initial',fontSize:'50px'}}>Welcome to SUGAM</h1>
+          <h1 style={{ fontFamily: "initial", fontSize: "50px" }}>
+            Welcome to SUGAM
+          </h1>
           <br />
           <p>Get a step ahead toward clean city!!!</p>
         </div>
@@ -128,22 +164,14 @@ const Home = () => {
               style={{ display: img === 2 ? "block" : "none" }}
             >
               {/* <div className="numbertext">2 / 3</div> */}
-              <img
-                src="slideimg2.jpeg"
-                style={{ width: "100%" }}
-                alt="img"
-              />
+              <img src="slideimg2.jpeg" style={{ width: "100%" }} alt="img" />
             </div>
             <div
               className="mySlides fade"
               style={{ display: img === 3 ? "block" : "none" }}
             >
               {/* <div className="numbertext">3 / 3</div> */}
-              <img
-                src="slideimg3.jpeg"
-                style={{ width: "100%" }}
-                alt="img"
-              />
+              <img src="slideimg3.jpeg" style={{ width: "100%" }} alt="img" />
             </div>
             <span className="prev" onClick={() => plusSlides(-1)}>
               <svg viewBox="0 0 1024 1024" className="home-icon">
@@ -199,23 +227,23 @@ const Home = () => {
         </div>
       </div>
       <div className="gotoAnalytics">
-      <Link to="/analytics">
-        <button class="button" >
-          Go to Analytics
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="1em"
-            viewBox="0 0 448 512"
-          >
-            <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
-          </svg>
-        </button>
+        <Link to="/analytics">
+          <button class="button">
+            Go to Analytics
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="1em"
+              viewBox="0 0 448 512"
+            >
+              <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+            </svg>
+          </button>
         </Link>
-        
+
         <div class="button-layer1"></div>
         <div class="button-layer2"></div>
       </div>
-      
+
       <div className="stats">
         <section>
           <div class="container">
@@ -224,31 +252,31 @@ const Home = () => {
               <div className="after-card">
                 <li>
                   <p>
-                    <h3>53</h3>
+                    <h3>{analyticdata.uniqueUsers}</h3>
                     <i class="fa fa-arrow-up clr-up"></i>
                   </p>
-                  <span>Websites Added</span>
+                  <span>Number of Unique Users</span>
                 </li>
                 <li>
                   <p>
-                    <h3>18</h3>
+                    <h3>{analyticdata.complete}</h3>
                     <i class="fa fa-arrow-down clr-down"></i>
                   </p>
-                  <span>Websites Dropped</span>
+                  <span>Number of Addressed Issues</span>
                 </li>
                 <li>
                   <p>
-                    <h3>9,526</h3>
+                    <h3>{analyticdata.workers}</h3>
                     <i class="fa fa-arrow-top"></i>
                   </p>
-                  <span>Current Websites</span>
+                  <span>Number of registered workers</span>
                 </li>
                 <li>
                   <p>
-                    <h3>6.90%</h3>
+                    <h3>{analyticdata.complaints}</h3>
                     <i class="fa fa-arrow-top"></i>
                   </p>
-                  <span>Market Share</span>
+                  <span>Number of Complaints</span>
                 </li>
               </div>
             </ul>
