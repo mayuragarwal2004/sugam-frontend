@@ -255,28 +255,28 @@ const Home = () => {
                     <h3>{analyticdata.uniqueUsers}</h3>
                     <i class="fa fa-arrow-up clr-up"></i>
                   </p>
-                  <span>Websites Added</span>
+                  <span>Number of Unique Users</span>
                 </li>
                 <li>
                   <p>
                     <h3>{analyticdata.complete}</h3>
                     <i class="fa fa-arrow-down clr-down"></i>
                   </p>
-                  <span>Websites Dropped</span>
+                  <span>Number of Addressed Issues</span>
                 </li>
                 <li>
                   <p>
                     <h3>{analyticdata.workers}</h3>
                     <i class="fa fa-arrow-top"></i>
                   </p>
-                  <span>Current Websites</span>
+                  <span>Number of registered workers</span>
                 </li>
                 <li>
                   <p>
                     <h3>{analyticdata.complaints}</h3>
                     <i class="fa fa-arrow-top"></i>
                   </p>
-                  <span>Market Share</span>
+                  <span>Number of Complaints</span>
                 </li>
               </div>
             </ul>
