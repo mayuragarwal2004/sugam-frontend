@@ -1,0 +1,93 @@
+.bodylogin {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative; /* Ensure relative positioning for the overlay */
+    background-image: url(../../../public/Garbage\ collection.jpg);
+    background-color: rgba(0, 0, 0, 0.594); /* Overlay color with opacity */
+    background-size: cover;
+    background-blend-mode: overlay; /* Blend mode to blend the color with the image */
+  }
+  
+  .trucksvg {
+    padding-left: 37%;
+    height: 100px;
+  }
+  
+  
+  .login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color:  rgb(140 191 176 / 43%);
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 70%;
+    height: 60%;
+  }
+  
+  .login-form {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s, background-color 0.3s;
+  }
+  
+  .input-field:hover, .input-field:focus {
+    border-color: #3498db;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .login-button, .register-button {
+    flex: 1;
+    padding: 12px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .login-button {
+    background-color: #3498db;
+    color: #fff;
+  }
+  
+  .login-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .register-button {
+    background-color: transparent;
+    color: #333;
+  }
+  
+  .register-button:hover {
+    color: #3498db;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .login-container {
+      width: 90%;
+    }
+  }
+  
