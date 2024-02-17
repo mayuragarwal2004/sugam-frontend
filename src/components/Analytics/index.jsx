@@ -6,6 +6,7 @@ import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { app } from "../../base";
 import ComplainCards from "./components/ComplainCards";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import Button from '@mui/material/Button';
 // import geojson from "../data/Municipal_Spatial/Pune/pune-electoral-wards_current.geojson"
 
 import Box from "@mui/material/Box";
@@ -449,8 +450,8 @@ function Analytics() {
         </div>
       </FullScreen>
 
-      <div>
-        <button onClick={fullscreenHandle.enter}>Enter fullscreen</button>
+      <div style={{display:'flex',justifyContent:'center'}}>
+      <Button onClick={fullscreenHandle.enter} sx={{margin:'10px'}} variant="contained">Enter FUll Screen</Button>
       </div>
       {queryData && <ComplainCards data={queryData} />}
     </>

@@ -55,7 +55,7 @@ const Home = () => {
           
           }}
         >
-          <h1>Welcome to SUGAM</h1>
+          <h1 style={{fontFamily:'initial',fontSize:'50px'}}>Welcome to SUGAM</h1>
           <br />
           <p>Get a step ahead toward clean city!!!</p>
         </div>

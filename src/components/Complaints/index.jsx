@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import "./Complaints.css"; // Import CSS file
 import Button from "@mui/material/Button";
+import FormLocation from "../FormComponents/FormLocation";
+import FormImageInput from "../FormComponents/FormImageInput";
+
 
 const Complaints = () => {
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
+  
+
   const questions = [
+    "Click the Picture for complaint & gice Access of the Location",
     "Select the major component of garbage (Select atleast 1 option)",
     "How much percent of garbage can be recycled?",
     "Since when are you seeing this site overflowing with waste?",
@@ -36,6 +42,17 @@ const Complaints = () => {
     // You can reset the form state or redirect to another page after submission
   };
 
+  const [loc, setloc] = useState({
+    latitude: 0,
+    longitude: 0,
+    accuracy: 0,
+    country: "",
+    state: "",
+    city: "",
+    postalcode: "",
+  });
+  const [userImage, setUserImage] = useState("");
+
   return (
     <div>
       <div className="complaints-container">
@@ -61,6 +78,17 @@ const Complaints = () => {
               <h2>{questions[currentQuestion]}</h2>
               {/* Render input fields based on current question */}
               {currentQuestion === 0 && (
+                <>
+                <div id="recaptcha-container"  ></div>
+                <div className="loc"style={{backgroundColor:'aliceblue',padding:'50px'}}>
+                <FormLocation loc={loc} setloc={setloc} />
+                </div>
+                
+                <div className="field" style={{backgroundColor:'aliceblue',marginTop:'50px',padding:'50px'}}>
+                  <FormImageInput userImage={userImage} setUserImage={setUserImage} />
+                </div></>
+              )}
+              {currentQuestion === 1 && (
                 <div className="optionscom">
                   <ul>
                     <li>
@@ -133,7 +161,7 @@ const Complaints = () => {
                 </div>
               )}
 
-              {currentQuestion === 1 && (
+              {currentQuestion === 2 && (
                 <div className="optionscom">
                   <ul>
                     <li>
@@ -195,7 +223,7 @@ const Complaints = () => {
                 </div>
               )}
 
-              {currentQuestion === 2 && (
+              {currentQuestion === 3 && (
                 <div className="optionscom">
                   <ul>
                     <li>
@@ -246,7 +274,7 @@ const Complaints = () => {
                 </div>
               )}
 
-              {currentQuestion === 3 && (
+              {currentQuestion === 4 && (
                 <div className="optionscom">
                   <ul>
                     <li>
@@ -320,7 +348,7 @@ const Complaints = () => {
               )}
 
               <div className="prev-next-buttons">
-                {currentQuestion < 3 ? (
+                {currentQuestion < 4 ? (
                   <Button
                     variant="outlined"
                     onClick={handleNext}
@@ -363,7 +391,7 @@ const Complaints = () => {
                   </Button>
                 )}
 
-                <Button
+                  <Button
                   variant="contained"
                   onClick={handleSubmit}
                   style={{ width: "30%" }}
@@ -373,7 +401,7 @@ const Complaints = () => {
               </div>
             </div>
           )}
-          <p>Let us go green to get our planet clean</p>
+          <div className="paraComplaint" style={{display:"flex",width:'100%',marginTop:'20px'}}><p>Let us go green to get our planet clean</p></div>
         </div>
       </div>
     </div>
