@@ -2,10 +2,11 @@ import React, { useMemo, useState, useEffect } from "react";
 import Map from "./components/Map";
 import "./analytics.css";
 import { collection, query, getDocs, getFirestore } from "firebase/firestore";
-import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, PolygonF } from "@react-google-maps/api";
 import { app } from "../base";
 import ComplainCards from "./components/ComplainCards";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+// import geojson from "../data/Municipal_Spatial/Pune/pune-electoral-wards_current.geojson"
 
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -48,6 +49,7 @@ function Analytics() {
     notCompleted: true,
   });
   const [sortByAddessOption, setsortByAddessOption] = useState(1);
+  const [geojson, setgeojson] = useState();
 
   const handleComplaintStatus = (e) => {
     setcomplaintStatus({
@@ -95,6 +97,21 @@ function Analytics() {
     getData();
   }, []);
 
+  function getGeoJson() {
+    fetch("/data/Municipal_Spatial/Pune/pune-electoral-wards_current.geojson")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setgeojson(data);
+      });
+  }
+
+  useEffect(() => {
+    getGeoJson();
+  }, []);
+
+  console.log({ geojson });
+
   return (
     <>
       <FullScreen handle={fullscreenHandle}>
@@ -124,6 +141,10 @@ function Analytics() {
                 }}
               >
                 <>
+                  {geojson &&
+                    geojson.features.map((shape) => (
+                      <PolygonF paths={shape.geometry.coordinates} />
+                    ))}
                   {queryData && (
                     <Map
                       data={queryData}
@@ -243,7 +264,7 @@ function Analytics() {
                       <MenuItem value={2}>City</MenuItem>
                     </Select>
                   </FormControl>
-                  <FormControl fullWidth style={{marginTop:"10px"}}>
+                  <FormControl fullWidth style={{ marginTop: "10px" }}>
                     <InputLabel id="demo-simple-select-label">
                       Choose Ward
                     </InputLabel>
