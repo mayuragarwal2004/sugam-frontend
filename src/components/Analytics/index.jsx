@@ -49,7 +49,10 @@ function Analytics() {
     notCompleted: true,
   });
   const [sortByAddessOption, setsortByAddessOption] = useState(1);
+  const [sortByWardOption, setsortByWardOption] = useState(-1);
   const [geojson, setgeojson] = useState();
+  const [citygeojson, setcitygeojson] = useState();
+  const [showgeojson, setshowgeojson] = useState(false);
   const [activeWard, setactiveWard] = useState();
 
   const handleComplaintStatus = (e) => {
@@ -112,25 +115,71 @@ function Analytics() {
         console.log({ data });
         const formattedData = [];
         data.features.map((shape) => {
-          const formattedShape = { properites: shape.properties };
+          const formattedShape = { properties: shape.properties };
           var latsum = 0;
           var lngsum = 0;
+          var maxlat = -90;
+          var maxlng = -180;
+          var minlat = 90;
+          var minlng = 180;
           const formattedCoordinates = [];
           shape.geometry.coordinates[0].map((coord) => {
             formattedCoordinates.push({ lat: coord[1], lng: coord[0] });
             latsum += coord[1];
             lngsum += coord[0];
+            if (coord[1] > maxlat) {
+              maxlat = coord[1];
+            }
+            if (coord[0] > maxlng) {
+              maxlng = coord[0];
+            }
+            if (coord[1] < minlat) {
+              minlat = coord[1];
+            }
+            if (coord[0] < minlng) {
+              minlng = coord[0];
+            }
           });
           formattedShape.geometry = { coordinates: formattedCoordinates };
           formattedShape.center = {
             lat: latsum / shape.geometry.coordinates[0].length,
             lng: lngsum / shape.geometry.coordinates[0].length,
           };
+          formattedShape.bounds = {
+            maxlat: maxlat,
+            maxlng: maxlng,
+            minlat: minlat,
+            minlng: minlng,
+          };
           formattedData.push(formattedShape);
         });
+        setcitygeojson(formattedData);
         setgeojson(formattedData);
       });
   }
+
+  const filterGeoJSONByWardNo = (wardNo) => {
+    const filteredData = [];
+    citygeojson.map((shape, index) => {
+      if (shape.properties["ward"] === wardNo) {
+        filteredData.push(shape);
+        if (filteredData.length === 1) {
+          map.setCenter(shape.center);
+          map.setZoom(15);
+        }
+      }
+    });
+    setgeojson(filteredData);
+  };
+
+  const handlePolygonClick = (ward) => {
+    if (sortByAddessOption === 1 && sortByWardOption === -1)
+      filterGeoJSONByWardNo(ward);
+  };
+
+  useEffect(() => {
+    getGeoJson();
+  }, []);
 
   console.log({ geojson });
 
@@ -152,6 +201,9 @@ function Analytics() {
                 mapContainerClassName="gmap"
                 onClick={() => setActiveMarker(null)}
                 fullscreenControl={true}
+                onLoad={(map) => {
+                  setMap(map);
+                }}
                 options={{
                   zoomControl: false,
                   mapTypeControl: false,
@@ -173,6 +225,8 @@ function Analytics() {
                       setactiveWard={setactiveWard}
                       geojson={geojson}
                       handleActiveWard={handleActiveWard}
+                      showgeojson={showgeojson}
+                      handlePolygonClick={handlePolygonClick}
                     />
                   )}
                 </>
@@ -282,10 +336,10 @@ function Analytics() {
                       label="View data by"
                       onChange={(e) => {
                         setsortByAddessOption(e.target.value);
+                        setshowgeojson(true);
                         if (e.target.value === 2) {
-                          getGeoJson();
-                        } else {
-                          setgeojson(null);
+                          map.setCenter(center);
+                          map.setZoom(13);
                         }
                       }}
                     >
@@ -293,21 +347,47 @@ function Analytics() {
                       <MenuItem value={2}>City</MenuItem>
                     </Select>
                   </FormControl>
-                  <FormControl fullWidth style={{ marginTop: "10px" }}>
-                    <InputLabel id="demo-simple-select-label">
-                      Choose Ward
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={sortByAddessOption}
-                      label="Choose Ward"
-                      onChange={(e) => setsortByAddessOption(e.target.value)}
-                    >
-                      <MenuItem value={1}>Ward</MenuItem>
-                      <MenuItem value={2}>City</MenuItem>
-                    </Select>
-                  </FormControl>
+                  {sortByAddessOption === 1 && (
+                    <FormControl fullWidth style={{ marginTop: "10px" }}>
+                      <InputLabel id="demo-simple-select-label">
+                        Choose Ward
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={sortByWardOption}
+                        label="Choose Ward"
+                        onChange={(e) => {
+                          setsortByWardOption(e.target.value);
+                          if (e.target.value === -1) {
+                            setgeojson(citygeojson);
+                            setshowgeojson(true);
+                          } else if (e.target.value === -2) {
+                            // get current ward
+                            setshowgeojson(false);
+                          } else {
+                            setshowgeojson(true);
+
+                            setgeojson(() =>
+                              filterGeoJSONByWardNo(e.target.value)
+                            );
+                          }
+                        }}
+                      >
+                        <MenuItem value={-1}>Select Ward</MenuItem>
+                        <MenuItem value={-2}>Get Current Ward</MenuItem>
+                        {citygeojson &&
+                          citygeojson.map((shape, index) => (
+                            <MenuItem
+                              value={shape.properties["ward"]}
+                              key={index}
+                            >
+                              {shape.properties["name-mr"]}
+                            </MenuItem>
+                          ))}
+                      </Select>
+                    </FormControl>
+                  )}
                 </div>
               </div>
             </div>

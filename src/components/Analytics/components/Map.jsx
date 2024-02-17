@@ -31,6 +31,8 @@ export default function Map(props) {
     activeWard,
     setactiveWard,
     handleActiveWard,
+    showgeojson,
+    handlePolygonClick
   } = props;
   const [open, setOpen] = useState({
     state: false,
@@ -103,11 +105,15 @@ export default function Map(props) {
           </>
         </InfoWindowF>
       )}
-      {geojson &&
+      {geojson && showgeojson && geojson.length > 0 &&
         geojson.map((shape, i) => (
           <PolygonF
             paths={shape.geometry.coordinates}
             onClick={() => {
+              console.log("shape");
+              console.log(shape.properties);
+              handlePolygonClick(shape.properties.ward);
+              return
               handleActiveWard({
                 location: shape.center,
               });
