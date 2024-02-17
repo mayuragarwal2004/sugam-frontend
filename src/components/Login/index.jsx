@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import Alert from "@mui/material/Alert";
 
@@ -14,12 +14,15 @@ const Login = () => {
   const handleRegisterSubmit = () => {
     // Add logic here to handle the register button click
     console.log("Register button clicked");
-    fetch(`/sugam/api/register?user=${username}&pass=${password}&username=${"abc"}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      `/sugam/api/register?user=${username}&pass=${password}&username=${"abc"}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => {
         console.log(response);
         response.body
@@ -67,7 +70,7 @@ const Login = () => {
           .read()
           .then(({ value, done }) => {
             console.log(new TextDecoder().decode(value));
-            if(value){
+            if (value) {
               setAlertData({
                 open: true,
                 message: "login successful.",
@@ -87,6 +90,15 @@ const Login = () => {
         // Handle errors here if needed
       });
   };
+
+  useEffect(() => {
+    if(alertData.open) {
+      setTimeout(() => {
+        setAlertData({ open: false, message: "", severity: "info" });
+      }, 5000);
+    }
+  }
+  , [alertData.open]);
 
   return (
     <div className="bodylogin">
@@ -142,14 +154,20 @@ const Login = () => {
               >
                 Register
               </button>
-              <button type="submit" className="login-button" onClick={handleLoginSubmit}>
+              <button
+                type="submit"
+                className="login-button"
+                onClick={handleLoginSubmit}
+              >
                 Login
               </button>
             </div>
           </form>
-          <Alert severity="info" sx={{ marginTop: "10px" }}>
-            registration successful.
-          </Alert>
+          {alertData.open && (
+            <Alert severity={alertData.severity} sx={{ marginTop: "10px" }}>
+              {alertData.message}
+            </Alert>
+          )}
         </div>
       </div>
     </div>
