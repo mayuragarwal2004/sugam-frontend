@@ -6,7 +6,7 @@ import General from "../Dashboard/DashboardComponents/General";
 import { useAuth } from "../context/auth/AuthState";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../base";
-import "./Profile.css"
+import "./Profile.css";
 
 const Profile = () => {
   const { currentUser } = useAuth();
@@ -20,17 +20,32 @@ const Profile = () => {
 
   async function getUserData() {
     ///sugam/user/getIssueSum
-    const docRef = doc(db, "users", currentUser.uid);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      setUserData(docSnap.data());
-      // console.log("Document data:", docSnap.data());
-    } else {
-      // docSnap.data() will be undefined in this case
-      console.log("No such document!");
-    }
+    fetch("/sugam/user/getIssueSum")
+      .then((response) => {
+        console.log(response);
+        response.body
+          .getReader()
+          .read()
+          .then(({ value, done }) => {
+            console.log(new TextDecoder().decode(value));
+            console.log({ value });
+            return JSON.parse(new TextDecoder().decode(value));
+          })
+          .then((data) => {
+            console.log({ newdata: data });
+            setUserData(data);
+          });
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Handle errors here if needed
+      });
   }
+
+  useEffect(() => {
+    if (process.env.REACT_APP_FRONTEND_ONLY === "true") return;
+    getUserData();
+  }, []);
 
   return (
     <div
