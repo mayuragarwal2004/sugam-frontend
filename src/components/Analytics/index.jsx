@@ -21,6 +21,7 @@ import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { Button } from "@mui/material";
 
 // sort by ward
 // sort by address
@@ -181,6 +182,43 @@ function Analytics() {
     getGeoJson();
   }, []);
 
+  const getNewData = () => {
+    const status = [];
+    const locations = [];
+    if (complaintStatus.completed) {
+      status.push("COMPLETED");
+    }
+    if (complaintStatus.notCompleted) {
+      status.push("PENDING");
+    }
+
+    citygeojson.map(ward=>{if(ward.properties.ward === sortByWardOption) locations.push(ward.properties["name-mr"])})
+    const reqbody = {
+      status: status,
+      // time1: sortByTimeOption,
+      // time2: sortByTimeOption,
+      locations,
+    };
+    console.log({ reqbody });
+
+    fetch("/sugam/analytics/getQuery", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        status: complaintStatus,
+        time: sortByTimeOption,
+        timeRange: value,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log({ data });
+        setqueryData(data);
+      });
+  };
+
   console.log({ geojson });
 
   return (
@@ -264,6 +302,7 @@ function Analytics() {
                       label="Not Completed"
                     />
                   </FormGroup>
+                  <Button onClick={getNewData}>Get Data</Button>
                 </div>
               </div>
               <div className="left-panel-row">
