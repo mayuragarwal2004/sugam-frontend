@@ -2,7 +2,7 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import AuthContext from "./AuthContext";
-import { auth } from "../../base";
+import { auth } from "../../../base";
 
 const AuthState = (props) => {
   const [currentUser, setcurrentUser] = useState();

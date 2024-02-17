@@ -1,0 +1,26 @@
+{
+    "Admin":[
+        { "value": "Admin", "label": "Admin" },
+        { "value": "Officer", "label": "Officer" },
+        { "value": "SubOfficer", "label": "SubOfficer" },
+        { "value": "Supervisor", "label": "Supervisor" },
+        { "value": "Worker", "label": "Worker" }
+      ],
+      
+      "Officer":[
+        { "value": "Officer", "label": "Officer" },
+        { "value": "SubOfficer", "label": "SubOfficer" },
+        { "value": "Supervisor", "label": "Supervisor" },
+        { "value": "Worker", "label": "Worker" }
+      ],
+      
+      "SubOfficer":[
+        { "value": "SubOfficer", "label": "SubOfficer" },
+        { "value": "Supervisor", "label": "Supervisor" },
+        { "value": "Worker", "label": "Worker" }
+      ],
+      
+      "Supervisor":[
+        { "value": "Worker", "label": "Worker" }
+      ]
+}

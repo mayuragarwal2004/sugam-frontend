@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 // import avatar from "assets/img/avatars/avatar11.png";
 // import banner from "../../public/banner.png";
-import Card from "./DashboardComponents/components/card";
-import General from "./DashboardComponents/General";
-import { useAuth } from "./context/auth/AuthState";
+import Card from "../Dashboard/DashboardComponents/components/card";
+import General from "../Dashboard/DashboardComponents/General";
+import { useAuth } from "../context/auth/AuthState";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../base";
+import { db } from "../../base";
 import "./Profile.css"
 
 const Profile = () => {

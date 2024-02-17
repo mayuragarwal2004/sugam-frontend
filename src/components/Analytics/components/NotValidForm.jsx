@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Select from "react-select";
 import { useAuth } from "../../context/auth/AuthState";
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../base";
+import { db } from "../../../base";
 
 const options = [
   { value: "Not a dump", label: "Not a dump" },

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/auth/AuthState";
 import ResolvedFormImageInput from "./ResolvedFormImageInput";
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../base";
+import { db } from "../../../base";
 
 const ResolvedForm = (props) => {
   const { data, activeMarker } = props;
