@@ -3,6 +3,7 @@ import React from "react";
 import Analytics from "./components/Analytics";
 import Login from "./components/Login";
 import Layout from "./components/Layout";
+import Profile from "./components/Profile";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
               {/* <Route path="dashboard" element={<Dashboard />} /> */}
               {/* <Route path="auth" element={<LoginSignUp />} /> */}
               {/* <Route path="complaints" element={<Complaints />} /> */}
-              {/* <Route path="profile" element={<Profile />} /> */}
+              <Route path="profile" element={<Profile />} />
               <Route path="login" element={<Login />} />
               {/* <Route path="aboutUs" element={<AboutUs />} /> */}
               {/* <Route path="*" element={<NoPage />} /> */}

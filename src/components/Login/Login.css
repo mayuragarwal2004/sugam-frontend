@@ -4,17 +4,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    /* height: 100vh; */
     position: relative; /* Ensure relative positioning for the overlay */
     background-image: url(../../../public/Garbage\ collection.jpg);
     background-color: rgba(0, 0, 0, 0.594); /* Overlay color with opacity */
     background-size: cover;
     background-blend-mode: overlay; /* Blend mode to blend the color with the image */
+    padding: 50px;
   }
   
   .trucksvg {
-    padding-left: 37%;
+    display: flex;
     height: 100px;
+    fill: aquamarine;
   }
   
   
@@ -27,12 +29,14 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     width: 70%;
-    height: 60%;
+    padding-top:10%;
+    align-items: center
   }
   
   .login-form {
     padding: 20px;
     box-sizing: border-box;
+    width: 100%
   }
   
   .input-field {
@@ -55,6 +59,7 @@
   .button-container {
     display: flex;
     justify-content: space-between;
+    gap: 10px
   }
   
   .login-button, .register-button {
@@ -77,17 +82,20 @@
   }
   
   .register-button {
-    background-color: transparent;
+    background-color: #2bb476;
     color: #333;
+    /* border: 2px solid aliceblue; */
+    color: aliceblue;
   }
   
   .register-button:hover {
-    color: #3498db;
+    background-color: #186040;
   }
   
   @media screen and (max-width: 600px) {
     .login-container {
       width: 90%;
+      align-items: center
     }
   }
   
