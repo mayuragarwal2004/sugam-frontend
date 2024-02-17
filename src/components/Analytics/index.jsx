@@ -40,11 +40,11 @@ function Analytics() {
   const fullscreenHandle = useFullScreenHandle();
   const [zoom, setzoom] = useState(15);
   const [map, setMap] = useState(null);
-  const [value, setValue] = React.useState([
+  const [sortByTimeOption, setsortByTimeOption] = useState(1);
+  const [sortByTimeValue, setsortByTimeValue] = useState([
     dayjs("2022-04-17"),
     dayjs("2022-04-21"),
   ]);
-  const [sortByTimeOption, setsortByTimeOption] = useState(1);
   const [complaintStatus, setcomplaintStatus] = useState({
     completed: true,
     notCompleted: true,
@@ -185,6 +185,8 @@ function Analytics() {
   const getNewData = () => {
     const status = [];
     const locations = [];
+    var time1 = sortByTimeValue[0].unix();
+    var time2 = sortByTimeValue[1].unix();
     if (complaintStatus.completed) {
       status.push("COMPLETED");
     }
@@ -192,25 +194,35 @@ function Analytics() {
       status.push("PENDING");
     }
 
-    citygeojson.map(ward=>{if(ward.properties.ward === sortByWardOption) locations.push(ward.properties["name-mr"])})
+    if (sortByTimeOption === "24 hours") {
+      time1 = dayjs().subtract(1, "day").unix();
+    } else if (sortByTimeOption === "2 days") {
+      time1 = dayjs().subtract(2, "day").unix();
+    } else if (sortByTimeOption === "4 days") {
+      time1 = dayjs().subtract(4, "day").unix();
+    } else if (sortByTimeOption === "1 week") {
+      time1 = dayjs().subtract(1, "week").unix();
+    }
+
+    citygeojson.map((ward) => {
+      if (ward.properties.ward === sortByWardOption)
+        locations.push(ward.properties["name-mr"]);
+    });
     const reqbody = {
       status: status,
-      // time1: sortByTimeOption,
-      // time2: sortByTimeOption,
+      time1,
+      time2,
       locations,
     };
     console.log({ reqbody });
+    if (process.env.REACT_APP_FRONTEND_ONLY === "true") return;
 
     fetch("/sugam/analytics/getQuery", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        status: complaintStatus,
-        time: sortByTimeOption,
-        timeRange: value,
-      }),
+      body: JSON.stringify(reqbody),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -327,14 +339,14 @@ function Analytics() {
                       label="Sort by time"
                       onChange={(e) => setsortByTimeOption(e.target.value)}
                     >
-                      <MenuItem value={1}>Last 24 hours</MenuItem>
-                      <MenuItem value={2}>Last 2 day</MenuItem>
-                      <MenuItem value={3}>Last 4 days</MenuItem>
-                      <MenuItem value={4}>Last 1 week</MenuItem>
-                      <MenuItem value={5}>Custom Time Input</MenuItem>
+                      <MenuItem value={"24 hours"}>Last 24 hours</MenuItem>
+                      <MenuItem value={"2 days"}>Last 2 day</MenuItem>
+                      <MenuItem value={"4 days"}>Last 4 days</MenuItem>
+                      <MenuItem value={"1 week"}>Last 1 week</MenuItem>
+                      <MenuItem value={"custom"}>Custom Time Input</MenuItem>
                     </Select>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      {sortByTimeOption === 5 && (
+                      {sortByTimeOption === "custom" && (
                         <DemoContainer
                           components={["DateRangePicker", "DateRangePicker"]}
                         >
@@ -343,8 +355,10 @@ function Analytics() {
                             component="DateRangePicker"
                           >
                             <DateRangePicker
-                              value={value}
-                              onChange={(newValue) => setValue(newValue)}
+                              value={sortByTimeValue}
+                              onChange={(newValue) =>
+                                setsortByTimeValue(newValue)
+                              }
                             />
                           </DemoItem>
                         </DemoContainer>
