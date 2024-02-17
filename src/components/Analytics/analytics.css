@@ -198,7 +198,6 @@
 
 .left-panel-main-parent {
   position: initial;
-  height: 90%;
   z-index: 5;
   display: flex;
   background-color: white;
@@ -226,4 +225,13 @@
   --default-maps-body-height: calc(100vh - 64px);
   --maps-body-height: var(--default-maps-body-height);
   --right-panel-width: 30%;
+}
+
+.left-panel-row-title{
+  padding: 10px;
+  color: black;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 10px;
+  background-color: antiquewhite;
+
 }

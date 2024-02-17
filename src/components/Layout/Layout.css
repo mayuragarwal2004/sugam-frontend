@@ -64,7 +64,7 @@
   
   /* Navbar end */
   .footer-containermain{
-    background-color: #0ca074e1 ;
+    background-color: #0ca074 ;
     /* padding-bottom: 30px ; */
   }
   .footer-menu {
@@ -149,7 +149,14 @@
       max-width: 50%;
     }
   }
-  
+
+  @media (max-width: 600px) {
+  .row{
+    display: flex;
+    flex-direction: column;
+    
+  }
+  }
   @media (min-width: 800px) and (max-width: 1200) {
   }
   /* footer end */

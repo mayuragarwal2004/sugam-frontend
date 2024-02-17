@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link, Outlet } from "react-router-dom";
-import "./index.css";
+import "./Layout.css";
 
 const pages = ["Complaints", "Analytics", "About Us"];
 const settings = ["Profile", "Dashboard", "Logout"];
@@ -233,7 +233,7 @@ const Layout = () => {
                 </div>
               </div>
 
-              <div className="col-lg-3 col-sm-6" style={{ width: "15%" }}>
+              <div className="col-lg-3 col-sm-6" >
                 <div className="footer-widget">
                   <div className="footer-menu">
                     <h4 className="footer-widget-title">Popular Category</h4>
@@ -253,7 +253,7 @@ const Layout = () => {
                 </div>
               </div>
 
-              <div className="col-lg-3 col-sm-6" style={{ width: "15%" }}>
+              <div className="col-lg-3 col-sm-6">
                 <div className="footer-widget">
                   <div className="footer-menu">
                     <h4 className="footer-widget-title">Our Team</h4>
