@@ -93,38 +93,51 @@ const CardMain = ({ data }) => {
               )}
               <br />
               <b>Recycle% : </b> {data.wasteRecyclable}
-              <br />
-              <b>Since when is garbage overflowing?: </b>
-              {data.siteUncleanDuration}
-              <br />
-              There is{" "}
-              {data.dustbinNearby === "Yes" ? (
+              {data.siteUncleanDuration && (
                 <>
-                  <b>a dustbin nearby, which is </b>
-                  {data.isdustbinOverflowing? (
-                    <b>filled up</b>
+                  <br />
+                  <b>Since when is garbage overflowing?: </b>
+                  {data.siteUncleanDuration}
+                </>
+              )}
+              {data.dustbinNearby && (
+                <>
+                  <br />
+                  There is{" "}
+                  {data.dustbinNearby ? (
+                    <>
+                      <b>a dustbin nearby, which is </b>
+                      {data.isdustbinOverflowing ? (
+                        <b>filled up</b>
+                      ) : (
+                        <b>not filled up.</b>
+                      )}
+                    </>
                   ) : (
-                    <b>not filled up.</b>
+                    <b>not a dustbin nearby.</b>
                   )}
                 </>
-              ) : (
-                <b>not a dustbin nearby.</b>
               )}
-              <br />
-              PMC is{" "}
-              {data.pmcCleanSite ? (
+              {data.pmcCleanSite && (
                 <>
-                  <b>seen cleaning</b> in this area.
-                </>
-              ) : (
-                <>
-                  <b>not seen cleaning</b> in this area.
+                  <br />
+                  PMC is{" "}
+                  {data.pmcCleanSite ? (
+                    <>
+                      <b>seen cleaning</b> in this area.
+                    </>
+                  ) : (
+                    <>
+                      <b>not seen cleaning</b> in this area.
+                    </>
+                  )}
                 </>
               )}
-              <br />
-              <b>Site Category: </b>{" "}
-              {data.siteType.map((x, i) =>
-                data.siteType.length - 1 === i ? x : x + ", "
+              {data.siteType && (
+                <>
+                  <br />
+                  <b>Site Category: </b> {data.siteType}
+                </>
               )}
             </p>
           </Typography>

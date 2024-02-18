@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Card from "../../Dashboard/DashboardComponents/components/card";
+import Card from "./Card";
 
 const ListComplaints = () => {
   const [data, setData] = useState({});
