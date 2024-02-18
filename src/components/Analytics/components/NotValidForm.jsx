@@ -41,7 +41,6 @@ const NotValidForm = (props) => {
           classNamePrefix="select"
           name="name"
           options={options}
-          value={value}
           onChange={(val) => setvalue(val.value)}
         />
       </div>

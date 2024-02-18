@@ -55,6 +55,45 @@ const Complaints = () => {
     // Logic to handle form submission
     console.log("Form submitted!");
     const reqBody = {};
+    reqBody.coordX = formData.location.latitude;
+    reqBody.coordY = formData.location.longitude;
+    reqBody.imageURL = formData.imageURL;
+    reqBody.severity = formData.severity;
+    reqBody.wasteType = formData.majorComponent;
+
+    if (formData.percentRecycled !== "") {
+      reqBody.wasteRecyclable = formData.percentRecycled;
+    }
+    if (formData.sinceWhen !== "") {
+      reqBody.siteUncleanDuration = formData.sinceWhen;
+    }
+    if (formData.category !== "") {
+      reqBody.siteType = formData.category;
+    }
+    if (formData.isdustbin !== "") {
+      reqBody.dustbinNearby = formData.isdustbin;
+    }
+    if (formData.isdustbinOverflowing !== "") {
+      reqBody.dusbinOverflow = formData.isdustbinOverflowing;
+    }
+    if (formData.isPMCcollecting !== "") {
+      reqBody.pmcCleanSite = formData.isPMCcollecting;
+    }
+
+    console.log({ reqBody });
+
+
+    fetch("/sugam/user/complaint", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(reqBody),
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .then(console.log("submitted"));
     // You can reset the form state or redirect to another page after submission
   };
 
@@ -172,11 +211,8 @@ const Complaints = () => {
                           className="ansList"
                           onChange={(e) => {
                             setFormData((prev) => {
-                              let newwasteType =
-                                prev.majorComponent.slice(); // Create a copy of the current array
-                              const index = newwasteType.indexOf(
-                                e.target.id
-                              );
+                              let newwasteType = prev.majorComponent.slice(); // Create a copy of the current array
+                              const index = newwasteType.indexOf(e.target.id);
                               if (index === -1) {
                                 newwasteType.push(e.target.id);
                               } else {
