@@ -5,13 +5,13 @@
     { "value": "LOW", "label": "Low" }
   ],
   "wasteType": [
-    { "value": "Dry Waste", "label": "Dry Waste" },
-    { "value": "Plant Waste", "label": "Plant Waste" },
-    { "value": "Construction Waste", "label": "Construction Waste" },
-    { "value": "Wet Waste", "label": "Wet Waste" },
-    { "value": "Clothes", "label": "Clothes" },
-    { "value": "Sanitary Waste", "label": "Sanitary Waste" },
-    { "value": "Medical Waste", "label": "Medical Waste" }
+    { "value": "DRY", "label": "Dry Waste" },
+    { "value": "PLANT", "label": "Plant Waste" },
+    { "value": "CONSTRUCTION", "label": "Construction Waste" },
+    { "value": "WET", "label": "Wet Waste" },
+    { "value": "CLOTHES", "label": "Clothes" },
+    { "value": "SANITARY", "label": "Sanitary Waste" },
+    { "value": "MEDICAL", "label": "Medical Waste" }
   ],
 
   "siteClean": [

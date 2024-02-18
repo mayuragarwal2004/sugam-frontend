@@ -257,22 +257,25 @@ function Analytics() {
     }
 
     if (sortByTypeOption["dry waste"]) {
-      type.push("DRY WASTE");
+      type.push("DRY");
     }
     if (sortByTypeOption["wet waste"]) {
-      type.push("WET WASTE");
+      type.push("WET");
     }
     if (sortByTypeOption["construction waste"]) {
-      type.push("CONSTRUCTION WASTE");
+      type.push("CONSTRUCTION");
     }
     if (sortByTypeOption["plant waste"]) {
-      type.push("PLANT WASTE");
+      type.push("PLANT");
     }
     if (sortByTypeOption.clothes) {
       type.push("CLOTHES");
     }
     if (sortByTypeOption["medical waste"]) {
-      type.push("MEDICAL WASTE");
+      type.push("MEDICAL");
+    }
+    if (sortByTypeOption["sanitary waste"]) {
+      type.push("SANITARY");
     }
 
     citygeojson.map((ward) => {
@@ -283,9 +286,9 @@ function Analytics() {
       status: status,
       time1,
       time2,
-      locations,
     };
     if (severity.length > 0) reqbody.severity = severity;
+    if (locations.length > 0) reqbody.locations = locations;
 
     if (type.length > 0) reqbody.type = type;
     console.log({ reqbody });
@@ -499,6 +502,18 @@ function Analytics() {
                         />
                       }
                       label="Medical Waste"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          defaultChecked
+                          name="medical waste"
+                          checked={sortByTypeOption["sanitary waste"]}
+                          onChange={handleGarbageType}
+                          value={sortByTypeOption["sanitary waste"]}
+                        />
+                      }
+                      label="Sanitary Waste"
                     />
                   </FormGroup>
                 </div>
