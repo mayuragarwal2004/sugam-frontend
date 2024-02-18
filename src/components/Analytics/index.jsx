@@ -4,7 +4,6 @@ import "./analytics.css";
 import { collection, query, getDocs, getFirestore } from "firebase/firestore";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { app } from "../../base";
-import ComplainCards from "./components/ComplainCards";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import Button from "@mui/material/Button";
 // import geojson from "../data/Municipal_Spatial/Pune/pune-electoral-wards_current.geojson"
@@ -647,7 +646,7 @@ function Analytics() {
           Enter FUll Screen
         </Button>
       </div>
-      {queryData && <ComplainCards data={queryData} />}
+      {/* {queryData && <ComplainCards data={queryData} />} */}
     </>
   );
 }

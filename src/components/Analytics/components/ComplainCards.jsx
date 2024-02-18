@@ -37,12 +37,12 @@ const ComplainCards = ({ data }) => {
                       )}
                       
                       <b>Components Of Garbage: </b>{" "}
-                      {doc.majorComponents.map((x, i) =>
-                        doc.majorComponentsNumber - 1 === i ? x : x + ", "
+                      {doc.wasteType.map((x, i) =>
+                        doc.wasteTypeNumber - 1 === i ? x : x + ", "
                       )}
                       <br />
                       <b>Chronic Site: </b>
-                      {parseInt(doc.majorComponentsNumber) > 3 ? "Yes" : "No"}
+                      {parseInt(doc.wasteTypeNumber) > 3 ? "Yes" : "No"}
                     </p>
                   </div>
                 </div>

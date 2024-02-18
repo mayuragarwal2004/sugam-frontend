@@ -163,7 +163,7 @@ const Complaints = () => {
               {currentQuestion === 2 && (
                 <div className="optionscom">
                   <ul>
-                    {options.majorComponents.map((option) => (
+                    {options.wasteType.map((option) => (
                       <li key={option.value}>
                         <input
                           type="checkbox"
@@ -172,19 +172,19 @@ const Complaints = () => {
                           className="ansList"
                           onChange={(e) => {
                             setFormData((prev) => {
-                              let newMajorComponents =
+                              let newwasteType =
                                 prev.majorComponent.slice(); // Create a copy of the current array
-                              const index = newMajorComponents.indexOf(
+                              const index = newwasteType.indexOf(
                                 e.target.id
                               );
                               if (index === -1) {
-                                newMajorComponents.push(e.target.id);
+                                newwasteType.push(e.target.id);
                               } else {
-                                newMajorComponents.splice(index, 1); // Remove the element at index
+                                newwasteType.splice(index, 1); // Remove the element at index
                               }
                               return {
                                 ...prev,
-                                majorComponent: newMajorComponents, // Set the new array with checked items
+                                majorComponent: newwasteType, // Set the new array with checked items
                               };
                             });
                           }}

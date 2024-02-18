@@ -26,12 +26,12 @@ const ComplainDetailOverlay = (props) => {
                 <b>Name: </b> {doc.fullname}
                 <br />
                 <b>Components Of Garbage: </b>{" "}
-                {doc.majorComponents.map((x, i) =>
-                  doc.majorComponentsNumber - 1 === i ? x : x + ", "
+                {doc.wasteType.map((x, i) =>
+                  doc.wasteTypeNumber - 1 === i ? x : x + ", "
                 )}
                 <br />
                 <b>Chronic Site: </b>
-                {parseInt(doc.majorComponentsNumber) > 3 ? "Yes" : "No"}
+                {parseInt(doc.wasteTypeNumber) > 3 ? "Yes" : "No"}
                 <br />
                 <b>How often the site is cleaned: </b> {doc.siteClean}
                 <br />
