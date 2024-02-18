@@ -34,21 +34,44 @@ const CardMain = ({ data }) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  function formatDate(isoDateStr) {
+    var isoDate = new Date(isoDateStr);
+
+    var months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    var year = isoDate.getFullYear();
+    var month = months[isoDate.getMonth()];
+    var day = isoDate.getDate();
+
+    return month + " " + day + ", " + year;
+  }
+
   return (
     <Card sx={{ maxWidth: 300, minWidth: 280 }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
-          </Avatar>
+          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"></Avatar>
         }
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={data.status}
+        subheader={formatDate(data.resolvedTime)}
       />
       <CardMedia
         component="img"
