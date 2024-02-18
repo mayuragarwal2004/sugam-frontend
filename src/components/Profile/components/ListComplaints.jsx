@@ -39,7 +39,7 @@ const ListComplaints = () => {
   }, []);
 
   return (
-    <div>
+    <div className="categories">
       {data &&
         data.length > 0 &&
         data.map((carddata) => <Card data={carddata} />)}
