@@ -6,7 +6,7 @@ import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { app } from "../../base";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import Button from "@mui/material/Button";
-// import geojson from "../data/Municipal_Spatial/Pune/pune-electoral-wards_current.geojson"
+import punegeojson from "./pune.geojson"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Box from "@mui/material/Box";
@@ -31,6 +31,7 @@ import Checkbox from "@mui/material/Checkbox";
 // sort by severity
 
 function Analytics() {
+  console.log({punegeojson});
   const [libraries] = useState(["places"]);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -144,7 +145,7 @@ function Analytics() {
   }, []);
 
   function getGeoJson() {
-    fetch("/data/pune.geojson")
+    fetch(punegeojson)
       .then((response) => response.json())
       .then((data) => {
         console.log({ data });
