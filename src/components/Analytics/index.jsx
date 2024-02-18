@@ -190,6 +190,9 @@ function Analytics() {
         });
         setcitygeojson(formattedData);
         setgeojson(formattedData);
+      })
+      .catch((err) => {
+        console.log({ err });
       });
   }
 
