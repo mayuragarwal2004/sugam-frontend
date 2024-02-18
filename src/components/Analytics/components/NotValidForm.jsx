@@ -7,7 +7,10 @@ import { db } from "../../../base";
 const options = [
   { value: "Scam reports", label: "Scam reports" },
   { value: "Garbage not found", label: "Garbage not found" },
-  { value: "Resolution already in progress", label: "Resolution already in progress" },
+  {
+    value: "Resolution already in progress",
+    label: "Resolution already in progress",
+  },
   { value: "Perception invalid", label: "Perception invalid" },
 ];
 
@@ -15,20 +18,13 @@ const NotValidForm = (props) => {
   const { data, activeMarker } = props;
   const [value, setvalue] = useState(null);
   const { currentUser, currentUserRole } = useAuth();
-  
+
   async function handleSubmit() {
-    console.log(data[activeMarker].docID);
-    // fetch the data from the server
-    await updateDoc(doc(db, "Complaints", data[activeMarker].docID), {
-      notValid: [
-        {
-          reason: value,
-          reportedByRole: currentUserRole,
-          reportedByName: currentUser.username,
-          reportedByUID: currentUser.uid,
-        },
-      ],
-    }).then(val=>console.log("submitted"))
+    fetch(`/sugam/user/markInvalid?id=${data[activeMarker].id}&msg=${value}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .then(console.log("submitted"));
   }
   return (
     <>
@@ -41,6 +37,7 @@ const NotValidForm = (props) => {
           classNamePrefix="select"
           name="name"
           options={options}
+          value={value}
           onChange={(val) => setvalue(val.value)}
         />
       </div>

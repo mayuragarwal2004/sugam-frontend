@@ -11,16 +11,11 @@ const ResolvedForm = (props) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("data[activeMarker].docID");
-    console.log(data[activeMarker].docID);
-    await updateDoc(doc(db, "Complaints", data[activeMarker].docID), {
-      resolved: {
-        isResolved: true,
-        resolvedByName: currentUser.username,
-        resolvedByRole: currentUserRole,
-        resolvedImage: img,
-      },
-    }).then(console.log("submitted"));
+    fetch(`/sugam/user/markComplete?id=${data[activeMarker].id}&url=${img}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .then(console.log("submitted"));
   }
 
   return (
