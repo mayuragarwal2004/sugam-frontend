@@ -223,14 +223,20 @@ function Analytics() {
       status.push("PENDING");
     }
 
+    if (sortByTimeOption === "custom") {
+      time1 = sortByTimeValue[0].toISOString();
+      time2 = sortByTimeValue[1].toISOString();
+    } else {
+      time2 = dayjs().toISOString();
+    }
     if (sortByTimeOption === "24 hours") {
-      time1 = dayjs().subtract(1, "day").unix().toLocaleString();
+      time1 = dayjs().subtract(1, "day").toISOString();
     } else if (sortByTimeOption === "2 days") {
-      time1 = dayjs().subtract(2, "day").unix().toLocaleString();
+      time1 = dayjs().subtract(2, "day").toISOString();
     } else if (sortByTimeOption === "4 days") {
-      time1 = dayjs().subtract(4, "day").unix().toLocaleString();
+      time1 = dayjs().subtract(4, "day").toISOString();
     } else if (sortByTimeOption === "1 week") {
-      time1 = dayjs().subtract(1, "week").unix().toLocaleString();
+      time1 = dayjs().subtract(1, "week").toISOString();
     }
 
     if (sortBySeverityOption.low) {
