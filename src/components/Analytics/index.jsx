@@ -65,7 +65,7 @@ function Analytics() {
     "wet waste": true,
     "construction waste": true,
     "plant waste": true,
-    "clothes": true,
+    clothes: true,
     "medical waste": true,
   });
 
@@ -79,6 +79,13 @@ function Analytics() {
   const handleComplaintStatus = (e) => {
     setcomplaintStatus({
       ...complaintStatus,
+      [e.target.name]: e.target.checked,
+    });
+  };
+
+  const handleGarbageType = (e) => {
+    setsortByTypeOption({
+      ...sortByTypeOption,
       [e.target.name]: e.target.checked,
     });
   };
@@ -206,6 +213,7 @@ function Analytics() {
     const status = [];
     const locations = [];
     const severity = [];
+    const type = [];
     var time1 = sortByTimeValue[0].unix();
     var time2 = sortByTimeValue[1].unix();
     if (complaintStatus.completed) {
@@ -233,6 +241,25 @@ function Analytics() {
       severity.push("HIGH");
     }
 
+    if (sortByTypeOption["dry waste"]) {
+      type.push("DRY WASTE");
+    }
+    if (sortByTypeOption["wet waste"]) {
+      type.push("WET WASTE");
+    }
+    if (sortByTypeOption["construction waste"]) {
+      type.push("CONSTRUCTION WASTE");
+    }
+    if (sortByTypeOption["plant waste"]) {
+      type.push("PLANT WASTE");
+    }
+    if (sortByTypeOption.clothes) {
+      type.push("CLOTHES");
+    }
+    if (sortByTypeOption["medical waste"]) {
+      type.push("MEDICAL WASTE");
+    }
+
     citygeojson.map((ward) => {
       if (ward.properties.ward === sortByWardOption)
         locations.push(ward.properties["name-mr"]);
@@ -244,6 +271,8 @@ function Analytics() {
       locations,
     };
     if (severity.length > 0) reqbody.severity = severity;
+
+    if (type.length > 0) reqbody.type = type;
     console.log({ reqbody });
     if (process.env.REACT_APP_FRONTEND_ONLY === "true") return;
 
@@ -291,7 +320,7 @@ function Analytics() {
                   streetViewControl: false,
                   rotateControl: false,
                   fullscreenControl: false,
-                  gestureHandling: fullscreenHandle.active ? "greedy" : "auto",
+                  gestureHandling: "greedy",
                 }}
               >
                 <>
@@ -354,25 +383,73 @@ function Analytics() {
                       control={
                         <Checkbox
                           defaultChecked
-                          name="completed"
-                          checked={complaintStatus.completed}
-                          onChange={handleComplaintStatus}
-                          value={complaintStatus.completed}
+                          name="dry waste"
+                          checked={sortByTypeOption["dry waste"]}
+                          onChange={handleGarbageType}
+                          value={sortByTypeOption["dry waste"]}
                         />
                       }
-                      label="Completed"
+                      label="Dry Waste"
                     />
                     <FormControlLabel
                       control={
                         <Checkbox
                           defaultChecked
-                          name="notCompleted"
-                          checked={complaintStatus.notCompleted}
-                          onChange={handleComplaintStatus}
-                          value={complaintStatus.notCompleted}
+                          name="wet waste"
+                          checked={sortByTypeOption["wet waste"]}
+                          onChange={handleGarbageType}
+                          value={sortByTypeOption["wet waste"]}
                         />
                       }
-                      label="Not Completed"
+                      label="Wet Waste"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          defaultChecked
+                          name="construction waste"
+                          checked={sortByTypeOption["construction waste"]}
+                          onChange={handleGarbageType}
+                          value={sortByTypeOption["construction waste"]}
+                        />
+                      }
+                      label="Construction Waste"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          defaultChecked
+                          name="plant waste"
+                          checked={sortByTypeOption["plant waste"]}
+                          onChange={handleGarbageType}
+                          value={sortByTypeOption["plant waste"]}
+                        />
+                      }
+                      label="Plant Waste"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          defaultChecked
+                          name="clothes"
+                          checked={sortByTypeOption["clothes"]}
+                          onChange={handleGarbageType}
+                          value={sortByTypeOption["clothes"]}
+                        />
+                      }
+                      label="Clothes"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          defaultChecked
+                          name="medical waste"
+                          checked={sortByTypeOption["medical waste"]}
+                          onChange={handleGarbageType}
+                          value={sortByTypeOption["medical waste"]}
+                        />
+                      }
+                      label="Medical Waste"
                     />
                   </FormGroup>
                 </div>
@@ -548,7 +625,7 @@ function Analytics() {
               </div>
               <Button onClick={getNewData}>Get Data</Button>
             </div>
-            <div className="right-panel-main-parent">right hello</div>
+            {/* <div className="right-panel-main-parent">right hello</div> */}
           </div>
         </div>
       </FullScreen>

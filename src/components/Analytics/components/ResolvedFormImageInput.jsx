@@ -12,8 +12,8 @@ import {
 function ResolvedFormImageInput(props) {
   const { img, setimg } = props;
   function handleChange(e) {
-    if (e.target.files.length===0){
-      return
+    if (e.target.files.length === 0) {
+      return;
     }
     const file = e.target.files[0];
     console.log(e);
@@ -71,7 +71,7 @@ function ResolvedFormImageInput(props) {
   }
   return (
     <>
-      <label htmlFor="img" >
+      <label htmlFor="img">
         Photo<span className="required-star">*</span>
       </label>
       <br />
@@ -82,7 +82,8 @@ function ResolvedFormImageInput(props) {
         name="img"
         onChange={handleChange}
         accept="image/*"
-        style={{minWidth:"200px"}}
+        style={{ minWidth: "200px" }}
+        capture="user"
         required
       />
     </>

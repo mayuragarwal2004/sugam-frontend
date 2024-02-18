@@ -16,7 +16,7 @@ const ResolvedForm = (props) => {
     await updateDoc(doc(db, "Complaints", data[activeMarker].docID), {
       resolved: {
         isResolved: true,
-        resolvedByName: currentUser.displayName,
+        resolvedByName: currentUser.username,
         resolvedByRole: currentUserRole,
         resolvedImage: img,
       },
@@ -25,7 +25,7 @@ const ResolvedForm = (props) => {
 
   return (
     <>
-      <div>Name: {currentUser.displayName}</div>
+      <div>Name: {currentUser.username}</div>
       <div>Role: {currentUserRole}</div>
       <div>
         <ResolvedFormImageInput img={img} setimg={setimg} />

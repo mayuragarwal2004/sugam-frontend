@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import "./Complaints.css"; // Import CSS file
 import Button from "@mui/material/Button";
-import FormLocation from "../FormComponents/FormLocation";
-import FormImageInput from "../FormComponents/FormImageInput";
+import FormLocation from "./components/FormLocation";
+import FormImageInput from "./components/FormImageInput";
 
 
 const Complaints = () => {
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-
-  
+  const [formData, setFormData] = useState({
+    imageURL: "",
+    location: { latitude: 0, longitude: 0, accuracy: 0 },
+    majorComponent: "",
+    percentRecycled: "",
+    sinceWhen: "",
+    category: "",
+  });
 
   const questions = [
     "Click the Picture for complaint & gice Access of the Location",

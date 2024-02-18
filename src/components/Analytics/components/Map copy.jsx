@@ -1,9 +1,8 @@
-import React, { useState, useMemo, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
-  GoogleMap,
-  useLoadScript,
   Marker,
-  InfoWindow,
+  InfoWindowF,
+  PolygonF,
   MarkerClusterer,
 } from "@react-google-maps/api";
 import greencircle from "./analytics/greencircle.png";
@@ -11,10 +10,11 @@ import redcircle from "./analytics/redcircle.png";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { View, StyleSheet, Alert } from "react-native";
-import AuthContext from "../context/auth/AuthContext";
-import { useAuth } from "../context/auth/AuthState";
+import AuthContext from "../../context/auth/AuthContext";
+import { useAuth } from "../../context/auth/AuthState";
 import AnalyticsConfirmation from "./AnalyticsConfirmation";
 import ImageOverlay from "./ImageOverlay";
+import MapWidgets from "./MapWidgets";
 // import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -22,11 +22,28 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function Map(props) {
-  const { data, activeMarker, setActiveMarker, handleActiveMarker } = props;
-  const [open, setOpen] = useState(false);
+  const {
+    data,
+    activeMarker,
+    setActiveMarker,
+    handleActiveMarker,
+    geojson,
+    activeWard,
+    setactiveWard,
+    handleActiveWard,
+    showgeojson,
+    handlePolygonClick,
+  } = props;
+  const [open, setOpen] = useState({
+    state: false,
+    lastClicked: null,
+    confirm: null,
+  });
   const [currImg, setCurrImg] = useState(null);
+  const [activeDocID, setActiveDocID] = useState(null);
   const [lastClicked, setlastClicked] = useState(null);
 
+  console.log(activeMarker);
   function imgClick(src) {
     setCurrImg(src);
   }
@@ -34,123 +51,157 @@ export default function Map(props) {
     setCurrImg(null);
   }
 
-  async function onYes() {
-    if (lastClicked === "Not Valid") {
-      await handleReportNotValid.then((check) => console.log(check));
-    } else {
-      await handleResolved.then((check) => console.log(check+"XXXXXX"));
-    }
-    // console.log(check);
+  const handleOpen = () => {
     setOpen(false);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  function onYes() {
+    const check =
+      open.lastClicked === "Not Valid"
+        ? handleReportNotValid()
+        : handleResolved();
+    setOpen((prev) => ({ ...prev, confirm: true }));
   }
   function onNo() {
-    setOpen(false);
+    setOpen({ state: false, lastClicked: null, confirm: null });
   }
 
-  const handleReportNotValid = new Promise((resolve) => {
-    // console.log();
-    setTimeout(() => {
-      console.log("Reported Not Validxxxxx");
-      return resolve(true);
-    }, 5000);
-  });
-  const handleResolved = new Promise((resolve) => {
-    // console.log("Reported Resolved");
-    setTimeout(() => {
-      console.log("Reported Resolvedxxxxx");
-      return resolve(true);
-    }, 5000);
-  });
+  function handleReportNotValid() {
+    console.log("Reported Not Valid");
+  }
+  function handleResolved() {
+    console.log("Reported Resolved");
+  }
+
+  console.log({ activeWard });
 
   return (
     <>
-      {open && (
+      <MapWidgets />
+      {open.state && (
         <AnalyticsConfirmation
           open={open}
           setOpen={setOpen}
           onYes={onYes}
           onNo={onNo}
+          data={data}
+          activeMarker={activeMarker}
         />
       )}
       {currImg && <ImageOverlay src={currImg} handleClose={handleImgCLose} />}
+
+      {activeWard && (
+        <InfoWindowF
+          onCloseClick={() => {
+            setactiveWard(null);
+          }}
+          position={activeWard.location}
+        >
+          <>
+            <div>Ward </div>
+          </>
+        </InfoWindowF>
+      )}
+      {geojson &&
+        showgeojson &&
+        geojson.length > 0 &&
+        geojson.map((shape, i) => (
+          <PolygonF
+            paths={shape.geometry.coordinates}
+            onClick={() => {
+              console.log("shape");
+              console.log(shape.properties);
+              handlePolygonClick(shape.properties.ward);
+            }}
+          />
+        ))}
       <MarkerClusterer>
         {(clusterer) =>
           data.map((doc, i) => {
             return (
               <Marker
                 key={i}
-                position={{ lat: doc.latitude, lng: doc.longitude }}
+                position={{ lat: doc.coordX, lng: doc.coordY }}
                 onClick={() => handleActiveMarker(i)}
                 clusterer={clusterer}
-                icon={
-                  "resolved" in doc && doc.resolved ? greencircle : redcircle
-                }
+                icon={doc.status === "COMPLETED" ? greencircle : redcircle}
               >
                 {activeMarker === i ? (
-                  <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+                  <InfoWindowF
+                    onCloseClick={() => {
+                      setActiveMarker(null);
+                      setActiveDocID(null);
+                    }}
+                  >
                     <>
                       <div className="row1">
-                        <table>
-                          <tr>
-                            <td>
-                              <StyledButton
-                                size="small"
-                                variant="contained"
-                                color="error"
-                                onClick={() => {
-                                  setOpen(true);
-                                  setlastClicked("Not Valid");
-                                }}
-                              >
-                                Report Not Valid
-                              </StyledButton>
-                            </td>
-                            <td>
-                              <StyledButton
-                                size="small"
-                                variant="contained"
-                                color="success"
-                                onClick={() => {
-                                  setOpen(true);
-                                  setlastClicked("Resolved");
-                                }}
-                              >
-                                Resolved
-                              </StyledButton>
-                            </td>
-                          </tr>
-                        </table>
+                        <div style={{ margin: "0px 5px" }}>
+                          <StyledButton
+                            size="small"
+                            variant="contained"
+                            color="error"
+                            onClick={() => {
+                              setOpen((prev) => ({
+                                ...prev,
+                                state: true,
+                                lastClicked: "Not Valid",
+                              }));
+                              setlastClicked("Not Valid");
+                            }}
+                          >
+                            Report Not Valid
+                          </StyledButton>
+                        </div>
+                        <div style={{ margin: "0px 5px" }}>
+                          <StyledButton
+                            size="small"
+                            variant="contained"
+                            color="success"
+                            onClick={() => {
+                              setOpen((prev) => ({
+                                ...prev,
+                                state: true,
+                                lastClicked: "Resolved",
+                              }));
+                            }}
+                          >
+                            Resolved
+                          </StyledButton>
+                        </div>
                       </div>
                       <div className="row">
                         <div className="column">
                           <img
-                            src={doc.userImage}
+                            src={doc.imageURL}
                             loading="lazy"
                             alt="not found"
                             width="100%"
                             style={{ float: "left" }}
-                            onClick={() => imgClick(doc.userImage)}
+                            onClick={() => imgClick(doc.imageURL)}
                           />
                         </div>
                         <p>
                           <b>Name: </b> {doc.fullname}
                           <br />
                           <b>Components Of Garbage: </b>{" "}
-                          {doc.majorComponents.map((x, i) =>
-                            doc.majorComponentsNumber - 1 === i ? x : x + ", "
+                          {doc.wasteType.map((x, i) =>
+                            doc.wasteType.length - 1 === i ? x : x + ", "
                           )}
                           <br />
                           <b>Chronic Site: </b>
-                          {parseInt(doc.majorComponentsNumber) > 3
+                          {parseInt(doc.wasteType) > 3
                             ? "Yes"
                             : "No"}
                           <br />
-                          <b>How often the site is cleaned: </b> {doc.siteClean}
+                          <b>How often the site is cleaned: </b> {doc.siteCleanFrequency}
                           <br />
-                          <b>Recycle% : </b> {doc.percentRecycle}
+                          <b>Recycle% : </b> {doc.wasteRecyclable}
                           <br />
                           <b>Since when is garbage overflowing?: </b>
-                          {doc.overflowingWaste}
+                          {doc.siteUncleanDuration}
                           <br />
                           There is{" "}
                           {doc.dustbin === "Yes" ? (
@@ -167,7 +218,7 @@ export default function Map(props) {
                           )}
                           <br />
                           PMC is{" "}
-                          {doc.PMCCollecting === "Yes" ? (
+                          {doc.pmcCleanSite ? (
                             <>
                               <b>seen cleaning</b> in this area.{" "}
                               {doc.garbageCollected}
@@ -179,13 +230,11 @@ export default function Map(props) {
                           )}
                           <br />
                           <b>Site Category: </b>{" "}
-                          {doc.siteCategory.map((x, i) =>
-                            doc.siteCategory.length - 1 === i ? x : x + ", "
-                          )}
+                          {doc.siteCategory}
                         </p>
                       </div>
                     </>
-                  </InfoWindow>
+                  </InfoWindowF>
                 ) : null}
               </Marker>
             );
@@ -203,3 +252,4 @@ export default function Map(props) {
 //     </GoogleMap>
 //   );
 // }
+// component, timestamp, valid

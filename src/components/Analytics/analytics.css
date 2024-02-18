@@ -209,6 +209,9 @@
 }
 
 .right-panel-main-parent {
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
   position: relative;
   transition: all 0.7s ease;
   align-items: center;
