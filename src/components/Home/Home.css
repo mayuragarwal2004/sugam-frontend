@@ -528,7 +528,15 @@ div.mySlides > img {
     /* min-height: 100vh; */
     margin: 0 30px;
   }
-  
+  .sectionstats{
+    height:500px;
+  }
+  @media screen and (max-width:400) {
+    .sectionstats{
+      height:700px !important;
+    }
+    
+  }
   .container {
     padding-left: 25px;
     padding-right: 25px;

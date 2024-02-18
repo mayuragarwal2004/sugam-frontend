@@ -259,7 +259,7 @@ const Home = () => {
         className="stats"
         style={{ display: "flex", justifycontent: "center" }}
       >
-        <section style={{ height: "500px" }}>
+        <section className="sectionstats">
           <div class="container">
             <ul class="card">
               <div className="before-card"></div>
