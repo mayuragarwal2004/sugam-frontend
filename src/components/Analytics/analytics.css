@@ -242,4 +242,19 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   border-radius: 10px;
   background-color: antiquewhite;
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-panel-row svg,
+.left-panel-row > .left-panel-row-body {
+  transition: all 0.5s;
+}
+
+.left-panel-row.inactive > .left-panel-row-body {
+  display: none;
+}
+
+.left-panel-row.inactive svg {
+  transform: rotate(-90deg);
 }

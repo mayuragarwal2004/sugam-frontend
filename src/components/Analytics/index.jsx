@@ -7,6 +7,7 @@ import { app } from "../../base";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import Button from "@mui/material/Button";
 // import geojson from "../data/Municipal_Spatial/Pune/pune-electoral-wards_current.geojson"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -66,6 +67,13 @@ function Analytics() {
     "plant waste": true,
     clothes: true,
     "medical waste": true,
+  });
+  const [activeFilters, setactiveFilters] = useState({
+    status: true,
+    time: true,
+    location: true,
+    severity: true,
+    type: true,
   });
 
   const handleSeverity = (e) => {
@@ -136,7 +144,7 @@ function Analytics() {
   }, []);
 
   function getGeoJson() {
-    fetch("/data/Municipal_Spatial/Pune/pune-electoral-wards_current.geojson")
+    fetch("/data/pune.geojson")
       .then((response) => response.json())
       .then((data) => {
         console.log({ data });
@@ -351,8 +359,24 @@ function Analytics() {
           </div>
           <div className="main-map-overlay">
             <div className="left-panel-main-parent">
-              <div className="left-panel-row">
-                <div className="left-panel-row-title">Complaint Status</div>
+              <div
+                className={`left-panel-row ${
+                  activeFilters.status ? "" : "inactive"
+                }`}
+                style={{ marginBottom: "10px" }}
+              >
+                <div
+                  className="left-panel-row-title"
+                  onClick={() => {
+                    setactiveFilters({
+                      ...activeFilters,
+                      status: !activeFilters.status,
+                    });
+                  }}
+                >
+                  <div className="title-main">Complaint Status</div>
+                  <ExpandMoreIcon classname="arrow-icon" />
+                </div>
                 <div className="left-panel-row-body">
                   <FormGroup>
                     <FormControlLabel
@@ -382,8 +406,24 @@ function Analytics() {
                   </FormGroup>
                 </div>
               </div>
-              <div className="left-panel-row">
-                <div className="left-panel-row-title">Sort by garbage type</div>
+              <div
+                className={`left-panel-row ${
+                  activeFilters.type ? "" : "inactive"
+                }`}
+                style={{ marginBottom: "10px" }}
+              >
+                <div
+                  className="left-panel-row-title"
+                  onClick={() => {
+                    setactiveFilters({
+                      ...activeFilters,
+                      type: !activeFilters.type,
+                    });
+                  }}
+                >
+                  <div className="title-main">Sort by garbage type</div>
+                  <ExpandMoreIcon classname="arrow-icon" />
+                </div>
                 <div className="left-panel-row-body">
                   <FormGroup>
                     <FormControlLabel
@@ -461,8 +501,23 @@ function Analytics() {
                   </FormGroup>
                 </div>
               </div>
-              <div className="left-panel-row">
-                <div className="left-panel-row-title">Severity</div>
+              <div
+                className={`left-panel-row ${
+                  activeFilters.severity ? "" : "inactive"
+                }`}
+              >
+                <div
+                  className="left-panel-row-title"
+                  onClick={() => {
+                    setactiveFilters({
+                      ...activeFilters,
+                      severity: !activeFilters.severity,
+                    });
+                  }}
+                >
+                  <div className="title-main">Severity</div>
+                  <ExpandMoreIcon classname="arrow-icon" />
+                </div>
                 <div className="left-panel-row-body">
                   <FormGroup>
                     <FormControlLabel
@@ -504,12 +559,23 @@ function Analytics() {
                   </FormGroup>
                 </div>
               </div>
-              <div className="left-panel-row">
+              <div
+                className={`left-panel-row ${
+                  activeFilters.time ? "" : "inactive"
+                }`}
+              >
                 <div
                   className="left-panel-row-title"
                   style={{ marginTop: "20px" }}
+                  onClick={() => {
+                    setactiveFilters({
+                      ...activeFilters,
+                      time: !activeFilters.time,
+                    });
+                  }}
                 >
-                  Sort by Time
+                  <div className="title-main">Sort by Time</div>
+                  <ExpandMoreIcon classname="arrow-icon" />
                 </div>
                 <div
                   className="left-panel-row-body"
@@ -523,6 +589,9 @@ function Analytics() {
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={sortByTimeOption}
+                      MenuProps={{
+                        disableScrollLock: true,
+                      }}
                       label="Sort by time"
                       onChange={(e) => setsortByTimeOption(e.target.value)}
                     >
@@ -554,12 +623,23 @@ function Analytics() {
                   </FormControl>
                 </div>
               </div>
-              <div className="left-panel-row">
+              <div
+                className={`left-panel-row ${
+                  activeFilters.location ? "" : "inactive"
+                }`}
+              >
                 <div
                   className="left-panel-row-title"
                   style={{ marginTop: "20px" }}
+                  onClick={() => {
+                    setactiveFilters({
+                      ...activeFilters,
+                      location: !activeFilters.location,
+                    });
+                  }}
                 >
-                  Sort by Location
+                  <div className="title-main">Sort by Location</div>
+                  <ExpandMoreIcon classname="arrow-icon" />
                 </div>
                 <div
                   className="left-panel-row-body"
