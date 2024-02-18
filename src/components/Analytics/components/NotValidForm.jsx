@@ -5,23 +5,26 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../base";
 
 const options = [
-  { value: "Not a dump", label: "Not a dump" },
-  { value: "Not a dump", label: "Not a dump" },
-  { value: "Not a dump", label: "Not a dump" },
+  { value: "Scam reports", label: "Scam reports" },
+  { value: "Garbage not found", label: "Garbage not found" },
+  { value: "Resolution already in progress", label: "Resolution already in progress" },
+  { value: "Perception invalid", label: "Perception invalid" },
 ];
 
 const NotValidForm = (props) => {
   const { data, activeMarker } = props;
   const [value, setvalue] = useState(null);
   const { currentUser, currentUserRole } = useAuth();
+  
   async function handleSubmit() {
     console.log(data[activeMarker].docID);
+    // fetch the data from the server
     await updateDoc(doc(db, "Complaints", data[activeMarker].docID), {
       notValid: [
         {
           reason: value,
           reportedByRole: currentUserRole,
-          reportedByName: currentUser.displayName,
+          reportedByName: currentUser.username,
           reportedByUID: currentUser.uid,
         },
       ],
@@ -29,7 +32,7 @@ const NotValidForm = (props) => {
   }
   return (
     <>
-      <div>Name: {currentUser.displayName}</div>
+      <div>Name: {currentUser.username}</div>
       <div>Role: {currentUserRole}</div>
       <div>Reason for non-valid Complaint</div>
       <div className="not-valid-form-select">
