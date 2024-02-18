@@ -57,7 +57,7 @@ const AuthState = (props) => {
     getUserData();
   }, []);
 
-  const value = { currentUser, currentUserRole };
+  const value = { currentUser, currentUserRole, getUserData };
 
   return (
     <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>

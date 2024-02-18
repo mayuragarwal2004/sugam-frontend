@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Login.css";
 import Alert from "@mui/material/Alert";
+import { useAuth } from "../context/auth/AuthState";
 
 const Login = () => {
   const [username, setusername] = useState("");
@@ -10,6 +11,7 @@ const Login = () => {
     message: "",
     severity: "info",
   });
+  const { getUserData } = useAuth();
 
   const handleRegisterSubmit = () => {
     // Add logic here to handle the register button click
@@ -31,11 +33,14 @@ const Login = () => {
           .then(({ value, done }) => {
             console.log(new TextDecoder().decode(value));
 
-            if (value) {
+            if (
+              new TextDecoder().decode(value) === "true" ||
+              new TextDecoder().decode(value) === true
+            ) {
               setAlertData({
                 open: true,
                 message: "registration successful.",
-                severity: "info",
+                severity: "success",
               });
             } else {
               setAlertData({
@@ -70,12 +75,16 @@ const Login = () => {
           .read()
           .then(({ value, done }) => {
             console.log(new TextDecoder().decode(value));
-            if (value) {
+            if (
+              new TextDecoder().decode(value) === "true" ||
+              new TextDecoder().decode(value) === true
+            ) {
               setAlertData({
                 open: true,
                 message: "login successful.",
-                severity: "info",
+                severity: "success",
               });
+              getUserData();
             } else {
               setAlertData({
                 open: true,
@@ -92,13 +101,12 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if(alertData.open) {
+    if (alertData.open) {
       setTimeout(() => {
         setAlertData({ open: false, message: "", severity: "info" });
       }, 5000);
     }
-  }
-  , [alertData.open]);
+  }, [alertData.open]);
 
   return (
     <div className="bodylogin">
@@ -164,7 +172,11 @@ const Login = () => {
             </div>
           </form>
           {alertData.open && (
-            <Alert severity={alertData.severity} sx={{ marginTop: "10px" }}>
+            <Alert
+              severity={alertData.severity}
+              variant="filled"
+              sx={{ marginTop: "10px" }}
+            >
               {alertData.message}
             </Alert>
           )}

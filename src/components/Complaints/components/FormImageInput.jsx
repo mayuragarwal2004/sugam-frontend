@@ -13,6 +13,7 @@ import {
 function FormImageInput(props) {
   const { userImage, handleImageChange } = props;
   function handleChange(e) {
+    e.preventDefault();
     const file = e.target.files[0]
     const storage = getStorage();
     const storageRef = ref(
@@ -81,9 +82,9 @@ function FormImageInput(props) {
       <input
         type="file"
         accept="image/*"
-        capture="user"
         onChange={handleChange}
       />
+      {JSON.stringify(userImage)}
     </>
   );
 }

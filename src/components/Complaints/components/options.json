@@ -1,8 +1,8 @@
 {
   "severity": [
-    { "value": "High", "label": "High" },
-    { "value": "Medium", "label": "Medium" },
-    { "value": "Low", "label": "Low" }
+    { "value": "HIGH", "label": "High" },
+    { "value": "MEDIUM", "label": "Medium" },
+    { "value": "LOW", "label": "Low" }
   ],
   "wasteType": [
     { "value": "Dry Waste", "label": "Dry Waste" },

@@ -248,9 +248,11 @@ function Analytics() {
 
     if (sortBySeverityOption.low) {
       severity.push("LOW");
-    } else if (sortBySeverityOption.medium) {
+    }
+    if (sortBySeverityOption.medium) {
       severity.push("MEDIUM");
-    } else if (sortBySeverityOption.high) {
+    }
+    if (sortBySeverityOption.high) {
       severity.push("HIGH");
     }
 

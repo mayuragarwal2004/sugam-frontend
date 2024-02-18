@@ -55,8 +55,8 @@ const Complaints = () => {
     // Logic to handle form submission
     console.log("Form submitted!");
     const reqBody = {};
-    reqBody.coordX = formData.location.latitude;
-    reqBody.coordY = formData.location.longitude;
+    reqBody.coordX = formData.location.longitude;
+    reqBody.coordY = formData.location.latitude;
     reqBody.imageURL = formData.imageURL;
     reqBody.severity = formData.severity;
     reqBody.wasteType = formData.majorComponent;
