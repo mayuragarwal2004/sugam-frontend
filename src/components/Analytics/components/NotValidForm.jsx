@@ -20,6 +20,10 @@ const NotValidForm = (props) => {
   const { currentUser, currentUserRole } = useAuth();
 
   async function handleSubmit() {
+    if (!value) {
+      alert("Please select a reason");
+      return;
+    }
     fetch(`/sugam/user/markInvalid?id=${data[activeMarker].id}&msg=${value}`)
       .then((response) => {
         console.log(response);

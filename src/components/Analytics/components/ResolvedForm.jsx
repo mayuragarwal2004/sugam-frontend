@@ -11,6 +11,10 @@ const ResolvedForm = (props) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (!img) {
+      alert("Please select an image");
+      return;
+    }
     fetch(`/sugam/user/markComplete?id=${data[activeMarker].id}&url=${img}`)
       .then((response) => {
         console.log(response);
