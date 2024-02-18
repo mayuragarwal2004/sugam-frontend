@@ -180,10 +180,12 @@ const Layout = () => {
                     <Typography textAlign="center">About Us</Typography>
                   </MenuItem>
                 </Link>
-                
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">Complaints</Typography>
+                <Link to="dashboard">
+                <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">Dashboard</Typography>
                   </MenuItem>
+                </Link>
+                  
                 
               </Menu>
             </Box>
@@ -265,7 +267,7 @@ const Layout = () => {
                         <Link to="">Home</Link>
                       </li>
                       <li>
-                        <a href="#">Contact Us</a>
+                      <Link to="dashboard">Dashboard</Link>
                       </li>
                     </ul>
                   </div>

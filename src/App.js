@@ -6,7 +6,7 @@ import Layout from "./components/Layout";
 import Profile from "./components/Profile";
 import Home from "./components/Home";
 import RequireAuth from "./components/RequireAuth";
-// import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/Dashboard";
 import Complaints from "./components/Complaints";
 import AboutUs from "./components/Aboutus";
 
@@ -24,7 +24,7 @@ function App() {
               </Route>
               <Route path="analytics" element={<Analytics />} />
               {/* <Route path="form" element={<Form />} /> */}
-              {/* <Route path="dashboard" element={<Dashboard />} /> */}
+              <Route path="dashboard" element={<Dashboard />} />
               {/* <Route path="auth" element={<LoginSignUp />} /> */}
               <Route path="complaints" element={<Complaints />} />
               <Route path="login" element={<Login />} />

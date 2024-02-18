@@ -518,13 +518,13 @@ div.mySlides > img {
   }
 
  .stats {
-    min-height: 100vh;
+    /* min-height: 100vh; */
     font-family: 'Anek Bangla', sans-serif;
     background-color: #dafcd8;
   }
   
   section {
-    min-height: 100vh;
+    /* min-height: 100vh; */
     margin: 0 30px;
   }
   
@@ -534,7 +534,7 @@ div.mySlides > img {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 500px;
   }
   
   .card {

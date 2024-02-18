@@ -244,8 +244,8 @@ const Home = () => {
         <div class="button-layer2"></div>
       </div>
 
-      <div className="stats">
-        <section>
+      <div className="stats" style={{display:'flex',justifycontent: 'center'}}>
+        <section style={{height:'500px'}}>
           <div class="container">
             <ul class="card">
               <div className="before-card"></div>
