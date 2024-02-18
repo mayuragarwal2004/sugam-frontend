@@ -23,12 +23,9 @@ const ListComplaints = () => {
             console.log(new TextDecoder().decode(value));
             console.log({ value });
             if (isJsonString(new TextDecoder().decode(value))) {
-              return JSON.parse(new TextDecoder().decode(value));
+              setData(JSON.parse(new TextDecoder().decode(value)));
             }
-            return "";
-          })
-          .then((data) => {
-            console.log(data);
+            return;
           });
       })
       .catch((error) => {
