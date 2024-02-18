@@ -49,7 +49,7 @@ function Analytics() {
     completed: true,
     notCompleted: true,
   });
-  const [sortByAddessOption, setsortByAddessOption] = useState(1);
+  const [sortByAddessOption, setsortByAddessOption] = useState(0);
   const [sortByWardOption, setsortByWardOption] = useState(-1);
   const [geojson, setgeojson] = useState();
   const [citygeojson, setcitygeojson] = useState();
