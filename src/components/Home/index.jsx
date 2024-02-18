@@ -108,23 +108,23 @@ const Home = () => {
           justifyContent: "space-around",
         }}
       >
-        <div className="card-parent">
+        <div className="card-parent" style={{color:'white'}}>
           <div className="icon">
             <MenuIcon />
           </div>
-          <div className="title">ABC</div>
+          <div className="title" >Analytics</div>
         </div>
-        <div className="card-parent">
+        <div className="card-parent" style={{color:'white'}}>
           <div className="icon">
             <MenuIcon />
           </div>
-          <div className="title">ABC</div>
+          <div className="title">Complaint</div>
         </div>
-        <div className="card-parent">
+        <div className="card-parent" style={{color:'white'}}>
           <div className="icon">
             <MenuIcon />
           </div>
-          <div className="title">ABC</div>
+          <div className="title">Dashboard</div>
         </div>
       </div>
       <div>

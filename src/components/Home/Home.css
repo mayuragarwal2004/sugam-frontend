@@ -521,6 +521,7 @@ div.mySlides > img {
     /* min-height: 100vh; */
     font-family: 'Anek Bangla', sans-serif;
     background-color: #dafcd8;
+    justify-content: center
   }
   
   section {
