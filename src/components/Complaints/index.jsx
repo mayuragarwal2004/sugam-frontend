@@ -9,6 +9,7 @@ const Complaints = () => {
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [isdustbin,setisdustbin] = useState('');
   const [formData, setFormData] = useState({
     imageURL: "",
     location: { latitude: 0, longitude: 0, accuracy: 0 },
@@ -19,13 +20,21 @@ const Complaints = () => {
   });
 
   const questions = [
-    "Click the Picture for complaint & gice Access of the Location",
+    "Click the Picture for complaint & give Access of the Location",
     "Select the major component of garbage (Select atleast 1 option)",
     "How much percent of garbage can be recycled?",
     "Since when are you seeing this site overflowing with waste?",
     "Into which category does this site fit in?",
+    "Is there any dustbin?",
+    "Do you see PMC collecting garbage in this site?",
   ];
 
+  const handledbYes = () => {
+    setisdustbin(true);
+  };
+  const handledbNo = () => {
+    setisdustbin(false);
+  };
   const handleHover = () => {
     setHovered(true);
   };
@@ -353,8 +362,107 @@ const Complaints = () => {
                 </div>
               )}
 
+{currentQuestion === 5 && (
+                <>
+                <div className="optionscom">
+                  <ul>
+                    <li>
+                      <input
+                        type="radio"
+                        name="option"
+                        id="a"
+                        className="ansList"
+                      />
+                      <label htmlFor="a" className="ansa" onClick={handledbYes}>
+                        Yes
+                      </label>
+                    </li>
+                    <li>
+                      <input
+                        type="radio"
+                        name="option"
+                        id="b"
+                        className="ansList"
+                      />
+                      <label htmlFor="b" className="ansb" onClick={handledbNo}>
+                        No
+                      </label>
+                    </li>
+                    
+                  </ul>
+                </div>
+                
+                <div className="optionscom">
+                <ul>
+                  <li>
+                    <input
+                      type="radio"
+                      name="option"
+                      id="a"
+                      className="ansList"
+                    />
+                    <label htmlFor="a" className="ansa" onClick={handledbYes}>
+                      Yes
+                    </label>
+                  </li>
+                  <li>
+                    <input
+                      type="radio"
+                      name="option"
+                      id="b"
+                      className="ansList"
+                    />
+                    <label htmlFor="b" className="ansb" onClick={handledbNo}>
+                      No
+                    </label>
+                  </li>
+                  
+                </ul>
+              </div>
+              </>
+                
+
+
+                // {isdustbin===true &&(
+                  
+                  
+                // )}
+
+                
+              )}
+
+{currentQuestion === 6 && (
+  <div className="optionscom">
+  <ul>
+    <li>
+      <input
+        type="radio"
+        name="option"
+        id="a"
+        className="ansList"
+      />
+      <label htmlFor="a" className="ansa" onClick={handledbYes}>
+        Yes
+      </label>
+    </li>
+    <li>
+      <input
+        type="radio"
+        name="option"
+        id="b"
+        className="ansList"
+      />
+      <label htmlFor="b" className="ansb" onClick={handledbNo}>
+        No
+      </label>
+    </li>
+    
+  </ul>
+</div>
+)}
+
               <div className="prev-next-buttons">
-                {currentQuestion < 4 ? (
+                {currentQuestion < 6? (
                   <Button
                     variant="outlined"
                     onClick={handleNext}
@@ -405,6 +513,8 @@ const Complaints = () => {
                   Submit
                 </Button>
               </div>
+
+              
             </div>
           )}
           <div className="paraComplaint" style={{display:"flex",width:'100%',marginTop:'20px'}}><p>Let us go green to get our planet clean</p></div>

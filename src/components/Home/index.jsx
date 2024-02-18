@@ -218,7 +218,7 @@ const Home = () => {
               Appropriate actions will be taken as soon as possible. The is no
               limit to your complaints. We are here to hear you.
             </span>
-            <Link to="/form">
+            <Link to="/complaints">
               <button className="button button-md button-outline">
                 Complaint Here
               </button>
