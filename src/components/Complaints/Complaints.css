@@ -221,3 +221,14 @@ svg {
   color: #000;
   letter-spacing: normal;
 }
+
+.gmap-form {
+  height: 200px;
+  width: 80%;
+  transition: all 1s linear;
+  border-radius: 15px;
+}
+
+.map-data-parent{
+  display: flex;
+}

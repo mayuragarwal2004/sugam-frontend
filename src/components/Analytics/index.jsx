@@ -224,13 +224,13 @@ function Analytics() {
     }
 
     if (sortByTimeOption === "24 hours") {
-      time1 = dayjs().subtract(1, "day").unix();
+      time1 = dayjs().subtract(1, "day").unix().toLocaleString();
     } else if (sortByTimeOption === "2 days") {
-      time1 = dayjs().subtract(2, "day").unix();
+      time1 = dayjs().subtract(2, "day").unix().toLocaleString();
     } else if (sortByTimeOption === "4 days") {
-      time1 = dayjs().subtract(4, "day").unix();
+      time1 = dayjs().subtract(4, "day").unix().toLocaleString();
     } else if (sortByTimeOption === "1 week") {
-      time1 = dayjs().subtract(1, "week").unix();
+      time1 = dayjs().subtract(1, "week").unix().toLocaleString();
     }
 
     if (sortBySeverityOption.low) {
@@ -291,6 +291,8 @@ function Analytics() {
   };
 
   console.log({ geojson });
+
+  console.log(sortByTimeValue[0].unix(), sortByTimeValue[1].unix());
 
   return (
     <>
