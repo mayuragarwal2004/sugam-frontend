@@ -196,6 +196,10 @@
   overflow: hidden;
 }
 
+.left-panel-main-parent.inactive {
+  right: calc(0px - var(--right-panel-width));
+}
+
 .left-panel-main-parent {
   position: initial;
   z-index: 5;
@@ -232,11 +236,10 @@
   --right-panel-width: 30%;
 }
 
-.left-panel-row-title{
+.left-panel-row-title {
   padding: 10px;
   color: black;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   border-radius: 10px;
   background-color: antiquewhite;
-
 }

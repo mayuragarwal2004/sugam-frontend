@@ -27,11 +27,11 @@ const Complaints = () => {
   const questions = [
     "Click the Picture for complaint & give Access of the Location",
     "How severe is the garbage site?",
-    "Is there any dustbin?",
     "Select the major component of garbage (Select atleast 1 option)",
     "How much percent of garbage can be recycled?",
     "Since when are you seeing this site overflowing with waste?",
     "Into which category does this site fit in?",
+    "Is there any dustbin?",
     "Do you see PMC collecting garbage in this site?",
   ];
 
