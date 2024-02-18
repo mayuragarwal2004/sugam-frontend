@@ -2,8 +2,8 @@ import React from 'react'
 
 const AboutUs = () => {
   return (
-    <div style={{backgroundColor:'#92dbc5e1'}}>
-      <div style={{borderRadius:'20px',margin:'100px',backgroundColor:'aliceblue',padding:'50px'}}>
+    <div style={{backgroundColor:'#92dbc5e1',marginTop:'0px',padding:'50px'}}>
+      <div style={{borderRadius:'20px',backgroundColor:'aliceblue',padding:"50px"}}>
       <h1 style={{fontSize:'30px'}}>About Us</h1>
       <p>At our organization, we have forged a strategic partnership with the Pune Municipal Corporation, leveraging collaborative efforts to tackle the pervasive issue of open garbage dumps in urban areas. Our approach is rooted in data-driven insights, as we have conducted a comprehensive survey across diverse city wards to gather extensive data on garbage collection frequencies and prevalent waste types. Engaging directly with municipal officers, we have emphasized the critical urgency of the problem and advocated for a technology-driven solution. Utilizing cutting-edge big data techniques, we have developed a robust application aimed at effectively addressing the challenges posed by open garbage dumps in urban environments. Our commitment to innovation and collaboration underscores our dedication to fostering cleaner, healthier communities for all residents.</p>
       <br></br>
