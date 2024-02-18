@@ -1,40 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Complaints.css"; // Import CSS file
 import Button from "@mui/material/Button";
 import FormLocation from "./components/FormLocation";
 import FormImageInput from "./components/FormImageInput";
-
+import options from "./components/options.json";
 
 const Complaints = () => {
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [isdustbin,setisdustbin] = useState('');
+  const [submitDisabled, setSubmitDisabled] = useState(true);
   const [formData, setFormData] = useState({
     imageURL: "",
     location: { latitude: 0, longitude: 0, accuracy: 0 },
-    majorComponent: "",
+    severity: "",
+    majorComponent: [],
     percentRecycled: "",
     sinceWhen: "",
     category: "",
+    isdustbin: "",
+    isdustbinOverflowing: "",
   });
+
+  console.log({ formData });
 
   const questions = [
     "Click the Picture for complaint & give Access of the Location",
+    "How severe is the garbage site?",
+    "Is there any dustbin?",
     "Select the major component of garbage (Select atleast 1 option)",
     "How much percent of garbage can be recycled?",
     "Since when are you seeing this site overflowing with waste?",
     "Into which category does this site fit in?",
-    "Is there any dustbin?",
     "Do you see PMC collecting garbage in this site?",
   ];
 
-  const handledbYes = () => {
-    setisdustbin(true);
-  };
-  const handledbNo = () => {
-    setisdustbin(false);
-  };
   const handleHover = () => {
     setHovered(true);
   };
@@ -54,19 +54,36 @@ const Complaints = () => {
   const handleSubmit = () => {
     // Logic to handle form submission
     console.log("Form submitted!");
+    const reqBody = {};
     // You can reset the form state or redirect to another page after submission
   };
 
-  const [loc, setloc] = useState({
-    latitude: 0,
-    longitude: 0,
-    accuracy: 0,
-    country: "",
-    state: "",
-    city: "",
-    postalcode: "",
-  });
-  const [userImage, setUserImage] = useState("");
+  useEffect(() => {
+    if (
+      formData.location.latitude !== 0 &&
+      formData.location.longitude !== 0 &&
+      formData.imageURL !== "" &&
+      formData.severity !== "" &&
+      formData.majorComponent.length !== 0
+    ) {
+      setSubmitDisabled(false);
+    } else {
+      setSubmitDisabled(true);
+    }
+  }, [
+    formData.location,
+    formData.imageURL,
+    formData.severity,
+    formData.majorComponent,
+  ]);
+
+  const handleImageChange = (url) => {
+    setFormData({ ...formData, imageURL: url });
+  };
+
+  const handleLocationChange = (location) => {
+    setFormData({ ...formData, location: location });
+  };
 
   return (
     <div>
@@ -94,276 +111,239 @@ const Complaints = () => {
               {/* Render input fields based on current question */}
               {currentQuestion === 0 && (
                 <>
-                <div id="recaptcha-container"  ></div>
-                <div className="loc"style={{backgroundColor:'aliceblue',padding:'50px'}}>
-                <FormLocation loc={loc} setloc={setloc} />
-                </div>
-                
-                <div className="field" style={{backgroundColor:'aliceblue',marginTop:'50px',padding:'50px'}}>
-                  <FormImageInput userImage={userImage} setUserImage={setUserImage} />
-                </div></>
+                  <div id="recaptcha-container"></div>
+                  <div
+                    className="loc"
+                    style={{ backgroundColor: "aliceblue", padding: "10px" }}
+                  >
+                    <FormLocation
+                      loc={formData.location}
+                      handleLocationChange={handleLocationChange}
+                    />
+                  </div>
+
+                  <div
+                    className="field"
+                    style={{
+                      backgroundColor: "aliceblue",
+                      marginTop: "10px",
+                      padding: "10px",
+                    }}
+                  >
+                    <FormImageInput
+                      userImage={formData.imageURL}
+                      handleImageChange={handleImageChange}
+                    />
+                  </div>
+                </>
               )}
               {currentQuestion === 1 && (
                 <div className="optionscom">
                   <ul>
-                    <li>
-                      <input
-                        type="Checkbox"
-                        name="option"
-                        id="a"
-                        className="ansList"
-                      />
-                      <label htmlFor="a" className="ansa">
-                        Dry Waste
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="Checkbox"
-                        name="option"
-                        id="b"
-                        className="ansList"
-                      />
-                      <label htmlFor="b" className="ansb">
-                        Plant Waste
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="Checkbox"
-                        name="option"
-                        id="c"
-                        className="ansList"
-                      />
-                      <label htmlFor="c" className="ansc">
-                        Construction Waste
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="Checkbox"
-                        name="option"
-                        id="d"
-                        className="ansList"
-                      />
-                      <label htmlFor="d" className="ansd">
-                        Wet Waste
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="Checkbox"
-                        name="option"
-                        id="e"
-                        className="ansList"
-                      />
-                      <label htmlFor="e" className="anse">
-                        Clothes
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="Checkbox"
-                        name="option"
-                        id="e"
-                        className="ansList"
-                      />
-                      <label htmlFor="e" className="anse">
-                        Medical Waste
-                      </label>
-                    </li>
+                    {options.severity.map((option) => (
+                      <li key={option.value}>
+                        <input
+                          type="radio"
+                          name="option"
+                          id={option.value}
+                          className="ansList"
+                          onChange={(e) =>
+                            setFormData({ ...formData, severity: e.target.id })
+                          }
+                          // value={formData.severity}
+                        />
+                        <label htmlFor={option.value} className="ansa">
+                          {option.label}
+                        </label>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               )}
-
               {currentQuestion === 2 && (
                 <div className="optionscom">
                   <ul>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="a"
-                        className="ansList"
-                      />
-                      <label htmlFor="a" className="ansa">
-                        10%-20%
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="b"
-                        className="ansList"
-                      />
-                      <label htmlFor="b" className="ansb">
-                        20%-40%
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="c"
-                        className="ansList"
-                      />
-                      <label htmlFor="c" className="ansc">
-                        40%-60%
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="d"
-                        className="ansList"
-                      />
-                      <label htmlFor="d" className="ansd">
-                        60%-80%
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="e"
-                        className="ansList"
-                      />
-                      <label htmlFor="e" className="anse">
-                        80%-100%
-                      </label>
-                    </li>
+                    {options.wasteType.map((option) => (
+                      <li key={option.value}>
+                        <input
+                          type="checkbox"
+                          name="option"
+                          id={option.value}
+                          className="ansList"
+                          onChange={(e) => {
+                            setFormData((prev) => {
+                              let newwasteType =
+                                prev.majorComponent.slice(); // Create a copy of the current array
+                              const index = newwasteType.indexOf(
+                                e.target.id
+                              );
+                              if (index === -1) {
+                                newwasteType.push(e.target.id);
+                              } else {
+                                newwasteType.splice(index, 1); // Remove the element at index
+                              }
+                              return {
+                                ...prev,
+                                majorComponent: newwasteType, // Set the new array with checked items
+                              };
+                            });
+                          }}
+                        />
+                        <label htmlFor={option.value} className="ansa">
+                          {option.label}
+                        </label>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               )}
-
               {currentQuestion === 3 && (
                 <div className="optionscom">
                   <ul>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="a"
-                        className="ansList"
-                      />
-                      <label htmlFor="a" className="ansa">
-                        Never
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="b"
-                        className="ansList"
-                      />
-                      <label htmlFor="b" className="ansb">
-                        Rarely
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="c"
-                        className="ansList"
-                      />
-                      <label htmlFor="c" className="ansc">
-                        Some time
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="d"
-                        className="ansList"
-                      />
-                      <label htmlFor="d" className="ansd">
-                        Many times
-                      </label>
-                    </li>
+                    {options.percentRecycle.map((option) => (
+                      <li key={option.value}>
+                        <input
+                          type="radio"
+                          name="option"
+                          id={option.value}
+                          className="ansList"
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              percentRecycled: e.target.id,
+                            })
+                          }
+                        />
+                        <label htmlFor={option.value} className="ansa">
+                          {option.label}
+                        </label>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               )}
-
               {currentQuestion === 4 && (
                 <div className="optionscom">
                   <ul>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="a"
-                        className="ansList"
-                      />
-                      <label htmlFor="a" className="ansa">
-                        Roadside
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="b"
-                        className="ansList"
-                      />
-                      <label htmlFor="b" className="ansb">
-                        Highway side
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="c"
-                        className="ansList"
-                      />
-                      <label htmlFor="c" className="ansc">
-                        Market Area
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="d"
-                        className="ansList"
-                      />
-                      <label htmlFor="d" className="ansd">
-                        Contruction area
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="e"
-                        className="ansList"
-                      />
-                      <label htmlFor="e" className="anse">
-                        Residential area
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="e"
-                        className="ansList"
-                      />
-                      <label htmlFor="e" className="anse">
-                        Park & Playground
-                      </label>
-                    </li>
+                    {options.siteClean.map((option) => (
+                      <li key={option.value}>
+                        <input
+                          type="radio"
+                          name="option"
+                          id={option.value}
+                          className="ansList"
+                          onChange={(e) =>
+                            setFormData({ ...formData, sinceWhen: e.target.id })
+                          }
+                        />
+                        <label htmlFor={option.value} className="ansa">
+                          {option.label}
+                        </label>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               )}
 
-{currentQuestion === 5 && (
+              {currentQuestion === 5 && (
+                <div className="optionscom">
+                  <ul>
+                    {options.siteCategory.map((option) => (
+                      <li key={option.value}>
+                        <input
+                          type="radio"
+                          name="option"
+                          id={option.value}
+                          className="ansList"
+                          onChange={(e) =>
+                            setFormData({ ...formData, category: e.target.id })
+                          }
+                        />
+                        <label htmlFor={option.value} className="ansa">
+                          {option.label}
+                        </label>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {currentQuestion === 6 && (
                 <>
+                  <div className="optionscom">
+                    <ul>
+                      <li>
+                        <input
+                          type="radio"
+                          name="option"
+                          id="a"
+                          className="ansList"
+                          onChange={(e) =>
+                            setFormData({ ...formData, isdustbin: true })
+                          }
+                        />
+                        <label htmlFor="a" className="ansa">
+                          Yes
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="radio"
+                          name="option"
+                          id="b"
+                          className="ansList"
+                          onChange={(e) =>
+                            setFormData({ ...formData, isdustbin: false })
+                          }
+                        />
+                        <label htmlFor="b" className="ansb">
+                          No
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+                  <h2>Is the Dusbin Overflowing?</h2>
+                  <div className="optionscom">
+                    <ul>
+                      <li>
+                        <input
+                          type="radio"
+                          name="option"
+                          id="a"
+                          className="ansList"
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              isdustbinOverflowing: true,
+                            })
+                          }
+                        />
+                        <label htmlFor="a" className="ansa">
+                          Yes
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="radio"
+                          name="option"
+                          id="b"
+                          className="ansList"
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              isdustbinOverflowing: false,
+                            })
+                          }
+                        />
+                        <label htmlFor="b" className="ansb">
+                          No
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+                </>
+              )}
+
+              {currentQuestion === 7 && (
                 <div className="optionscom">
                   <ul>
                     <li>
@@ -372,8 +352,11 @@ const Complaints = () => {
                         name="option"
                         id="a"
                         className="ansList"
+                        onChange={(e) => {
+                          setFormData({ ...formData, isPMCcollecting: true });
+                        }}
                       />
-                      <label htmlFor="a" className="ansa" onClick={handledbYes}>
+                      <label htmlFor="a" className="ansa">
                         Yes
                       </label>
                     </li>
@@ -383,86 +366,20 @@ const Complaints = () => {
                         name="option"
                         id="b"
                         className="ansList"
+                        onChange={(e) => {
+                          setFormData({ ...formData, isPMCcollecting: false });
+                        }}
                       />
-                      <label htmlFor="b" className="ansb" onClick={handledbNo}>
+                      <label htmlFor="b" className="ansb">
                         No
                       </label>
                     </li>
-                    
                   </ul>
                 </div>
-                
-                <div className="optionscom">
-                <ul>
-                  <li>
-                    <input
-                      type="radio"
-                      name="option"
-                      id="a"
-                      className="ansList"
-                    />
-                    <label htmlFor="a" className="ansa" onClick={handledbYes}>
-                      Yes
-                    </label>
-                  </li>
-                  <li>
-                    <input
-                      type="radio"
-                      name="option"
-                      id="b"
-                      className="ansList"
-                    />
-                    <label htmlFor="b" className="ansb" onClick={handledbNo}>
-                      No
-                    </label>
-                  </li>
-                  
-                </ul>
-              </div>
-              </>
-                
-
-
-                // {isdustbin===true &&(
-                  
-                  
-                // )}
-
-                
               )}
 
-{currentQuestion === 6 && (
-  <div className="optionscom">
-  <ul>
-    <li>
-      <input
-        type="radio"
-        name="option"
-        id="a"
-        className="ansList"
-      />
-      <label htmlFor="a" className="ansa" onClick={handledbYes}>
-        Yes
-      </label>
-    </li>
-    <li>
-      <input
-        type="radio"
-        name="option"
-        id="b"
-        className="ansList"
-      />
-      <label htmlFor="b" className="ansb" onClick={handledbNo}>
-        No
-      </label>
-    </li>
-    
-  </ul>
-</div>
-)}
-
               <div className="prev-next-buttons">
-                {currentQuestion < 6? (
+                {currentQuestion < 6 ? (
                   <Button
                     variant="outlined"
                     onClick={handleNext}
@@ -505,19 +422,23 @@ const Complaints = () => {
                   </Button>
                 )}
 
-                  <Button
+                <Button
                   variant="contained"
                   onClick={handleSubmit}
                   style={{ width: "30%" }}
+                  disabled={submitDisabled}
                 >
                   Submit
                 </Button>
               </div>
-
-              
             </div>
           )}
-          <div className="paraComplaint" style={{display:"flex",width:'100%',marginTop:'20px'}}><p>Let us go green to get our planet clean</p></div>
+          <div
+            className="paraComplaint"
+            style={{ display: "flex", width: "100%", marginTop: "20px" }}
+          >
+            <p>Let us go green to get our planet clean</p>
+          </div>
         </div>
       </div>
     </div>

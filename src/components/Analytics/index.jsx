@@ -4,7 +4,6 @@ import "./analytics.css";
 import { collection, query, getDocs, getFirestore } from "firebase/firestore";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { app } from "../../base";
-import ComplainCards from "./components/ComplainCards";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import Button from "@mui/material/Button";
 // import geojson from "../data/Municipal_Spatial/Pune/pune-electoral-wards_current.geojson"
@@ -223,14 +222,20 @@ function Analytics() {
       status.push("PENDING");
     }
 
+    if (sortByTimeOption === "custom") {
+      time1 = sortByTimeValue[0].toISOString();
+      time2 = sortByTimeValue[1].toISOString();
+    } else {
+      time2 = dayjs().toISOString();
+    }
     if (sortByTimeOption === "24 hours") {
-      time1 = dayjs().subtract(1, "day").unix();
+      time1 = dayjs().subtract(1, "day").toISOString();
     } else if (sortByTimeOption === "2 days") {
-      time1 = dayjs().subtract(2, "day").unix();
+      time1 = dayjs().subtract(2, "day").toISOString();
     } else if (sortByTimeOption === "4 days") {
-      time1 = dayjs().subtract(4, "day").unix();
+      time1 = dayjs().subtract(4, "day").toISOString();
     } else if (sortByTimeOption === "1 week") {
-      time1 = dayjs().subtract(1, "week").unix();
+      time1 = dayjs().subtract(1, "week").toISOString();
     }
 
     if (sortBySeverityOption.low) {
@@ -291,6 +296,8 @@ function Analytics() {
   };
 
   console.log({ geojson });
+
+  console.log(sortByTimeValue[0].unix(), sortByTimeValue[1].unix());
 
   return (
     <>
@@ -639,7 +646,7 @@ function Analytics() {
           Enter FUll Screen
         </Button>
       </div>
-      {queryData && <ComplainCards data={queryData} />}
+      {/* {queryData && <ComplainCards data={queryData} />} */}
     </>
   );
 }

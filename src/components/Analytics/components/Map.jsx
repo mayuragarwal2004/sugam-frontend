@@ -124,7 +124,7 @@ export default function Map(props) {
             return (
               <Marker
                 key={i}
-                position={{ lat: doc.latitude, lng: doc.longitude }}
+                position={{ lng: doc.coordX, lat: doc.coordY }}
                 onClick={() => handleActiveMarker(i)}
                 clusterer={clusterer}
                 icon={doc.status === "COMPLETED" ? greencircle : redcircle}
@@ -187,15 +187,16 @@ export default function Map(props) {
                           <b>Name: </b> {doc.fullname}
                           <br />
                           <b>Components Of Garbage: </b>{" "}
-                          {doc.wasteType && doc.wasteType.map((x, i) =>
+                          {doc.wasteType.map((x, i) =>
                             doc.wasteType.length - 1 === i ? x : x + ", "
                           )}
                           <br />
                           <b>Chronic Site: </b>
-                          {parseInt(doc.wasteType) > 3 ? "Yes" : "No"}
+                          {parseInt(doc.wasteType) > 3
+                            ? "Yes"
+                            : "No"}
                           <br />
-                          <b>How often the site is cleaned: </b>{" "}
-                          {doc.siteCleanFrequency}
+                          <b>How often the site is cleaned: </b> {doc.siteCleanFrequency}
                           <br />
                           <b>Recycle% : </b> {doc.wasteRecyclable}
                           <br />
@@ -228,7 +229,8 @@ export default function Map(props) {
                             </>
                           )}
                           <br />
-                          <b>Site Category: </b> {doc.siteCategory}
+                          <b>Site Category: </b>{" "}
+                          {doc.siteCategory}
                         </p>
                       </div>
                     </>
