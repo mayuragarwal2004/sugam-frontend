@@ -198,6 +198,7 @@ function Analytics() {
     citygeojson.map((shape, index) => {
       if (shape.properties["ward"] === wardNo) {
         filteredData.push(shape);
+        setsortByWardOption(shape.properties["ward"]);
         if (filteredData.length === 1) {
           map.setCenter(shape.center);
           map.setZoom(15);
@@ -211,6 +212,8 @@ function Analytics() {
     if (sortByAddessOption === 1 && sortByWardOption === -1)
       filterGeoJSONByWardNo(ward);
   };
+
+  console.log({ sortByWardOption });
 
   useEffect(() => {
     getGeoJson();
@@ -288,7 +291,8 @@ function Analytics() {
       time2,
     };
     if (severity.length > 0) reqbody.severity = severity;
-    if (locations.length > 0) reqbody.locations = locations;
+    if (locations.length > 0 && sortByAddessOption !== 0)
+      reqbody.locations = locations;
 
     if (type.length > 0) reqbody.type = type;
     console.log({ reqbody });
@@ -678,8 +682,16 @@ function Analytics() {
                           map.setCenter(center);
                           map.setZoom(13);
                         }
+                        if (e.target.value === 1) {
+                          setgeojson(citygeojson);
+                        }
+                        if (e.target.value === 0) {
+                          setshowgeojson(false);
+                          setsortByWardOption([]);
+                        }
                       }}
                     >
+                      <MenuItem value={0}>No Sort</MenuItem>
                       <MenuItem value={1}>Ward</MenuItem>
                       <MenuItem value={2}>City</MenuItem>
                     </Select>
