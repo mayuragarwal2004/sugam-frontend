@@ -224,7 +224,7 @@ function Analytics() {
     var time1 = sortByTimeValue[0].unix();
     var time2 = sortByTimeValue[1].unix();
     if (complaintStatus.completed) {
-      status.push("COMPLETED");
+      status.push("COMPLETE");
     }
     if (complaintStatus.notCompleted) {
       status.push("PENDING");

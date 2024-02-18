@@ -127,7 +127,7 @@ export default function Map(props) {
                 position={{ lat: doc.coordX, lng: doc.coordY }}
                 onClick={() => handleActiveMarker(i)}
                 clusterer={clusterer}
-                icon={doc.status === "COMPLETED" ? greencircle : redcircle}
+                icon={doc.status === "COMPLETE" ? greencircle : redcircle}
               >
                 {activeMarker === i ? (
                   <InfoWindowF
