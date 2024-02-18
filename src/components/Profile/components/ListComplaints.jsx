@@ -13,7 +13,7 @@ const ListComplaints = () => {
   }
 
   const getUserData = () => {
-    fetch("/sugam/")
+    fetch("/sugam/user/getIssues")
       .then((response) => {
         console.log(response);
         response.body
