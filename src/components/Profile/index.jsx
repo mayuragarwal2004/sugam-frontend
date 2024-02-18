@@ -16,6 +16,15 @@ const Profile = () => {
     Pending: 19,
   });
 
+  function isJsonString(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
   async function getUserData() {
     ///sugam/user/getIssueSum
     fetch("/sugam/user/getIssueSum")
@@ -27,7 +36,10 @@ const Profile = () => {
           .then(({ value, done }) => {
             console.log(new TextDecoder().decode(value));
             console.log({ value });
-            return JSON.parse(new TextDecoder().decode(value));
+            if (isJsonString(new TextDecoder().decode(value))) {
+              return JSON.parse(new TextDecoder().decode(value));
+            }
+            return "";
           })
           .then((data) => {
             console.log({ newdata: data });

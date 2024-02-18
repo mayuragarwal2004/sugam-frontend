@@ -10,6 +10,15 @@ const AuthState = (props) => {
 
   console.log({ currentUser, currentUserRole });
 
+  function isJsonString(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
   const getUserData = () => {
     fetch("/sugam/api/get")
       .then((response) => {
@@ -20,7 +29,10 @@ const AuthState = (props) => {
           .then(({ value, done }) => {
             console.log(new TextDecoder().decode(value));
             console.log({ value });
-            return JSON.parse(new TextDecoder().decode(value));
+            if (isJsonString(new TextDecoder().decode(value))) {
+              return JSON.parse(new TextDecoder().decode(value));
+            }
+            return "";
           })
           .then((data) => {
             console.log(data);

@@ -32,6 +32,15 @@ const Home = () => {
     setimg(v);
   }
 
+  function isJsonString(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
   const getAnalyticData = async () => {
     fetch("/sugam/api/footer")
       .then((response) => {
@@ -42,7 +51,10 @@ const Home = () => {
           .then(({ value, done }) => {
             console.log(new TextDecoder().decode(value));
             console.log({ value });
-            return JSON.parse(new TextDecoder().decode(value));
+            if (isJsonString(new TextDecoder().decode(value))) {
+              return JSON.parse(new TextDecoder().decode(value));
+            }
+            return "";
           })
           .then((data) => {
             console.log(data);
@@ -55,10 +67,9 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if(process.env.REACT_APP_FRONTEND_ONLY === "true") return;
+    if (process.env.REACT_APP_FRONTEND_ONLY === "true") return;
     getAnalyticData();
-  }
-  , []);
+  }, []);
 
   return (
     <>
@@ -108,19 +119,19 @@ const Home = () => {
           justifyContent: "space-around",
         }}
       >
-        <div className="card-parent" style={{color:'white'}}>
+        <div className="card-parent" style={{ color: "white" }}>
           <div className="icon">
             <MenuIcon />
           </div>
-          <div className="title" >Analytics</div>
+          <div className="title">Analytics</div>
         </div>
-        <div className="card-parent" style={{color:'white'}}>
+        <div className="card-parent" style={{ color: "white" }}>
           <div className="icon">
             <MenuIcon />
           </div>
           <div className="title">Complaint</div>
         </div>
-        <div className="card-parent" style={{color:'white'}}>
+        <div className="card-parent" style={{ color: "white" }}>
           <div className="icon">
             <MenuIcon />
           </div>
@@ -244,8 +255,11 @@ const Home = () => {
         <div class="button-layer2"></div>
       </div>
 
-      <div className="stats" style={{display:'flex',justifycontent: 'center'}}>
-        <section style={{height:'500px'}}>
+      <div
+        className="stats"
+        style={{ display: "flex", justifycontent: "center" }}
+      >
+        <section style={{ height: "500px" }}>
           <div class="container">
             <ul class="card">
               <div className="before-card"></div>
