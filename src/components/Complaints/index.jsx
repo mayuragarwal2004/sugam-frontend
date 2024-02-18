@@ -20,6 +20,7 @@ const Complaints = () => {
     "Since when are you seeing this site overflowing with waste?",
     "Into which category does this site fit in?",
     "Is there any dustbin?",
+    "Do you see PMC collecting garbage in this site?",
   ];
 
   const handledbYes = () => {
@@ -356,6 +357,7 @@ const Complaints = () => {
               )}
 
 {currentQuestion === 5 && (
+                <>
                 <div className="optionscom">
                   <ul>
                     <li>
@@ -383,14 +385,78 @@ const Complaints = () => {
                     
                   </ul>
                 </div>
+                
+                <div className="optionscom">
+                <ul>
+                  <li>
+                    <input
+                      type="radio"
+                      name="option"
+                      id="a"
+                      className="ansList"
+                    />
+                    <label htmlFor="a" className="ansa" onClick={handledbYes}>
+                      Yes
+                    </label>
+                  </li>
+                  <li>
+                    <input
+                      type="radio"
+                      name="option"
+                      id="b"
+                      className="ansList"
+                    />
+                    <label htmlFor="b" className="ansb" onClick={handledbNo}>
+                      No
+                    </label>
+                  </li>
+                  
+                </ul>
+              </div>
+              </>
+                
+
+
                 // {isdustbin===true &&(
                   
                   
                 // )}
+
+                
               )}
 
+{currentQuestion === 6 && (
+  <div className="optionscom">
+  <ul>
+    <li>
+      <input
+        type="radio"
+        name="option"
+        id="a"
+        className="ansList"
+      />
+      <label htmlFor="a" className="ansa" onClick={handledbYes}>
+        Yes
+      </label>
+    </li>
+    <li>
+      <input
+        type="radio"
+        name="option"
+        id="b"
+        className="ansList"
+      />
+      <label htmlFor="b" className="ansb" onClick={handledbNo}>
+        No
+      </label>
+    </li>
+    
+  </ul>
+</div>
+)}
+
               <div className="prev-next-buttons">
-                {currentQuestion < 5? (
+                {currentQuestion < 6? (
                   <Button
                     variant="outlined"
                     onClick={handleNext}
