@@ -116,18 +116,6 @@ function Analytics() {
 
   const center = useMemo(() => ({ lat: 18.4807627, lng: 73.8724301 }), []);
   const [queryData, setqueryData] = useState([]);
-  async function getData() {
-    const db = getFirestore(app);
-    const q = query(collection(db, "Complaints"));
-
-    const querySnapshot = await getDocs(q);
-    setqueryData([]);
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      setqueryData((prev) => [...prev, { ...doc.data(), docID: doc.id }]);
-      // console.log(doc.id, " => ", doc.data());
-    });
-  }
 
   useEffect(() => {
     if (fullscreenHandle.active) {
@@ -139,10 +127,6 @@ function Analytics() {
       );
     }
   }, [fullscreenHandle.active]);
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   function getGeoJson() {
     fetch(punegeojson)
