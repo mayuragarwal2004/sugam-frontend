@@ -10,6 +10,7 @@ import Dashboard from "./components/Dashboard";
 import Complaints from "./components/Complaints";
 import AboutUs from "./components/Aboutus";
 import ListComplaints from "./components/Profile/components/ListComplaints";
+import Charts from "./components/Charts";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               <Route path="complaints" element={<Complaints />} />
               <Route path="login" element={<Login />} />
               <Route path="aboutUs" element={<AboutUs />} />
+              <Route path="charts" element={<Charts />} />
               {/* <Route path="*" element={<NoPage />} /> */}
             </Route>
           </Routes>

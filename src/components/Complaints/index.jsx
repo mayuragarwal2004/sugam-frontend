@@ -4,12 +4,14 @@ import Button from "@mui/material/Button";
 import FormLocation from "./components/FormLocation";
 import FormImageInput from "./components/FormImageInput";
 import options from "./components/options.json";
+import Alert from "@mui/material/Alert";
 
 const Complaints = () => {
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [submitDisabled, setSubmitDisabled] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
   const [formData, setFormData] = useState({
     imageURL: "",
     location: { latitude: 0, longitude: 0, accuracy: 0 },
@@ -52,6 +54,12 @@ const Complaints = () => {
   };
 
   const handleSubmit = () => {
+    // Disable submit button after clicking
+    setSubmitDisabled(true);
+
+    // Show the alert
+    setShowAlert(true);
+
     // Logic to handle form submission
     console.log("Form submitted!");
     const reqBody = {};
@@ -81,7 +89,6 @@ const Complaints = () => {
     }
 
     console.log({ reqBody });
-
 
     fetch("/sugam/user/complaint", {
       method: "POST",
@@ -304,80 +311,84 @@ const Complaints = () => {
                 </div>
               )}
               {currentQuestion === 6 && (
-                <>
-                  <div className="optionscom">
-                    <ul>
-                      <li>
-                        <input
-                          type="radio"
-                          name="option"
-                          id="a"
-                          className="ansList"
-                          onChange={(e) =>
-                            setFormData({ ...formData, isdustbin: true })
-                          }
-                        />
-                        <label htmlFor="a" className="ansa">
-                          Yes
-                        </label>
-                      </li>
-                      <li>
-                        <input
-                          type="radio"
-                          name="option"
-                          id="b"
-                          className="ansList"
-                          onChange={(e) =>
-                            setFormData({ ...formData, isdustbin: false })
-                          }
-                        />
-                        <label htmlFor="b" className="ansb">
-                          No
-                        </label>
-                      </li>
-                    </ul>
-                  </div>
-                  <h2>Is the Dusbin Overflowing?</h2>
-                  <div className="optionscom">
-                    <ul>
-                      <li>
-                        <input
-                          type="radio"
-                          name="option"
-                          id="a"
-                          className="ansList"
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              isdustbinOverflowing: true,
-                            })
-                          }
-                        />
-                        <label htmlFor="a" className="ansa">
-                          Yes
-                        </label>
-                      </li>
-                      <li>
-                        <input
-                          type="radio"
-                          name="option"
-                          id="b"
-                          className="ansList"
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              isdustbinOverflowing: false,
-                            })
-                          }
-                        />
-                        <label htmlFor="b" className="ansb">
-                          No
-                        </label>
-                      </li>
-                    </ul>
-                  </div>
-                </>
-              )}
+  <>
+    <div className="optionscom">
+      <ul>
+        <li>
+          <input
+            type="radio"
+            name="isdustbin"
+            id="dustbin-yes"
+            className="ansList"
+            onChange={(e) =>
+              setFormData({ ...formData, isdustbin: true })
+            }
+          />
+          <label htmlFor="dustbin-yes" className="ansa">
+            Yes
+          </label>
+        </li>
+        <li>
+          <input
+            type="radio"
+            name="isdustbin"
+            id="dustbin-no"
+            className="ansList"
+            onChange={(e) =>
+              setFormData({ ...formData, isdustbin: false })
+            }
+          />
+          <label htmlFor="dustbin-no" className="ansb">
+            No
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <>
+      <h2>Is the Dustbin Overflowing?</h2>
+      <div className="optionscom">
+        <ul>
+          <li>
+            <input
+              type="radio"
+              name="isdustbinOverflowing"
+              id="overflow-yes"
+              className="ansList"
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  isdustbinOverflowing: true,
+                })
+              }
+            />
+            <label htmlFor="overflow-yes" className="ansa">
+              Yes
+            </label>
+          </li>
+          <li>
+            <input
+              type="radio"
+              name="isdustbinOverflowing"
+              id="overflow-no"
+              className="ansList"
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  isdustbinOverflowing: false,
+                })
+              }
+            />
+            <label htmlFor="overflow-no" className="ansb">
+              No
+            </label>
+          </li>
+        </ul>
+      </div>
+    </>
+  </>
+)}
+
 
               {currentQuestion === 7 && (
                 <div className="optionscom">
@@ -466,6 +477,9 @@ const Complaints = () => {
                 >
                   Submit
                 </Button>
+                {showAlert && (
+                  <Alert style={{position:"absolute",top:"100%",left:"40%",paddingTop:"5px"}} severity="success">Success</Alert>
+                )}
               </div>
             </div>
           )}
