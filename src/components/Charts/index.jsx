@@ -8,6 +8,7 @@ const index = () => {
       className="div-carduser"
       style={{
         display: 'flex',
+        flexWrap: 'wrap',
         gap: '10px',
         padding: "5%",
         backgroundRepeat: "no-repeat",
