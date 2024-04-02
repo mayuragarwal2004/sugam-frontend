@@ -12,6 +12,8 @@ import AboutUs from "./components/Aboutus";
 import ListComplaints from "./components/Profile/components/ListComplaints";
 import Charts from "./components/Charts";
 
+// import  Bubble from "./components/Charts/components/bubble";
+
 function App() {
   return (
     <>
@@ -30,6 +32,7 @@ function App() {
               <Route path="dashboard" element={<Dashboard />} />
               {/* <Route path="auth" element={<LoginSignUp />} /> */}
               <Route path="complaints" element={<Complaints />} />
+              {/* <Route path="testing" element={<Bubble />} /> */}
               <Route path="login" element={<Login />} />
               <Route path="aboutUs" element={<AboutUs />} />
               <Route path="charts" element={<Charts />} />
