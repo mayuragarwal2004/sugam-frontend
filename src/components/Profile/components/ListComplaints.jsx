@@ -20,10 +20,10 @@ const ListComplaints = () => {
           .getReader()
           .read()
           .then(({ value, done }) => {
-            console.log(new TextDecoder().decode(value));
-            console.log({ value });
-            if (isJsonString(new TextDecoder().decode(value))) {
-              setData(JSON.parse(new TextDecoder().decode(value)));
+            const text = new TextDecoder().decode(value)
+            if (isJsonString(text)) {
+              console.log(JSON.parse(text));
+              setData(JSON.parse(text));
             }
             return;
           });
@@ -38,11 +38,13 @@ const ListComplaints = () => {
     getUserData();
   }, []);
 
+  console.log({ data });
+
   return (
     <div className="categories">
       {data &&
         data.length > 0 &&
-        data.map((carddata) => <Card data={carddata} />)}
+        data.map((carddata, i) => <Card data={carddata} key={i} />)}
     </div>
   );
 };

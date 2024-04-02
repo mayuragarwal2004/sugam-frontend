@@ -1,4 +1,7 @@
 /* Navbar start */
+.navbar-parent{
+  text-decoration: none;
+}
 
 .navbar {
   position: relative;

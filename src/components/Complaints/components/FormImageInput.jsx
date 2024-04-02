@@ -5,11 +5,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-
 import LinearProgress from "@mui/material/LinearProgress";
-import CircularProgress, {
-  CircularProgressProps,
-} from "@mui/material/CircularProgress";
 
 function FormImageInput(props) {
   const { userImage, handleImageChange } = props;
@@ -32,7 +28,7 @@ function FormImageInput(props) {
         // Update progress state
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        if (progress <= 10) setUploadProgress(10);
+        if (progress <= 30) setUploadProgress(30);
         else setUploadProgress(progress);
       },
       (error) => {
@@ -71,8 +67,6 @@ function FormImageInput(props) {
       {/* Progress bar */}
       {uploadProgress !== undefined && (
         <LinearProgress variant="determinate" value={uploadProgress} />
-        // <CircularProgress variant="determinate" value={uploadProgress} />
-        // <progress value={uploadProgress} max="100" />
       )}
       <br />
       <input type="file" accept="image/*" onChange={handleChange} />
