@@ -223,7 +223,7 @@ const Home = () => {
       </div>
       <div className="gotoAnalytics">
         <Link to="/analytics">
-          <button class="button">
+          <button className="button">
             Go to Analytics
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -235,8 +235,8 @@ const Home = () => {
           </button>
         </Link>
 
-        <div class="button-layer1"></div>
-        <div class="button-layer2"></div>
+        <div className="button-layer1"></div>
+        <div className="button-layer2"></div>
       </div>
 
       <div
@@ -244,35 +244,35 @@ const Home = () => {
         style={{ display: "flex", justifycontent: "center" }}
       >
         <section className="sectionstats">
-          <div class="container">
-            <ul class="card">
+          <div className="container">
+            <ul className="card">
               <div className="before-card"></div>
               <div className="after-card">
                 <li>
                   <p>
                     <h3>{analyticdata.uniqueUsers}</h3>
-                    <i class="fa fa-arrow-up clr-up"></i>
+                    <i className="fa fa-arrow-up clr-up"></i>
                   </p>
                   <span>Number of Unique Users</span>
                 </li>
                 <li>
                   <p>
                     <h3>{analyticdata.complete}</h3>
-                    <i class="fa fa-arrow-down clr-down"></i>
+                    <i className="fa fa-arrow-down clr-down"></i>
                   </p>
                   <span>Number of Addressed Issues</span>
                 </li>
                 <li>
                   <p>
                     <h3>{analyticdata.workers}</h3>
-                    <i class="fa fa-arrow-top"></i>
+                    <i className="fa fa-arrow-top"></i>
                   </p>
                   <span>Number of registered workers</span>
                 </li>
                 <li>
                   <p>
                     <h3>{analyticdata.complaints}</h3>
-                    <i class="fa fa-arrow-top"></i>
+                    <i className="fa fa-arrow-top"></i>
                   </p>
                   <span>Number of Complaints</span>
                 </li>
