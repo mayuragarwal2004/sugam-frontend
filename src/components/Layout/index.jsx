@@ -38,7 +38,7 @@ const Layout = () => {
   };
 
   return (
-    <div>
+    <div className="navbar-parent">
       <AppBar position="static" sx={{ backgroundColor: "#0ca074e1" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>

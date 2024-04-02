@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Login.css";
 import Alert from "@mui/material/Alert";
 import { useAuth } from "../context/auth/AuthState";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setusername] = useState("");
@@ -11,7 +12,13 @@ const Login = () => {
     message: "",
     severity: "info",
   });
-  const { getUserData } = useAuth();
+  const { currentUser, getUserData } = useAuth();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentUser) navigate("/profile");
+  }, [currentUser]);
 
   const handleRegisterSubmit = () => {
     // Add logic here to handle the register button click
@@ -42,6 +49,7 @@ const Login = () => {
                 message: "registration successful.",
                 severity: "success",
               });
+              getUserData();
             } else {
               setAlertData({
                 open: true,
