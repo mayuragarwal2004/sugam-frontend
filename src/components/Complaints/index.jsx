@@ -311,83 +311,84 @@ const Complaints = () => {
                 </div>
               )}
               {currentQuestion === 6 && (
-                <>
-                  <div className="optionscom">
-                    <ul>
-                      <li>
-                        <input
-                          type="radio"
-                          name="isdustbin"
-                          id="a"
-                          className="ansList"
-                          onChange={(e) =>
-                            setFormData({ ...formData, isdustbin: true })
-                          }
-                        />
-                        <label htmlFor="a" className="ansa">
-                          Yes
-                        </label>
-                      </li>
-                      <li>
-                        <input
-                          type="radio"
-                          name="isdustbin"
-                          id="b"
-                          className="ansList"
-                          onChange={(e) =>
-                            setFormData({ ...formData, isdustbin: false })
-                          }
-                        />
-                        <label htmlFor="b" className="ansb">
-                          No
-                        </label>
-                      </li>
-                    </ul>
-                  </div>
+  <>
+    <div className="optionscom">
+      <ul>
+        <li>
+          <input
+            type="radio"
+            name="isdustbin"
+            id="dustbin-yes"
+            className="ansList"
+            onChange={(e) =>
+              setFormData({ ...formData, isdustbin: true })
+            }
+          />
+          <label htmlFor="dustbin-yes" className="ansa">
+            Yes
+          </label>
+        </li>
+        <li>
+          <input
+            type="radio"
+            name="isdustbin"
+            id="dustbin-no"
+            className="ansList"
+            onChange={(e) =>
+              setFormData({ ...formData, isdustbin: false })
+            }
+          />
+          <label htmlFor="dustbin-no" className="ansb">
+            No
+          </label>
+        </li>
+      </ul>
+    </div>
 
-                  <>
-                    <h2>Is the Dusbin Overflowing?</h2>
-                    <div className="optionscom">
-                      <ul>
-                        <li>
-                          <input
-                            type="radio"
-                            name="isdustbinOverflowing"
-                            id="a"
-                            className="ansList"
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                isdustbinOverflowing: true,
-                              })
-                            }
-                          />
-                          <label htmlFor="a" className="ansa">
-                            Yes
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="radio"
-                            name="isdustbinOverflowing"
-                            id="b"
-                            className="ansList"
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                isdustbinOverflowing: false,
-                              })
-                            }
-                          />
-                          <label htmlFor="b" className="ansb">
-                            No
-                          </label>
-                        </li>
-                      </ul>
-                    </div>
-                  </>
-                </>
-              )}
+    <>
+      <h2>Is the Dustbin Overflowing?</h2>
+      <div className="optionscom">
+        <ul>
+          <li>
+            <input
+              type="radio"
+              name="isdustbinOverflowing"
+              id="overflow-yes"
+              className="ansList"
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  isdustbinOverflowing: true,
+                })
+              }
+            />
+            <label htmlFor="overflow-yes" className="ansa">
+              Yes
+            </label>
+          </li>
+          <li>
+            <input
+              type="radio"
+              name="isdustbinOverflowing"
+              id="overflow-no"
+              className="ansList"
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  isdustbinOverflowing: false,
+                })
+              }
+            />
+            <label htmlFor="overflow-no" className="ansb">
+              No
+            </label>
+          </li>
+        </ul>
+      </div>
+    </>
+  </>
+)}
+
 
               {currentQuestion === 7 && (
                 <div className="optionscom">
