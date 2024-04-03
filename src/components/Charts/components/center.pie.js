@@ -5,7 +5,7 @@ Chart.register(...registerables);
 
 function PieChart() {
     const [data, setData] = useState({
-        labels: [In_location, Total],
+        labels: [],
         datasets: [
             {
                 label: "My First dataset",
@@ -26,7 +26,7 @@ function PieChart() {
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                data: [],
+                data: [11,1,3,14,3,56,6,]
             },
         ],
     });
