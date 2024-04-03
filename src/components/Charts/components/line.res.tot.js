@@ -99,6 +99,8 @@ function Line_res_tot() {
                             resolved.push(item.resolved);
                             total.push(item.total);
                         })
+                        resolved.reverse();
+                        total.reverse();
                         setData((prevData) => ({
                             ...prevData,
                             labels: [...prevData.labels],
