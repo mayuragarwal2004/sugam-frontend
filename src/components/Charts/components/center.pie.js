@@ -5,17 +5,17 @@ Chart.register(...registerables);
 
 function PieChart() {
     const [data, setData] = useState({
-        labels: [In_location, Total],
+        labels: ["In_location", "Total"],
         datasets: [
             {
                 label: "My First dataset",
                 fill: false,
                 lineTension: 0.1,
-                backgroundColor: "rgba(75,192,192,0.4)",
+                backgroundColor: ["rgba(75,192,192,0.4)","rgba(255,159,64,0.6)"],
                 borderColor: "rgba(75,192,192,1)",
                 borderCapStyle: "butt",
                 borderDash: [],
-                borderDashOffset: 0.0,
+                borderDashOffset: 0.0,  
                 borderJoinStyle: "miter",
                 pointBorderColor: "rgba(75,192,192,1)",
                 pointBackgroundColor: "#fff",
@@ -26,7 +26,7 @@ function PieChart() {
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                data: [],
+                data: [30,70],
             },
         ],
     });
