@@ -34,7 +34,7 @@ function PieChart() {
     useEffect(() => {
         async function loadPieData() {
             try {
-                const response = await fetch("sugam/api/pie_center", {
+                const response = await fetch("/sugam/charts/pie_center", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

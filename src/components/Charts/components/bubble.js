@@ -26,7 +26,19 @@ function BubbleChart() {
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                data: [],
+                data: [{ x: 30,
+                    y: 20,
+                    r: 10
+            },{   x: 40,
+                y: 10,
+                r: 10},
+                {   x: 35,
+                    y: 15,
+                    r: 100},
+                    {   x: 36,
+                        y: 15,
+                        r: 120}
+            ],
             },
         ],
     });
@@ -34,7 +46,7 @@ function BubbleChart() {
     useEffect(() => {
         async function loadPieData() {
             try {
-                const response = await fetch("sugam/api/bubble", {
+                const response = await fetch("/sugam/charts/bubble", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
