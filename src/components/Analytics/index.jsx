@@ -23,6 +23,8 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import GpsFixedIcon from "@mui/icons-material/GpsFixed";
+import IconButton from "@mui/material/IconButton";
 
 // sort by ward
 // sort by address
@@ -32,13 +34,13 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 // sort by severity
 
 function Analytics() {
-  console.log({ punegeojson });
   const [libraries] = useState(["places"]);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
   const [filterPanel, setFilterPanel] = useState(true);
+  const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
   const [activeMarker, setActiveMarker] = useState(null);
   const fullscreenHandle = useFullScreenHandle();
   const [zoom, setzoom] = useState(15);
@@ -70,6 +72,7 @@ function Analytics() {
     "plant waste": true,
     clothes: true,
     "medical waste": true,
+    "sanitary waste": true,
   });
   const [activeFilters, setactiveFilters] = useState({
     status: true,
@@ -99,8 +102,6 @@ function Analytics() {
       [e.target.name]: e.target.checked,
     });
   };
-
-  console.log(activeMarker);
 
   const handleActiveMarker = (marker) => {
     if (marker === activeMarker) {
@@ -134,7 +135,6 @@ function Analytics() {
     fetch(punegeojson)
       .then((response) => response.json())
       .then((data) => {
-        console.log({ data });
         const formattedData = [];
         data.features.map((shape) => {
           const formattedShape = { properties: shape.properties };
@@ -202,8 +202,6 @@ function Analytics() {
     if (sortByAddessOption === 1 && sortByWardOption === -1)
       filterGeoJSONByWardNo(ward);
   };
-
-  console.log({ sortByWardOption });
 
   useEffect(() => {
     getGeoJson();
@@ -285,7 +283,6 @@ function Analytics() {
       reqbody.locations = locations;
 
     if (type.length > 0) reqbody.type = type;
-    console.log({ reqbody });
     if (process.env.REACT_APP_FRONTEND_ONLY === "true") return;
 
     fetch("/sugam/analytics/getQuery", {
@@ -297,20 +294,31 @@ function Analytics() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log({ data });
         setqueryData(data);
       });
   };
-
-  console.log({ geojson });
-
-  console.log(sortByTimeValue[0].unix(), sortByTimeValue[1].unix());
 
   const handleFilterPanelView = () => {
     setFilterPanel((prev) => !prev);
   };
 
-  console.log({ sortByWardOption });
+  useEffect(() => {
+    const watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setCurrentLocation({ lat: latitude, lng: longitude });
+      },
+      (error) => {
+        console.error("Error getting current location:", error);
+      }
+    );
+
+    return () => {
+      navigator.geolocation.clearWatch(watchId); // Cleanup on unmount
+    };
+  }, []);
+
+  console.log(currentLocation);
 
   return (
     <>
@@ -356,11 +364,25 @@ function Analytics() {
                       handleActiveWard={handleActiveWard}
                       showgeojson={showgeojson}
                       handlePolygonClick={handlePolygonClick}
+                      currentLocation={currentLocation}
                     />
                   )}
                 </>
               </GoogleMap>
             )}
+          </div>
+          <div className="user-location-widget">
+            <IconButton
+              aria-label="previous question"
+              style={{ height: "fit-content" }}
+              onClick={() => {
+                if (currentLocation.lat !== 0 && currentLocation.lng !== 0)
+                  map.setCenter(currentLocation);
+                else alert("Location not available");
+              }}
+            >
+              <GpsFixedIcon />
+            </IconButton>
           </div>
           <div className="main-map-overlay">
             <div
@@ -397,14 +419,13 @@ function Analytics() {
                     }}
                   >
                     <div className="title-main">Complaint Status</div>
-                    <ExpandMoreIcon classname="arrow-icon" />
+                    <ExpandMoreIcon className="arrow-icon" />
                   </div>
                   <div className="left-panel-row-body">
                     <FormGroup>
                       <FormControlLabel
                         control={
                           <Checkbox
-                            defaultChecked
                             name="completed"
                             checked={complaintStatus.completed}
                             onChange={handleComplaintStatus}
@@ -416,7 +437,6 @@ function Analytics() {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            defaultChecked
                             name="notCompleted"
                             checked={complaintStatus.notCompleted}
                             onChange={handleComplaintStatus}
@@ -444,14 +464,13 @@ function Analytics() {
                     }}
                   >
                     <div className="title-main">Sort by garbage type</div>
-                    <ExpandMoreIcon classname="arrow-icon" />
+                    <ExpandMoreIcon className="arrow-icon" />
                   </div>
                   <div className="left-panel-row-body">
                     <FormGroup>
                       <FormControlLabel
                         control={
                           <Checkbox
-                            defaultChecked
                             name="dry waste"
                             checked={sortByTypeOption["dry waste"]}
                             onChange={handleGarbageType}
@@ -463,7 +482,6 @@ function Analytics() {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            defaultChecked
                             name="wet waste"
                             checked={sortByTypeOption["wet waste"]}
                             onChange={handleGarbageType}
@@ -475,7 +493,6 @@ function Analytics() {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            defaultChecked
                             name="construction waste"
                             checked={sortByTypeOption["construction waste"]}
                             onChange={handleGarbageType}
@@ -487,7 +504,6 @@ function Analytics() {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            defaultChecked
                             name="plant waste"
                             checked={sortByTypeOption["plant waste"]}
                             onChange={handleGarbageType}
@@ -499,7 +515,6 @@ function Analytics() {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            defaultChecked
                             name="clothes"
                             checked={sortByTypeOption["clothes"]}
                             onChange={handleGarbageType}
@@ -511,7 +526,6 @@ function Analytics() {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            defaultChecked
                             name="medical waste"
                             checked={sortByTypeOption["medical waste"]}
                             onChange={handleGarbageType}
@@ -523,7 +537,6 @@ function Analytics() {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            defaultChecked
                             name="medical waste"
                             checked={sortByTypeOption["sanitary waste"]}
                             onChange={handleGarbageType}
@@ -550,14 +563,13 @@ function Analytics() {
                     }}
                   >
                     <div className="title-main">Severity</div>
-                    <ExpandMoreIcon classname="arrow-icon" />
+                    <ExpandMoreIcon className="arrow-icon" />
                   </div>
                   <div className="left-panel-row-body">
                     <FormGroup>
                       <FormControlLabel
                         control={
                           <Checkbox
-                            defaultChecked
                             name="low"
                             checked={sortBySeverityOption.low}
                             onChange={handleSeverity}
@@ -569,7 +581,6 @@ function Analytics() {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            defaultChecked
                             name="medium"
                             checked={sortBySeverityOption.medium}
                             onChange={handleSeverity}
@@ -581,7 +592,6 @@ function Analytics() {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            defaultChecked
                             name="high"
                             checked={sortBySeverityOption.high}
                             onChange={handleSeverity}
@@ -609,7 +619,7 @@ function Analytics() {
                     }}
                   >
                     <div className="title-main">Sort by Time</div>
-                    <ExpandMoreIcon classname="arrow-icon" />
+                    <ExpandMoreIcon className="arrow-icon" />
                   </div>
                   <div
                     className="left-panel-row-body"
@@ -673,7 +683,7 @@ function Analytics() {
                     }}
                   >
                     <div className="title-main">Sort by Location</div>
-                    <ExpandMoreIcon classname="arrow-icon" />
+                    <ExpandMoreIcon className="arrow-icon" />
                   </div>
                   <div
                     className="left-panel-row-body"
