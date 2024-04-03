@@ -7,6 +7,14 @@
     function Line_res_tot() {
     //     let Resolved = []; // Define Resolved as an empty array
     // let Total = [];
+    function isJsonString(str) {
+        try {
+          JSON.parse(str);
+        } catch (e) {
+          return false;
+        }
+        return true;
+      }
         const [data, setData] = useState({
         labels: ['1', '2', '3', '4', '5', '6', '7', '8'],
             datasets: [
@@ -61,33 +69,48 @@
             async function loadPieData() {
                 try {
                     const response = await fetch("/sugam/charts/res_tot", {
-                        method: "POST",
+                        method: "GET",
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: "",
                     });
             
-                    if (!response.ok) {
-                        throw new Error("Network response was not ok");
-                    }
+                    // if (!response.ok) {
+                    //     throw new Error("Network response was not ok");
+                    // }
             
-                    const responseData = await response.json();
-                    console.log(responseData); // Check the response data
-                    setData((prevData) => ({
-                        ...prevData,
-                        labels: [...prevData.labels],
-                        datasets: [
-                            {
-                                ...prevData.datasets[0],
-                                data: responseData.resolved,
-                            },
-                            {
-                                ...prevData.datasets[1],
-                                data: responseData.total,
-                            },
-                        ],
-                    }));
+
+                    response.body
+                    .getReader()
+                    .read()
+                    .then(({ value, done }) => {
+                        console.log(new TextDecoder().decode(value));
+                        console.log({ value });
+                        if (isJsonString(new TextDecoder().decode(value))) {
+                            return JSON.parse(new TextDecoder().decode(value));
+                        }
+                        return "";
+                    })
+                    .then((responseData) => {
+                        console.log(responseData);
+                        setData((prevData) => ({
+                            ...prevData,
+                            labels: [...prevData.labels],
+                            datasets: [
+                                {
+                                    ...prevData.datasets[0],
+                                    data: responseData.resolved,
+                                },
+                                {
+                                    ...prevData.datasets[1],
+                                    data: responseData.total,
+                                },
+                            ],
+                        }));
+                    });
+
+
+                    
                 } catch (error) {
                     console.error('There has been a problem with your fetch operation:', error);
                 }

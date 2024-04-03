@@ -4,6 +4,14 @@ import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
 function BubbleChart() {
+    function isJsonString(str) {
+        try {
+          JSON.parse(str);
+        } catch (e) {
+          return false;
+        }
+        return true;
+      }
     const [data, setData] = useState({
         
         datasets: [
@@ -26,19 +34,7 @@ function BubbleChart() {
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                data: [{ x: 30,
-                    y: 20,
-                    r: 10
-            },{   x: 40,
-                y: 10,
-                r: 10},
-                {   x: 35,
-                    y: 15,
-                    r: 100},
-                    {   x: 36,
-                        y: 15,
-                        r: 120}
-            ],
+                data: [],
             },
         ],
     });
@@ -47,27 +43,40 @@ function BubbleChart() {
         async function loadPieData() {
             try {
                 const response = await fetch("/sugam/charts/bubble", {
-                    method: "POST",
+                    method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: "",
                 });
 
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
 
-                const responseData = await response.json();
-                setData((prevData) => ({
-                    ...prevData,
-                    datasets: [
-                        {
-                            ...prevData.datasets[0],
-                            data: responseData,
-                        },
-                    ],
-                }));
+                response.body
+                .getReader()
+                .read()
+                .then(({ value, done }) => {
+                    console.log(new TextDecoder().decode(value));
+                    console.log({ value });
+                    if (isJsonString(new TextDecoder().decode(value))) {
+                        return JSON.parse(new TextDecoder().decode(value));
+                    }
+                    return "";
+                })
+                .then((responseData) => {
+                    console.log(responseData);
+                    setData((prevData) => ({
+                        ...prevData,
+                        datasets: [
+                            {
+                                ...prevData.datasets[0],
+                                data: responseData,
+                            },
+                        ],
+                    }));
+                });
+
             } catch (error) {
                 console.error('There has been a problem with your fetch operation:', error);
             }
