@@ -4,6 +4,14 @@ import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
 function BarChart_w() {
+    function isJsonString(str) {
+        try {
+          JSON.parse(str);
+        } catch (e) {
+          return false;
+        }
+        return true;
+      }
     const [data, setData] = useState({
         labels: ['Dry Waste', 'Plant Waste', 'Construction Waste', 'Wet Waste', 'Clothes','Sanitary Waste','Medical Waste'],
         datasets: [
@@ -42,27 +50,39 @@ function BarChart_w() {
         async function loadPieData() {
             try {
                 const response = await fetch("/sugam/charts/bar_types", {
-                    method: "POST",
+                    method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: "",
+               
                 });
 
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-
-                const responseData = await response.json();
-                setData((prevData) => ({
-                    ...prevData,
-                    datasets: [
-                        {
-                            ...prevData.datasets[0],
-                            data: responseData,
-                        },
-                    ],
-                }));
+                // if (!response.ok) {
+                //     throw new Error("Network response was not ok");
+                // }
+                response.body
+                    .getReader()
+                    .read()
+                    .then(({ value, done }) => {
+                        console.log(new TextDecoder().decode(value));
+                        console.log({ value });
+                        if (isJsonString(new TextDecoder().decode(value))) {
+                            return JSON.parse(new TextDecoder().decode(value));
+                        }
+                        return "";
+                    })
+                    .then((responseData) => {
+                        console.log(responseData);
+                        setData((prevData) => ({
+                            ...prevData,
+                            datasets: [
+                                {
+                                    ...prevData.datasets[0],
+                                    data: responseData,
+                                },
+                            ],
+                        }));
+                    });
             } catch (error) {
                 console.error('There has been a problem with your fetch operation:', error);
             }
