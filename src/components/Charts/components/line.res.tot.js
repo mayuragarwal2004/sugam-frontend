@@ -16,7 +16,7 @@
         return true;
       }
         const [data, setData] = useState({
-        labels: ['1', '2', '3', '4', '5', '6', '7', '8'],
+        labels: ['1', '2', '3', '4', '5', '6', '7'],
             datasets: [
                 {
                 label: "Resolved",
