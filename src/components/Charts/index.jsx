@@ -1,14 +1,20 @@
 import React from 'react';
 import Card from "../Dashboard/DashboardComponents/components/card";
 import General from "../Dashboard/DashboardComponents/General";
+import Bubblechart from "./components/bubble";
+import PieChart from "./components/center.pie";
+import Line_res_tot from "./components/line.res.tot";
+import BarChart_w from "./components/types.of.w.bar";
+import { Bubble } from 'react-chartjs-2';
 
 const index = () => {
   return (
+    <>
     <div
       className="div-carduser"
       style={{
         display: 'flex',
-        flexWrap: 'wrap',
+        flexWrap: 'nowrap',
         gap: '10px',
         padding: "5%",
         backgroundRepeat: "no-repeat",
@@ -142,7 +148,66 @@ const index = () => {
           </div>
         </div>
       </Card>
+
+      
     </div>
+    <div className="chartsdisplay" style={{display:'flex',overflow:'auto',padding:'20px', background: "rgb(160 216 200 / 100%)"}}>
+
+    <Card
+        extra={"items-center w-full h-full p-[16px] bg-cover"}
+        style={{
+        maxWidth:'300px',
+          margin:'10px',
+          width: 'calc(100% - 20px)',
+          display: "flex",
+          justifyContent: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <Bubblechart></Bubblechart>
+      </Card>
+      
+      <Card
+        extra={"items-center w-full h-full p-[16px] bg-cover"}
+        style={{
+          margin:'10px',
+          width: 'calc(100% - 20px)',
+          display: "flex",
+          justifyContent: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+       <PieChart></PieChart>
+      </Card>
+      <Card
+        extra={"items-center w-full h-full p-[16px] bg-cover"}
+        style={{
+          margin:'10px',
+          width: 'calc(100% - 20px)',
+          display: "flex",
+          justifyContent: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <Line_res_tot></Line_res_tot>
+      </Card>
+      <Card
+        extra={"items-center w-full h-full p-[16px] bg-cover"}
+        style={{
+          margin:'10px',
+          width: 'calc(100% - 20px)',
+          display: "flex",
+          justifyContent: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <BarChart_w></BarChart_w>
+      </Card>
+      
+      
+      
+    </div>
+    </>
   )
 }
 

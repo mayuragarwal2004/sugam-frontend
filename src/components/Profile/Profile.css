@@ -6,7 +6,9 @@
 }
 
 .categories {
-  margin: 5%;
+  background: azure;
+  padding: 20px;
+  padding: 5%;
   display: flex;
   flex-direction: row;
   row-gap: 50px;
