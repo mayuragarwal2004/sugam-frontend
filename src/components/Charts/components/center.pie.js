@@ -4,6 +4,15 @@ import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
 function PieChart() {
+    function isJsonString(str) {
+        try {
+          JSON.parse(str);
+        } catch (e) {
+          return false;
+        }
+        return true;
+      }
+    
     const [data, setData] = useState({
         labels: [],
         datasets: [
@@ -35,16 +44,16 @@ function PieChart() {
         async function loadPieData() {
             try {
                 const response = await fetch("/sugam/charts/pie_center", {
-                    method: "POST",
+                    method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: "",
+                  
                 });
 
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
+                // if (!response.ok) {
+                //     throw new Error("Network response was not ok");
+                // }
 
                 response.body
                     .getReader()
