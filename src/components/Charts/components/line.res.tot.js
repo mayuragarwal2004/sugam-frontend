@@ -60,7 +60,7 @@
         useEffect(() => {
             async function loadPieData() {
                 try {
-                    const response = await fetch("sugam/api/res_tot", {
+                    const response = await fetch("/sugam/charts/res_tot", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",

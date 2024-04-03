@@ -41,7 +41,7 @@ function BarChart_w() {
     useEffect(() => {
         async function loadPieData() {
             try {
-                const response = await fetch("sugam/api/bar_types", {
+                const response = await fetch("/sugam/charts/bar_types", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

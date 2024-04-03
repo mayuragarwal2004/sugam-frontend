@@ -11,11 +11,11 @@ function PieChart() {
                 label: "My First dataset",
                 fill: false,
                 lineTension: 0.1,
-                backgroundColor: "rgba(75,192,192,0.4)",
+                backgroundColor: ["rgba(75,192,192,0.4)","rgba(255,159,64,0.6)"],
                 borderColor: "rgba(75,192,192,1)",
                 borderCapStyle: "butt",
                 borderDash: [],
-                borderDashOffset: 0.0,
+                borderDashOffset: 0.0,  
                 borderJoinStyle: "miter",
                 pointBorderColor: "rgba(75,192,192,1)",
                 pointBackgroundColor: "#fff",
@@ -26,7 +26,7 @@ function PieChart() {
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                data: [11,1,3,14,3,56,6,]
+                data: [],
             },
         ],
     });
@@ -34,7 +34,7 @@ function PieChart() {
     useEffect(() => {
         async function loadPieData() {
             try {
-                const response = await fetch("sugam/api/pie_center", {
+                const response = await fetch("/sugam/charts/pie_center", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
