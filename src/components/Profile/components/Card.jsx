@@ -71,11 +71,12 @@ const CardMain = ({ data }) => {
           </IconButton>
         }
         title={data.status}
-        subheader={formatDate(data.resolvedTime)}
+        subheader={formatDate(data.timestamp)}
       />
       <CardMedia
         component="img"
-        height="194"
+        style={{ height: "194px", objectFit: "contain" }}
+        // height="194"
         image={data.imageURL}
         alt="image data"
       />

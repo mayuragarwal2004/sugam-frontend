@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   getStorage,
   ref,
@@ -6,10 +6,13 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import LinearProgress from "@mui/material/LinearProgress";
+import { Button } from "@mui/material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 function FormImageInput(props) {
   const { userImage, handleImageChange } = props;
   const [uploadProgress, setUploadProgress] = useState(undefined);
+  const hiddenFileInput = useRef(null);
 
   function handleChange(e) {
     e.preventDefault();
@@ -69,7 +72,20 @@ function FormImageInput(props) {
         <LinearProgress variant="determinate" value={uploadProgress} />
       )}
       <br />
-      <input type="file" accept="image/*" onChange={handleChange} />
+      <Button
+        variant="contained"
+        onClick={() => hiddenFileInput.current.click()}
+        endIcon={<CloudUploadIcon />}
+      >
+        Click to upload Image
+      </Button>
+      <input
+        type="file"
+        ref={hiddenFileInput}
+        accept="image/*"
+        onChange={handleChange}
+        hidden
+      />
     </>
   );
 }

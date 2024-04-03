@@ -5,8 +5,12 @@ import FormLocation from "./components/FormLocation";
 import FormImageInput from "./components/FormImageInput";
 import options from "./components/options.json";
 import Alert from "@mui/material/Alert";
-import axios from 'axios';
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import IconButton from "@mui/material/IconButton";
 
 const Complaints = () => {
   const [hovered, setHovered] = useState(false);
@@ -28,6 +32,7 @@ const Complaints = () => {
   const navigate = useNavigate();
 
   console.log({ formData });
+  console.log({ currentQuestion });
 
   const questions = [
     "Click the Picture for complaint & give Access of the Location",
@@ -49,10 +54,15 @@ const Complaints = () => {
   };
 
   const handleNext = () => {
+    if (currentQuestion === 0 && formData.imageURL === "") {
+      alert("Please upload an image or wait for image to upload successfully");
+      return;
+    }
     setCurrentQuestion(currentQuestion + 1);
   };
 
   const handlePrevious = () => {
+    if (currentQuestion === 0) return;
     setCurrentQuestion(currentQuestion - 1);
   };
 
@@ -93,19 +103,20 @@ const Complaints = () => {
 
     console.log({ reqBody });
 
-    axios.post('/sugam/user/complaint', reqBody, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    axios
+      .post("/sugam/user/complaint", reqBody, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then((response) => {
         console.log(response);
-        console.log('submitted');
-        alert('Complaint submitted successfully');
-        navigate('/profile/complaints');
+        console.log("submitted");
+        alert("Complaint submitted successfully");
+        navigate("/profile/complaints");
       })
       .catch((error) => {
-        console.error('Error submitting data:', error);
+        console.error("Error submitting data:", error);
       });
     // You can reset the form state or redirect to another page after submission
   };
@@ -143,366 +154,365 @@ const Complaints = () => {
         <div className="background-image"></div>
         <div className="content-container">
           {!clicked && ( // Render only if not clicked
-            <h1
-              className="complaints-heading"
+            <div
               style={{
-                color: hovered ? "red" : "inherit",
-                cursor: "pointer",
+                height: "70vh",
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
               }}
-              onMouseEnter={handleHover}
-              onMouseLeave={() => setHovered(false)}
-              onClick={handleClick}
             >
-              Click to Complaint
-            </h1>
+              <h1
+                className="complaints-heading"
+                style={{
+                  color: hovered ? "red" : "inherit",
+                  cursor: "pointer",
+                }}
+                onMouseEnter={handleHover}
+                onMouseLeave={() => setHovered(false)}
+                onClick={handleClick}
+              >
+                Click to Complaint
+              </h1>
+            </div>
           )}
-          <br />
           {clicked && (
-            <div className="form-container">
-              <h2>
-                {questions[currentQuestion]}
-                {currentQuestion <= 2 && (
-                  <span className="required-star" style={{ color: "red" }}>
-                    *
-                  </span>
+            <div className="form-container-parent">
+              <IconButton
+                aria-label="previous question"
+                disabled={currentQuestion <= 0}
+                onClick={handlePrevious}
+                style={{ height: "fit-content" }}
+              >
+                <ArrowBackIosIcon
+                  sx={{ color: currentQuestion <= 0 ? "grey" : "white" }}
+                />
+              </IconButton>
+              <div className="form-container">
+                <h2>
+                  {questions[currentQuestion]}
+                  {currentQuestion <= 2 && (
+                    <span className="required-star" style={{ color: "red" }}>
+                      *
+                    </span>
+                  )}
+                </h2>
+                {/* Render input fields based on current question */}
+                {currentQuestion === 0 && (
+                  <>
+                    <div id="recaptcha-container"></div>
+                    <div
+                      className="loc"
+                      style={{ backgroundColor: "aliceblue", padding: "10px" }}
+                    >
+                      <FormLocation
+                        loc={formData.location}
+                        handleLocationChange={handleLocationChange}
+                      />
+                    </div>
+
+                    <div
+                      className="field"
+                      style={{
+                        backgroundColor: "aliceblue",
+                        marginTop: "10px",
+                        padding: "10px",
+                      }}
+                    >
+                      <FormImageInput
+                        userImage={formData.imageURL}
+                        handleImageChange={handleImageChange}
+                      />
+                    </div>
+                  </>
                 )}
-              </h2>
-              {/* Render input fields based on current question */}
-              {currentQuestion === 0 && (
-                <>
-                  <div id="recaptcha-container"></div>
-                  <div
-                    className="loc"
-                    style={{ backgroundColor: "aliceblue", padding: "10px" }}
-                  >
-                    <FormLocation
-                      loc={formData.location}
-                      handleLocationChange={handleLocationChange}
-                    />
-                  </div>
-
-                  <div
-                    className="field"
-                    style={{
-                      backgroundColor: "aliceblue",
-                      marginTop: "10px",
-                      padding: "10px",
-                    }}
-                  >
-                    <FormImageInput
-                      userImage={formData.imageURL}
-                      handleImageChange={handleImageChange}
-                    />
-                  </div>
-                </>
-              )}
-              {currentQuestion === 1 && (
-                <div className="optionscom">
-                  <ul>
-                    {options.severity.map((option) => (
-                      <li key={option.value}>
-                        <input
-                          type="radio"
-                          name="option"
-                          id={option.value}
-                          className="ansList"
-                          onChange={(e) =>
-                            setFormData({ ...formData, severity: e.target.id })
-                          }
-                          // value={formData.severity}
-                        />
-                        <label htmlFor={option.value} className="ansa">
-                          {option.label}
-                        </label>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {currentQuestion === 2 && (
-                <div className="optionscom">
-                  <ul>
-                    {options.wasteType.map((option) => (
-                      <li key={option.value}>
-                        <input
-                          type="checkbox"
-                          name="option"
-                          id={option.value}
-                          className="ansList"
-                          onChange={(e) => {
-                            setFormData((prev) => {
-                              let newwasteType = prev.majorComponent.slice(); // Create a copy of the current array
-                              const index = newwasteType.indexOf(e.target.id);
-                              if (index === -1) {
-                                newwasteType.push(e.target.id);
-                              } else {
-                                newwasteType.splice(index, 1); // Remove the element at index
-                              }
-                              return {
-                                ...prev,
-                                majorComponent: newwasteType, // Set the new array with checked items
-                              };
-                            });
-                          }}
-                        />
-                        <label htmlFor={option.value} className="ansa">
-                          {option.label}
-                        </label>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {currentQuestion === 3 && (
-                <div className="optionscom">
-                  <ul>
-                    {options.percentRecycle.map((option) => (
-                      <li key={option.value}>
-                        <input
-                          type="radio"
-                          name="option"
-                          id={option.value}
-                          className="ansList"
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              percentRecycled: e.target.id,
-                            })
-                          }
-                        />
-                        <label htmlFor={option.value} className="ansa">
-                          {option.label}
-                        </label>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {currentQuestion === 4 && (
-                <div className="optionscom">
-                  <ul>
-                    {options.siteClean.map((option) => (
-                      <li key={option.value}>
-                        <input
-                          type="radio"
-                          name="option"
-                          id={option.value}
-                          className="ansList"
-                          onChange={(e) =>
-                            setFormData({ ...formData, sinceWhen: e.target.id })
-                          }
-                        />
-                        <label htmlFor={option.value} className="ansa">
-                          {option.label}
-                        </label>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {currentQuestion === 5 && (
-                <div className="optionscom">
-                  <ul>
-                    {options.siteCategory.map((option) => (
-                      <li key={option.value}>
-                        <input
-                          type="radio"
-                          name="option"
-                          id={option.value}
-                          className="ansList"
-                          onChange={(e) =>
-                            setFormData({ ...formData, category: e.target.id })
-                          }
-                        />
-                        <label htmlFor={option.value} className="ansa">
-                          {option.label}
-                        </label>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {currentQuestion === 6 && (
-                <>
+                {currentQuestion === 1 && (
                   <div className="optionscom">
                     <ul>
-                      <li>
-                        <input
-                          type="radio"
-                          name="isdustbin"
-                          id="dustbin-yes"
-                          className="ansList"
-                          onChange={(e) =>
-                            setFormData({ ...formData, isdustbin: true })
-                          }
-                        />
-                        <label htmlFor="dustbin-yes" className="ansa">
-                          Yes
-                        </label>
-                      </li>
-                      <li>
-                        <input
-                          type="radio"
-                          name="isdustbin"
-                          id="dustbin-no"
-                          className="ansList"
-                          onChange={(e) =>
-                            setFormData({ ...formData, isdustbin: false })
-                          }
-                        />
-                        <label htmlFor="dustbin-no" className="ansb">
-                          No
-                        </label>
-                      </li>
+                      {options.severity.map((option) => (
+                        <li key={option.value}>
+                          <input
+                            type="radio"
+                            name="option"
+                            id={option.value}
+                            className="ansList"
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                severity: e.target.id,
+                              })
+                            }
+                            // value={formData.severity}
+                          />
+                          <label htmlFor={option.value} className="ansa">
+                            {option.label}
+                          </label>
+                        </li>
+                      ))}
                     </ul>
                   </div>
+                )}
+                {currentQuestion === 2 && (
+                  <div className="optionscom">
+                    <ul>
+                      {options.wasteType.map((option) => (
+                        <li key={option.value}>
+                          <input
+                            type="checkbox"
+                            name="option"
+                            id={option.value}
+                            className="ansList"
+                            onChange={(e) => {
+                              setFormData((prev) => {
+                                let newwasteType = prev.majorComponent.slice(); // Create a copy of the current array
+                                const index = newwasteType.indexOf(e.target.id);
+                                if (index === -1) {
+                                  newwasteType.push(e.target.id);
+                                } else {
+                                  newwasteType.splice(index, 1); // Remove the element at index
+                                }
+                                return {
+                                  ...prev,
+                                  majorComponent: newwasteType, // Set the new array with checked items
+                                };
+                              });
+                            }}
+                          />
+                          <label htmlFor={option.value} className="ansa">
+                            {option.label}
+                          </label>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {currentQuestion === 3 && (
+                  <div className="optionscom">
+                    <ul>
+                      {options.percentRecycle.map((option) => (
+                        <li key={option.value}>
+                          <input
+                            type="radio"
+                            name="option"
+                            id={option.value}
+                            className="ansList"
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                percentRecycled: e.target.id,
+                              })
+                            }
+                          />
+                          <label htmlFor={option.value} className="ansa">
+                            {option.label}
+                          </label>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {currentQuestion === 4 && (
+                  <div className="optionscom">
+                    <ul>
+                      {options.siteClean.map((option) => (
+                        <li key={option.value}>
+                          <input
+                            type="radio"
+                            name="option"
+                            id={option.value}
+                            className="ansList"
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                sinceWhen: e.target.id,
+                              })
+                            }
+                          />
+                          <label htmlFor={option.value} className="ansa">
+                            {option.label}
+                          </label>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
+                {currentQuestion === 5 && (
+                  <div className="optionscom">
+                    <ul>
+                      {options.siteCategory.map((option) => (
+                        <li key={option.value}>
+                          <input
+                            type="radio"
+                            name="option"
+                            id={option.value}
+                            className="ansList"
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                category: e.target.id,
+                              })
+                            }
+                          />
+                          <label htmlFor={option.value} className="ansa">
+                            {option.label}
+                          </label>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {currentQuestion === 6 && (
                   <>
-                    <h2>Is the Dustbin Overflowing?</h2>
                     <div className="optionscom">
                       <ul>
                         <li>
                           <input
                             type="radio"
-                            name="isdustbinOverflowing"
-                            id="overflow-yes"
+                            name="isdustbin"
+                            id="dustbin-yes"
                             className="ansList"
                             onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                isdustbinOverflowing: true,
-                              })
+                              setFormData({ ...formData, isdustbin: true })
                             }
                           />
-                          <label htmlFor="overflow-yes" className="ansa">
+                          <label htmlFor="dustbin-yes" className="ansa">
                             Yes
                           </label>
                         </li>
                         <li>
                           <input
                             type="radio"
-                            name="isdustbinOverflowing"
-                            id="overflow-no"
+                            name="isdustbin"
+                            id="dustbin-no"
                             className="ansList"
                             onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                isdustbinOverflowing: false,
-                              })
+                              setFormData({ ...formData, isdustbin: false })
                             }
                           />
-                          <label htmlFor="overflow-no" className="ansb">
+                          <label htmlFor="dustbin-no" className="ansb">
                             No
                           </label>
                         </li>
                       </ul>
                     </div>
+
+                    <>
+                      <h2>Is the Dustbin Overflowing?</h2>
+                      <div className="optionscom">
+                        <ul>
+                          <li>
+                            <input
+                              type="radio"
+                              name="isdustbinOverflowing"
+                              id="overflow-yes"
+                              className="ansList"
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  isdustbinOverflowing: true,
+                                })
+                              }
+                            />
+                            <label htmlFor="overflow-yes" className="ansa">
+                              Yes
+                            </label>
+                          </li>
+                          <li>
+                            <input
+                              type="radio"
+                              name="isdustbinOverflowing"
+                              id="overflow-no"
+                              className="ansList"
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  isdustbinOverflowing: false,
+                                })
+                              }
+                            />
+                            <label htmlFor="overflow-no" className="ansb">
+                              No
+                            </label>
+                          </li>
+                        </ul>
+                      </div>
+                    </>
                   </>
-                </>
-              )}
+                )}
 
-              {currentQuestion === 7 && (
-                <div className="optionscom">
-                  <ul>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="a"
-                        className="ansList"
-                        onChange={(e) => {
-                          setFormData({ ...formData, isPMCcollecting: true });
-                        }}
-                      />
-                      <label htmlFor="a" className="ansa">
-                        Yes
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="radio"
-                        name="option"
-                        id="b"
-                        className="ansList"
-                        onChange={(e) => {
-                          setFormData({ ...formData, isPMCcollecting: false });
-                        }}
-                      />
-                      <label htmlFor="b" className="ansb">
-                        No
-                      </label>
-                    </li>
-                  </ul>
+                {currentQuestion === 7 && (
+                  <div className="optionscom">
+                    <ul>
+                      <li>
+                        <input
+                          type="radio"
+                          name="option"
+                          id="a"
+                          className="ansList"
+                          onChange={(e) => {
+                            setFormData({ ...formData, isPMCcollecting: true });
+                          }}
+                        />
+                        <label htmlFor="a" className="ansa">
+                          Yes
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="radio"
+                          name="option"
+                          id="b"
+                          className="ansList"
+                          onChange={(e) => {
+                            setFormData({
+                              ...formData,
+                              isPMCcollecting: false,
+                            });
+                          }}
+                        />
+                        <label htmlFor="b" className="ansb">
+                          No
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+
+                <div className="prev-next-buttons">
+                  <Button
+                    variant="contained"
+                    onClick={handleSubmit}
+                    style={{ width: "30%" }}
+                    disabled={submitDisabled}
+                  >
+                    Submit
+                  </Button>
+                  {showAlert && (
+                    <Alert
+                      style={{
+                        position: "absolute",
+                        top: "100%",
+                        left: "40%",
+                        paddingTop: "5px",
+                      }}
+                      severity="success"
+                    >
+                      Success
+                    </Alert>
+                  )}
                 </div>
-              )}
-
-              <div className="prev-next-buttons">
-                {currentQuestion < 6 ? (
-                  <Button
-                    variant="outlined"
-                    onClick={handleNext}
-                    style={{ width: "20%" }}
-                  >
-                    Next
-                  </Button>
-                ) : (
-                  <Button
-                    variant="outlined"
-                    disabled
-                    style={{
-                      width: "20%",
-                      backgroundColor: "lightgray",
-                      color: "gray",
-                    }}
-                  >
-                    Next
-                  </Button>
-                )}
-                {currentQuestion > 0 ? (
-                  <Button
-                    variant="outlined"
-                    onClick={handlePrevious}
-                    style={{ width: "20%" }}
-                  >
-                    Previous
-                  </Button>
-                ) : (
-                  <Button
-                    variant="outlined"
-                    disabled
-                    style={{
-                      width: "20%",
-                      backgroundColor: "lightgray",
-                      color: "gray",
-                    }}
-                  >
-                    Previous
-                  </Button>
-                )}
-
-                <Button
-                  variant="contained"
-                  onClick={handleSubmit}
-                  style={{ width: "30%" }}
-                  disabled={submitDisabled}
-                >
-                  Submit
-                </Button>
-                {showAlert && (
-                  <Alert
-                    style={{
-                      position: "absolute",
-                      top: "100%",
-                      left: "40%",
-                      paddingTop: "5px",
-                    }}
-                    severity="success"
-                  >
-                    Success
-                  </Alert>
-                )}
               </div>
+              <IconButton
+                aria-label="next question"
+                disabled={currentQuestion > 6}
+                onClick={handleNext}
+                style={{ height: "fit-content" }}
+              >
+                <ArrowForwardIosIcon
+                  sx={{ color: currentQuestion > 6 ? "grey" : "white" }}
+                />
+              </IconButton>
             </div>
           )}
           <div
