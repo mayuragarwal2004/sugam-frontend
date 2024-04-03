@@ -200,7 +200,15 @@
   right: calc(0px - var(--right-panel-width));
 }
 
-.left-panel-main-parent {
+.filter-panel-main-parent {
+  position: relative;
+  z-index: 5;
+  background-color: transparent;
+  width: var(--filter-panel-width);
+  transition: all 0.7s ease;
+}
+
+.left-panel-main-parent{
   position: initial;
   z-index: 5;
   display: flex;
@@ -211,6 +219,39 @@
   overflow: auto;
   height: calc(var(--maps-body-height) - 150px);
 }
+
+.arrow-main-parent {
+  margin-right: 10px;
+  padding: 20px 10px;
+  border-radius: 5px;
+  background-color: #b3b3b3;
+  right: -70px;
+  position: absolute;
+  top: 50px;
+  z-index: 10;
+}
+
+#arrow-main {
+  color: #000000;
+  transition: all 1s ease;
+}
+
+.filter-panel-main-parent.inactive .arrow-main {
+  transform: rotate(180deg);
+}
+
+.filter-panel-main-parent.active .arrow-main {
+  transform: rotate(0deg);
+}
+
+.filter-panel-main-parent.active {
+  left: 0px;
+}
+
+.filter-panel-main-parent.inactive {
+  left: calc(0px - var(--filter-panel-width));
+}
+
 
 .right-panel-main-parent {
   background-color: white;
@@ -231,9 +272,16 @@
 /* fullscreen maps end */
 
 :root {
-  --default-maps-body-height: calc(100vh - 64px);
+  --default-maps-body-height: calc(100vh);
   --maps-body-height: var(--default-maps-body-height);
   --right-panel-width: 30%;
+  --filter-panel-width: 30%;
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --filter-panel-width: 80%;
+  }
 }
 
 .left-panel-row-title {

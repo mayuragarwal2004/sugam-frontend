@@ -6,7 +6,7 @@ import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { app } from "../../base";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import Button from "@mui/material/Button";
-import punegeojson from "./pune.geojson"
+import punegeojson from "./pune.geojson";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Box from "@mui/material/Box";
@@ -22,6 +22,7 @@ import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 // sort by ward
 // sort by address
@@ -31,12 +32,13 @@ import Checkbox from "@mui/material/Checkbox";
 // sort by severity
 
 function Analytics() {
-  console.log({punegeojson});
+  console.log({ punegeojson });
   const [libraries] = useState(["places"]);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
+  const [filterPanel, setFilterPanel] = useState(true);
   const [activeMarker, setActiveMarker] = useState(null);
   const fullscreenHandle = useFullScreenHandle();
   const [zoom, setzoom] = useState(15);
@@ -304,6 +306,12 @@ function Analytics() {
 
   console.log(sortByTimeValue[0].unix(), sortByTimeValue[1].unix());
 
+  const handleFilterPanelView = () => {
+    setFilterPanel((prev) => !prev);
+  };
+
+  console.log({ sortByWardOption });
+
   return (
     <>
       <FullScreen handle={fullscreenHandle}>
@@ -355,380 +363,399 @@ function Analytics() {
             )}
           </div>
           <div className="main-map-overlay">
-            <div className="left-panel-main-parent">
+            <div
+              className={"filter-panel-main-parent ".concat(
+                filterPanel ? "active" : "inactive"
+              )}
+            >
               <div
-                className={`left-panel-row ${
-                  activeFilters.status ? "" : "inactive"
-                }`}
-                style={{ marginBottom: "10px" }}
+                className="arrow-main-parent"
+                onClick={handleFilterPanelView}
               >
-                <div
-                  className="left-panel-row-title"
-                  onClick={() => {
-                    setactiveFilters({
-                      ...activeFilters,
-                      status: !activeFilters.status,
-                    });
-                  }}
-                >
-                  <div className="title-main">Complaint Status</div>
-                  <ExpandMoreIcon classname="arrow-icon" />
-                </div>
-                <div className="left-panel-row-body">
-                  <FormGroup>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          defaultChecked
-                          name="completed"
-                          checked={complaintStatus.completed}
-                          onChange={handleComplaintStatus}
-                          value={complaintStatus.completed}
-                        />
-                      }
-                      label="Completed"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          defaultChecked
-                          name="notCompleted"
-                          checked={complaintStatus.notCompleted}
-                          onChange={handleComplaintStatus}
-                          value={complaintStatus.notCompleted}
-                        />
-                      }
-                      label="Not Completed"
-                    />
-                  </FormGroup>
-                </div>
+                {
+                  <ArrowBackIosNewIcon
+                    sx={{ color: "white" }}
+                    className="arrow-main"
+                    id="arrow-main"
+                  />
+                }
               </div>
-              <div
-                className={`left-panel-row ${
-                  activeFilters.type ? "" : "inactive"
-                }`}
-                style={{ marginBottom: "10px" }}
-              >
+              <div className="left-panel-main-parent">
                 <div
-                  className="left-panel-row-title"
-                  onClick={() => {
-                    setactiveFilters({
-                      ...activeFilters,
-                      type: !activeFilters.type,
-                    });
-                  }}
+                  className={`left-panel-row ${
+                    activeFilters.status ? "" : "inactive"
+                  }`}
+                  style={{ marginBottom: "10px" }}
                 >
-                  <div className="title-main">Sort by garbage type</div>
-                  <ExpandMoreIcon classname="arrow-icon" />
-                </div>
-                <div className="left-panel-row-body">
-                  <FormGroup>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          defaultChecked
-                          name="dry waste"
-                          checked={sortByTypeOption["dry waste"]}
-                          onChange={handleGarbageType}
-                          value={sortByTypeOption["dry waste"]}
-                        />
-                      }
-                      label="Dry Waste"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          defaultChecked
-                          name="wet waste"
-                          checked={sortByTypeOption["wet waste"]}
-                          onChange={handleGarbageType}
-                          value={sortByTypeOption["wet waste"]}
-                        />
-                      }
-                      label="Wet Waste"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          defaultChecked
-                          name="construction waste"
-                          checked={sortByTypeOption["construction waste"]}
-                          onChange={handleGarbageType}
-                          value={sortByTypeOption["construction waste"]}
-                        />
-                      }
-                      label="Construction Waste"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          defaultChecked
-                          name="plant waste"
-                          checked={sortByTypeOption["plant waste"]}
-                          onChange={handleGarbageType}
-                          value={sortByTypeOption["plant waste"]}
-                        />
-                      }
-                      label="Plant Waste"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          defaultChecked
-                          name="clothes"
-                          checked={sortByTypeOption["clothes"]}
-                          onChange={handleGarbageType}
-                          value={sortByTypeOption["clothes"]}
-                        />
-                      }
-                      label="Clothes"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          defaultChecked
-                          name="medical waste"
-                          checked={sortByTypeOption["medical waste"]}
-                          onChange={handleGarbageType}
-                          value={sortByTypeOption["medical waste"]}
-                        />
-                      }
-                      label="Medical Waste"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          defaultChecked
-                          name="medical waste"
-                          checked={sortByTypeOption["sanitary waste"]}
-                          onChange={handleGarbageType}
-                          value={sortByTypeOption["sanitary waste"]}
-                        />
-                      }
-                      label="Sanitary Waste"
-                    />
-                  </FormGroup>
-                </div>
-              </div>
-              <div
-                className={`left-panel-row ${
-                  activeFilters.severity ? "" : "inactive"
-                }`}
-              >
-                <div
-                  className="left-panel-row-title"
-                  onClick={() => {
-                    setactiveFilters({
-                      ...activeFilters,
-                      severity: !activeFilters.severity,
-                    });
-                  }}
-                >
-                  <div className="title-main">Severity</div>
-                  <ExpandMoreIcon classname="arrow-icon" />
-                </div>
-                <div className="left-panel-row-body">
-                  <FormGroup>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          defaultChecked
-                          name="low"
-                          checked={sortBySeverityOption.low}
-                          onChange={handleSeverity}
-                          value={sortBySeverityOption.low}
-                        />
-                      }
-                      label="Low"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          defaultChecked
-                          name="medium"
-                          checked={sortBySeverityOption.medium}
-                          onChange={handleSeverity}
-                          value={sortBySeverityOption.medium}
-                        />
-                      }
-                      label="Medium"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          defaultChecked
-                          name="high"
-                          checked={sortBySeverityOption.high}
-                          onChange={handleSeverity}
-                          value={sortBySeverityOption.high}
-                        />
-                      }
-                      label="High"
-                    />
-                  </FormGroup>
-                </div>
-              </div>
-              <div
-                className={`left-panel-row ${
-                  activeFilters.time ? "" : "inactive"
-                }`}
-              >
-                <div
-                  className="left-panel-row-title"
-                  style={{ marginTop: "20px" }}
-                  onClick={() => {
-                    setactiveFilters({
-                      ...activeFilters,
-                      time: !activeFilters.time,
-                    });
-                  }}
-                >
-                  <div className="title-main">Sort by Time</div>
-                  <ExpandMoreIcon classname="arrow-icon" />
-                </div>
-                <div
-                  className="left-panel-row-body"
-                  style={{ marginTop: "10px" }}
-                >
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">
-                      Sort by time
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={sortByTimeOption}
-                      MenuProps={{
-                        disableScrollLock: true,
-                      }}
-                      label="Sort by time"
-                      onChange={(e) => setsortByTimeOption(e.target.value)}
-                    >
-                      <MenuItem value={"24 hours"}>Last 24 hours</MenuItem>
-                      <MenuItem value={"2 days"}>Last 2 day</MenuItem>
-                      <MenuItem value={"4 days"}>Last 4 days</MenuItem>
-                      <MenuItem value={"1 week"}>Last 1 week</MenuItem>
-                      <MenuItem value={"custom"}>Custom Time Input</MenuItem>
-                    </Select>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      {sortByTimeOption === "custom" && (
-                        <DemoContainer
-                          components={["DateRangePicker", "DateRangePicker"]}
-                        >
-                          <DemoItem
-                            label="Choose Date Range"
-                            component="DateRangePicker"
-                          >
-                            <DateRangePicker
-                              value={sortByTimeValue}
-                              onChange={(newValue) =>
-                                setsortByTimeValue(newValue)
-                              }
-                            />
-                          </DemoItem>
-                        </DemoContainer>
-                      )}
-                    </LocalizationProvider>
-                  </FormControl>
-                </div>
-              </div>
-              <div
-                className={`left-panel-row ${
-                  activeFilters.location ? "" : "inactive"
-                }`}
-              >
-                <div
-                  className="left-panel-row-title"
-                  style={{ marginTop: "20px" }}
-                  onClick={() => {
-                    setactiveFilters({
-                      ...activeFilters,
-                      location: !activeFilters.location,
-                    });
-                  }}
-                >
-                  <div className="title-main">Sort by Location</div>
-                  <ExpandMoreIcon classname="arrow-icon" />
-                </div>
-                <div
-                  className="left-panel-row-body"
-                  style={{ marginTop: "10px" }}
-                >
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">
-                      View data by
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={sortByAddessOption}
-                      label="View data by"
-                      onChange={(e) => {
-                        setsortByAddessOption(e.target.value);
-                        setshowgeojson(true);
-                        if (e.target.value === 2) {
-                          map.setCenter(center);
-                          map.setZoom(13);
+                  <div
+                    className="left-panel-row-title"
+                    onClick={() => {
+                      setactiveFilters({
+                        ...activeFilters,
+                        status: !activeFilters.status,
+                      });
+                    }}
+                  >
+                    <div className="title-main">Complaint Status</div>
+                    <ExpandMoreIcon classname="arrow-icon" />
+                  </div>
+                  <div className="left-panel-row-body">
+                    <FormGroup>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked
+                            name="completed"
+                            checked={complaintStatus.completed}
+                            onChange={handleComplaintStatus}
+                            value={complaintStatus.completed}
+                          />
                         }
-                        if (e.target.value === 1) {
-                          setgeojson(citygeojson);
+                        label="Completed"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked
+                            name="notCompleted"
+                            checked={complaintStatus.notCompleted}
+                            onChange={handleComplaintStatus}
+                            value={complaintStatus.notCompleted}
+                          />
                         }
-                        if (e.target.value === 0) {
-                          setshowgeojson(false);
-                          setsortByWardOption([]);
+                        label="Not Completed"
+                      />
+                    </FormGroup>
+                  </div>
+                </div>
+                <div
+                  className={`left-panel-row ${
+                    activeFilters.type ? "" : "inactive"
+                  }`}
+                  style={{ marginBottom: "10px" }}
+                >
+                  <div
+                    className="left-panel-row-title"
+                    onClick={() => {
+                      setactiveFilters({
+                        ...activeFilters,
+                        type: !activeFilters.type,
+                      });
+                    }}
+                  >
+                    <div className="title-main">Sort by garbage type</div>
+                    <ExpandMoreIcon classname="arrow-icon" />
+                  </div>
+                  <div className="left-panel-row-body">
+                    <FormGroup>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked
+                            name="dry waste"
+                            checked={sortByTypeOption["dry waste"]}
+                            onChange={handleGarbageType}
+                            value={sortByTypeOption["dry waste"]}
+                          />
                         }
-                      }}
-                    >
-                      <MenuItem value={0}>No Sort</MenuItem>
-                      <MenuItem value={1}>Ward</MenuItem>
-                      <MenuItem value={2}>City</MenuItem>
-                    </Select>
-                  </FormControl>
-                  {sortByAddessOption === 1 && (
-                    <FormControl fullWidth style={{ marginTop: "10px" }}>
+                        label="Dry Waste"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked
+                            name="wet waste"
+                            checked={sortByTypeOption["wet waste"]}
+                            onChange={handleGarbageType}
+                            value={sortByTypeOption["wet waste"]}
+                          />
+                        }
+                        label="Wet Waste"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked
+                            name="construction waste"
+                            checked={sortByTypeOption["construction waste"]}
+                            onChange={handleGarbageType}
+                            value={sortByTypeOption["construction waste"]}
+                          />
+                        }
+                        label="Construction Waste"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked
+                            name="plant waste"
+                            checked={sortByTypeOption["plant waste"]}
+                            onChange={handleGarbageType}
+                            value={sortByTypeOption["plant waste"]}
+                          />
+                        }
+                        label="Plant Waste"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked
+                            name="clothes"
+                            checked={sortByTypeOption["clothes"]}
+                            onChange={handleGarbageType}
+                            value={sortByTypeOption["clothes"]}
+                          />
+                        }
+                        label="Clothes"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked
+                            name="medical waste"
+                            checked={sortByTypeOption["medical waste"]}
+                            onChange={handleGarbageType}
+                            value={sortByTypeOption["medical waste"]}
+                          />
+                        }
+                        label="Medical Waste"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked
+                            name="medical waste"
+                            checked={sortByTypeOption["sanitary waste"]}
+                            onChange={handleGarbageType}
+                            value={sortByTypeOption["sanitary waste"]}
+                          />
+                        }
+                        label="Sanitary Waste"
+                      />
+                    </FormGroup>
+                  </div>
+                </div>
+                <div
+                  className={`left-panel-row ${
+                    activeFilters.severity ? "" : "inactive"
+                  }`}
+                >
+                  <div
+                    className="left-panel-row-title"
+                    onClick={() => {
+                      setactiveFilters({
+                        ...activeFilters,
+                        severity: !activeFilters.severity,
+                      });
+                    }}
+                  >
+                    <div className="title-main">Severity</div>
+                    <ExpandMoreIcon classname="arrow-icon" />
+                  </div>
+                  <div className="left-panel-row-body">
+                    <FormGroup>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked
+                            name="low"
+                            checked={sortBySeverityOption.low}
+                            onChange={handleSeverity}
+                            value={sortBySeverityOption.low}
+                          />
+                        }
+                        label="Low"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked
+                            name="medium"
+                            checked={sortBySeverityOption.medium}
+                            onChange={handleSeverity}
+                            value={sortBySeverityOption.medium}
+                          />
+                        }
+                        label="Medium"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked
+                            name="high"
+                            checked={sortBySeverityOption.high}
+                            onChange={handleSeverity}
+                            value={sortBySeverityOption.high}
+                          />
+                        }
+                        label="High"
+                      />
+                    </FormGroup>
+                  </div>
+                </div>
+                <div
+                  className={`left-panel-row ${
+                    activeFilters.time ? "" : "inactive"
+                  }`}
+                >
+                  <div
+                    className="left-panel-row-title"
+                    style={{ marginTop: "20px" }}
+                    onClick={() => {
+                      setactiveFilters({
+                        ...activeFilters,
+                        time: !activeFilters.time,
+                      });
+                    }}
+                  >
+                    <div className="title-main">Sort by Time</div>
+                    <ExpandMoreIcon classname="arrow-icon" />
+                  </div>
+                  <div
+                    className="left-panel-row-body"
+                    style={{ marginTop: "10px" }}
+                  >
+                    <FormControl fullWidth>
                       <InputLabel id="demo-simple-select-label">
-                        Choose Ward
+                        Sort by time
                       </InputLabel>
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={sortByWardOption}
-                        label="Choose Ward"
+                        value={sortByTimeOption}
+                        MenuProps={{
+                          disableScrollLock: true,
+                        }}
+                        label="Sort by time"
+                        onChange={(e) => setsortByTimeOption(e.target.value)}
+                      >
+                        <MenuItem value={"24 hours"}>Last 24 hours</MenuItem>
+                        <MenuItem value={"2 days"}>Last 2 day</MenuItem>
+                        <MenuItem value={"4 days"}>Last 4 days</MenuItem>
+                        <MenuItem value={"1 week"}>Last 1 week</MenuItem>
+                        <MenuItem value={"custom"}>Custom Time Input</MenuItem>
+                      </Select>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        {sortByTimeOption === "custom" && (
+                          <DemoContainer
+                            components={["DateRangePicker", "DateRangePicker"]}
+                          >
+                            <DemoItem
+                              label="Choose Date Range"
+                              component="DateRangePicker"
+                            >
+                              <DateRangePicker
+                                value={sortByTimeValue}
+                                onChange={(newValue) =>
+                                  setsortByTimeValue(newValue)
+                                }
+                              />
+                            </DemoItem>
+                          </DemoContainer>
+                        )}
+                      </LocalizationProvider>
+                    </FormControl>
+                  </div>
+                </div>
+                <div
+                  className={`left-panel-row ${
+                    activeFilters.location ? "" : "inactive"
+                  }`}
+                >
+                  <div
+                    className="left-panel-row-title"
+                    style={{ marginTop: "20px" }}
+                    onClick={() => {
+                      setactiveFilters({
+                        ...activeFilters,
+                        location: !activeFilters.location,
+                      });
+                    }}
+                  >
+                    <div className="title-main">Sort by Location</div>
+                    <ExpandMoreIcon classname="arrow-icon" />
+                  </div>
+                  <div
+                    className="left-panel-row-body"
+                    style={{ marginTop: "10px" }}
+                  >
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">
+                        View data by
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={sortByAddessOption}
+                        label="View data by"
                         onChange={(e) => {
-                          setsortByWardOption(e.target.value);
-                          if (e.target.value === -1) {
+                          setsortByAddessOption(e.target.value);
+                          setshowgeojson(true);
+                          if (e.target.value === 2) {
+                            map.setCenter(center);
+                            map.setZoom(13);
+                          }
+                          if (e.target.value === 1) {
                             setgeojson(citygeojson);
-                            setshowgeojson(true);
-                          } else if (e.target.value === -2) {
-                            // get current ward
+                          }
+                          if (e.target.value === 0) {
                             setshowgeojson(false);
-                          } else {
-                            setshowgeojson(true);
-
-                            setgeojson(() =>
-                              filterGeoJSONByWardNo(e.target.value)
-                            );
+                            setsortByWardOption(-1);
                           }
                         }}
                       >
-                        <MenuItem value={-1}>Select Ward</MenuItem>
-                        <MenuItem value={-2}>Get Current Ward</MenuItem>
-                        {citygeojson &&
-                          citygeojson.map((shape, index) => (
-                            <MenuItem
-                              value={shape.properties["ward"]}
-                              key={index}
-                            >
-                              {shape.properties["name-mr"]}
-                            </MenuItem>
-                          ))}
+                        <MenuItem value={0}>No Sort</MenuItem>
+                        <MenuItem value={1}>Ward</MenuItem>
+                        <MenuItem value={2}>City</MenuItem>
                       </Select>
                     </FormControl>
-                  )}
+                    {sortByAddessOption === 1 && (
+                      <FormControl fullWidth style={{ marginTop: "10px" }}>
+                        <InputLabel id="demo-simple-select-label">
+                          Choose Ward
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={sortByWardOption}
+                          label="Choose Ward"
+                          onChange={(e) => {
+                            setsortByWardOption(e.target.value);
+                            if (e.target.value === -1) {
+                              setgeojson(citygeojson);
+                              setshowgeojson(true);
+                            } else if (e.target.value === -2) {
+                              // get current ward
+                              setshowgeojson(false);
+                            } else {
+                              setshowgeojson(true);
+
+                              setgeojson(() =>
+                                filterGeoJSONByWardNo(e.target.value)
+                              );
+                            }
+                          }}
+                        >
+                          <MenuItem value={-1}>Select Ward</MenuItem>
+                          <MenuItem value={-2}>Get Current Ward</MenuItem>
+                          {citygeojson &&
+                            citygeojson.map((shape, index) => (
+                              <MenuItem
+                                value={shape.properties["ward"]}
+                                key={index}
+                              >
+                                {shape.properties["name-mr"]}
+                              </MenuItem>
+                            ))}
+                        </Select>
+                      </FormControl>
+                    )}
+                  </div>
                 </div>
+                <Button onClick={getNewData}>Get Data</Button>
               </div>
-              <Button onClick={getNewData}>Get Data</Button>
             </div>
+            <div>hello</div>
             {/* <div className="right-panel-main-parent">right hello</div> */}
           </div>
         </div>
