@@ -222,8 +222,8 @@ function Analytics() {
     }
 
     if (sortByTimeOption === "custom") {
-      time1 = sortByTimeValue[0].toISOString();
-      time2 = sortByTimeValue[1].toISOString();
+      time1 = sortByTimeValue[0].startOf('day').toISOString();
+      time2 = sortByTimeValue[1].endOf('day').toISOString();
     } else {
       time2 = dayjs().toISOString();
     }
@@ -538,7 +538,7 @@ function Analytics() {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            name="medical waste"
+                            name="sanitary waste"
                             checked={sortByTypeOption["sanitary waste"]}
                             onChange={handleGarbageType}
                             value={sortByTypeOption["sanitary waste"]}
