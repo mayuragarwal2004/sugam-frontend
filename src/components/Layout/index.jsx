@@ -12,15 +12,33 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import "./Layout.css";
+import { useAuth } from "../context/auth/AuthState";
 
 const pages = ["Complaints", "Analytics", "About Us"];
 const settings = ["Profile", "Dashboard", "Logout"];
 
+const avatarColors = [
+  "D28100",
+  "D1423F",
+  "DC1677",
+  "C233A0",
+  "6163E1",
+  "246DB6",
+  "008290",
+  "7BA100",
+  "9355D2",
+  "627A89",
+];
+const currentAvatarColor =
+  "#" + avatarColors[Math.floor(Math.random() * avatarColors.length)];
+
 const Layout = () => {
   const [anchorElNav, setAnchorElNav] = React.useState("");
   const [anchorElUser, setAnchorElUser] = React.useState("");
+  const { currentUser, currentUserRole } = useAuth();
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -35,6 +53,13 @@ const Layout = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    // clear cookies and refresh
+    fetch("/sugam/api/logout").then(() => {
+      navigate("/login");
+    });
   };
 
   return (
@@ -90,12 +115,12 @@ const Layout = () => {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                <Link to="Complaints">
+                <Link to="complaints">
                   <MenuItem onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">Complaints</Typography>
                   </MenuItem>
                 </Link>
-                <Link to="Analytics">
+                <Link to="analytics">
                   <MenuItem onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">Analytics</Typography>
                   </MenuItem>
@@ -103,6 +128,11 @@ const Layout = () => {
                 <Link to="aboutus">
                   <MenuItem onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">About Us</Typography>
+                  </MenuItem>
+                </Link>
+                <Link to="track">
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">Track</Typography>
                   </MenuItem>
                 </Link>
               </Menu>
@@ -127,68 +157,85 @@ const Layout = () => {
               SUGAM
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Link to="Complaints">
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">Complaints</Typography>
-                  </MenuItem>
-                </Link>
-                <Link to="Analytics">
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">Analytics</Typography>
-                  </MenuItem>
-                </Link>
-                <Link to="aboutus">
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">About Us</Typography>
-                  </MenuItem>
-                </Link>
+              <Link to="complaints">
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Complaints</Typography>
+                </MenuItem>
+              </Link>
+              <Link to="analytics">
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Analytics</Typography>
+                </MenuItem>
+              </Link>
+              <Link to="aboutus">
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">About Us</Typography>
+                </MenuItem>
+              </Link>
+              <Link to="track">
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">Track</Typography>
+                </MenuItem>
+              </Link>
             </Box>
 
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src="/static/images/avatar/2.jpg"
-                    sx={{ backgroundColor: "white", color: "black" }}
-                  />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                <Link to="Profile">
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">Profile</Typography>
+            {currentUser ? (
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <AvatarImage
+                      name={currentUser.displayName}
+                      // photoURL={currentUser.photoURL}
+                      currentAvatarColor={currentAvatarColor}
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <Link to="Profile">
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">Profile</Typography>
+                    </MenuItem>
+                  </Link>
+                  <Link to="aboutus">
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">About Us</Typography>
+                    </MenuItem>
+                  </Link>
+                  <Link to="charts">
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">Dashboard</Typography>
+                    </MenuItem>
+                  </Link>
+                  <MenuItem onClick={handleLogout}>
+                    <Typography textAlign="center">Logout</Typography>
                   </MenuItem>
+                </Menu>
+              </Box>
+            ) : (
+              <Box sx={{ flexGrow: 0 }}>
+                {/* //add login button */}
+                <Link to="login">
+                  <Button variant="contained" color="success">
+                    Login
+                  </Button>
                 </Link>
-                <Link to="aboutus">
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">About Us</Typography>
-                  </MenuItem>
-                </Link>
-                <Link to="charts">
-                <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">Dashboard</Typography>
-                  </MenuItem>
-                </Link>
-                  
-                
-              </Menu>
-            </Box>
+              </Box>
+            )}
           </Toolbar>
         </Container>
       </AppBar>
@@ -199,7 +246,7 @@ const Layout = () => {
         <div className="footer-big">
           <div className="footer-containermain">
             <div className="row">
-              <div className="col-lg-3 col-sm-6" >
+              <div className="col-lg-3 col-sm-6">
                 <div className="footer-widget">
                   <div className="widget-about">
                     <img
@@ -235,7 +282,7 @@ const Layout = () => {
                 </div>
               </div>
 
-              <div className="col-lg-3 col-sm-6" style={{marginTop:'100px'}}>
+              <div className="col-lg-3 col-sm-6" style={{ marginTop: "100px" }}>
                 <div className="footer-widget">
                   <div className="footer-menu">
                     <h4 className="footer-widget-title">Popular Category</h4>
@@ -255,7 +302,7 @@ const Layout = () => {
                 </div>
               </div>
 
-              <div className="col-lg-3 col-sm-6" style={{marginTop:'100px'}}>
+              <div className="col-lg-3 col-sm-6" style={{ marginTop: "100px" }}>
                 <div className="footer-widget">
                   <div className="footer-menu">
                     <h4 className="footer-widget-title">Our Team</h4>
@@ -267,7 +314,7 @@ const Layout = () => {
                         <Link to="">Home</Link>
                       </li>
                       <li>
-                      <Link to="dashboard">Dashboard</Link>
+                        <Link to="dashboard">Dashboard</Link>
                       </li>
                     </ul>
                   </div>
@@ -280,5 +327,29 @@ const Layout = () => {
     </div>
   );
 };
+
+function stringAvatar(name) {
+  const abbreviation =
+    name.search(" ") === -1
+      ? `${name.split(" ")[0][0]}`
+      : `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`;
+  return {
+    children: abbreviation,
+  };
+}
+
+function AvatarImage(props) {
+  const { name, photoURL, currentAvatarColor } = props;
+  //   return <div></div>
+  if (Boolean(photoURL)) {
+    return <Avatar alt={name} src={photoURL} />;
+  } else if (Boolean(name)) {
+    return (
+      <Avatar {...stringAvatar(name)} sx={{ bgcolor: currentAvatarColor }} />
+    );
+  } else {
+    return <Avatar alt={name} src={photoURL} />;
+  }
+}
 
 export default Layout;

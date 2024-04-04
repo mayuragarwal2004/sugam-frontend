@@ -34,10 +34,14 @@
   position: relative;
 }
 
+.column {
+  padding: 5px;
+  width: 50%;
+}
+
 .column img {
   float: left;
-  margin: 5px;
-  width: 50%;
+  width: 100%;
 }
 
 .row1 {

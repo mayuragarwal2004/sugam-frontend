@@ -6,7 +6,8 @@ import NotValidForm from "./NotValidForm";
 import ResolvedForm from "./ResolvedForm";
 
 const AnalyticsConfirmation = (props) => {
-  const { open, onYes, onNo, setOpen, data, activeMarker } = props;
+  const { open, onYes, handleResolveFormClose, setOpen, data, activeMarker } =
+    props;
   function handleClose() {
     setOpen((prev) => ({ ...prev, state: true, lastClicked: "Not Valid" }));
   }
@@ -21,7 +22,10 @@ const AnalyticsConfirmation = (props) => {
       open={open.state}
     >
       <div className="analytics-form-overlay">
-        <CloseIcon onClick={onNo} className="overlay-confirmation-close" />
+        <CloseIcon
+          onClick={handleResolveFormClose}
+          className="overlay-confirmation-close"
+        />
         {!open.confirm && (
           <>
             <div>Are you sure?</div>
@@ -30,7 +34,7 @@ const AnalyticsConfirmation = (props) => {
                 size="small"
                 variant="contained"
                 color="error"
-                onClick={onNo}
+                onClick={handleResolveFormClose}
               >
                 No
               </Button>
@@ -45,8 +49,20 @@ const AnalyticsConfirmation = (props) => {
             </div>
           </>
         )}
-        {open.confirm && open.lastClicked === "Not Valid" && <NotValidForm data={data} activeMarker={activeMarker} />}
-        {open.confirm && open.lastClicked === "Resolved" && <ResolvedForm data={data} activeMarker={activeMarker} />}
+        {open.confirm && open.lastClicked === "Not Valid" && (
+          <NotValidForm
+            data={data}
+            handleResolveFormClose={handleResolveFormClose}
+            activeMarker={activeMarker}
+          />
+        )}
+        {open.confirm && open.lastClicked === "Resolved" && (
+          <ResolvedForm
+            data={data}
+            handleResolveFormClose={handleResolveFormClose}
+            activeMarker={activeMarker}
+          />
+        )}
       </div>
     </Backdrop>
   );

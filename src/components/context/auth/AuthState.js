@@ -3,21 +3,13 @@ import React, { useContext, createContext, useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import AuthContext from "./AuthContext";
 import { auth } from "../../../base";
+import { isJsonString } from "../../../utilityFunctions";
 
 const AuthState = (props) => {
   const [currentUser, setcurrentUser] = useState(0);
   const [currentUserRole, setcurrentUserRole] = useState();
 
   console.log({ currentUser, currentUserRole });
-
-  function isJsonString(str) {
-    try {
-      JSON.parse(str);
-    } catch (e) {
-      return false;
-    }
-    return true;
-  }
 
   const getUserData = () => {
     fetch("/sugam/api/get")

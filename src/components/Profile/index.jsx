@@ -7,6 +7,7 @@ import { useAuth } from "../context/auth/AuthState";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../base";
 import "./Profile.css";
+import { isJsonString } from "../../utilityFunctions";
 
 const Profile = () => {
   const { currentUser } = useAuth();
@@ -15,15 +16,6 @@ const Profile = () => {
     Complete: 6,
     Pending: 19,
   });
-
-  function isJsonString(str) {
-    try {
-      JSON.parse(str);
-    } catch (e) {
-      return false;
-    }
-    return true;
-  }
 
   async function getUserData() {
     ///sugam/user/getIssueSum
@@ -90,7 +82,10 @@ const Profile = () => {
 
         {/* Name and position */}
         <div className="mt-16 flex flex-col items-center">
-          <h4 className="text-xl font-bold text-navy-700">
+          <h4
+            className="text-xl font-bold text-navy-700"
+            style={{ color: "black" }}
+          >
             {currentUser.username}
           </h4>
           {/* <p className="text-base font-normal text-gray-600">Product Manager</p> */}

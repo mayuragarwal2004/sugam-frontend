@@ -35,6 +35,7 @@ export default function Map(props) {
     showgeojson,
     handlePolygonClick,
     currentLocation,
+    getNewData,
   } = props;
   const [open, setOpen] = useState({
     state: false,
@@ -45,7 +46,6 @@ export default function Map(props) {
   const [activeDocID, setActiveDocID] = useState(null);
   const [lastClicked, setlastClicked] = useState(null);
 
-  console.log(activeMarker);
   function imgClick(src) {
     setCurrImg(src);
   }
@@ -67,8 +67,11 @@ export default function Map(props) {
         : handleResolved();
     setOpen((prev) => ({ ...prev, confirm: true }));
   }
-  function onNo() {
+  function handleResolveFormClose(refresh = false) {
     setOpen({ state: false, lastClicked: null, confirm: null });
+    if (refresh) {
+      getNewData();
+    }
   }
 
   function handleReportNotValid() {
@@ -78,7 +81,9 @@ export default function Map(props) {
     console.log("Reported Resolved");
   }
 
-  console.log({ activeWard });
+  console.log({ data });
+
+  console.log({ open });
 
   return (
     <>
@@ -88,7 +93,7 @@ export default function Map(props) {
           open={open}
           setOpen={setOpen}
           onYes={onYes}
-          onNo={onNo}
+          handleResolveFormClose={handleResolveFormClose}
           data={data}
           activeMarker={activeMarker}
         />

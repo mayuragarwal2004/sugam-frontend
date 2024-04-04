@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
+import { isJsonString } from "../../../utilityFunctions";
 
 const ListComplaints = () => {
   const [data, setData] = useState({});
-  function isJsonString(str) {
-    try {
-      JSON.parse(str);
-    } catch (e) {
-      return false;
-    }
-    return true;
-  }
 
   const getUserData = () => {
     fetch("/sugam/user/getIssues")

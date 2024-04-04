@@ -1,16 +1,22 @@
 /* eslint-disable default-case */
 // import logo from './logo.svg';
 // import './ImageInput.css';
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import LinearProgress from "@mui/material/LinearProgress";
+import { Button } from "@mui/material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 function ResolvedFormImageInput(props) {
   const { img, setimg } = props;
+  const [uploadProgress, setUploadProgress] = useState(undefined);
+  const hiddenFileInput = useRef(null);
+
   function handleChange(e) {
     if (e.target.files.length === 0) {
       return;
@@ -32,35 +38,17 @@ function ResolvedFormImageInput(props) {
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-        }
+        if (progress <= 30) setUploadProgress(30);
+        else setUploadProgress(progress);
       },
       (error) => {
-        // A full list of error codes is available at
-        // https://firebase.google.com/docs/storage/web/handle-errors
-        switch (error.code) {
-          case "storage/unauthorized":
-            // User doesn't have permission to access the object
-            break;
-          case "storage/canceled":
-            // User canceled the upload
-            break;
-
-          // ...
-
-          case "storage/unknown":
-            // Unknown error occurred, inspect error.serverResponse
-            break;
-        }
+        console.error("Error uploading file:", error);
       },
       () => {
+        setTimeout(() => {
+          setUploadProgress(undefined);
+          console.log("Upload completed");
+        }, 2000);
         // Upload completed successfully, now we can get the download URL
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
@@ -76,10 +64,25 @@ function ResolvedFormImageInput(props) {
       </label>
       <br />
       {img && <img src={img} style={{ maxHeight: "100px" }} alt="img" />}
+      <br />
+      {/* Progress bar */}
+      {uploadProgress !== undefined && (
+        <LinearProgress variant="determinate" value={uploadProgress} />
+      )}
+      <br />
+      <Button
+        variant="contained"
+        onClick={() => hiddenFileInput.current.click()}
+        endIcon={<CloudUploadIcon />}
+      >
+        Click to upload Image
+      </Button>
       <input
         type="file"
         id="img"
         name="img"
+        ref={hiddenFileInput}
+        hidden
         onChange={handleChange}
         accept="image/*"
         style={{ minWidth: "200px" }}

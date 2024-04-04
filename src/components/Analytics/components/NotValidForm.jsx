@@ -15,7 +15,7 @@ const options = [
 ];
 
 const NotValidForm = (props) => {
-  const { data, activeMarker } = props;
+  const { data, activeMarker, handleResolveFormClose } = props;
   const [value, setvalue] = useState(null);
   const { currentUser, currentUserRole } = useAuth();
 
@@ -26,6 +26,7 @@ const NotValidForm = (props) => {
     }
     fetch(`/sugam/user/markInvalid?id=${data[activeMarker].id}&msg=${value}`)
       .then((response) => {
+        handleResolveFormClose(true);
         console.log(response);
       })
       .then(console.log("submitted"));

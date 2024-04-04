@@ -38,7 +38,9 @@ function FormImageInput(props) {
         console.error("Error uploading file:", error);
       },
       () => {
-        setUploadProgress(undefined);
+        setTimeout(() => {
+          setUploadProgress(undefined);
+        }, 2000);
         // Upload completed successfully, get download URL
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);

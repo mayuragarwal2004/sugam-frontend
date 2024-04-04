@@ -10,6 +10,7 @@ import Dashboard from "./components/Dashboard";
 import Complaints from "./components/Complaints";
 import AboutUs from "./components/Aboutus";
 import ListComplaints from "./components/Profile/components/ListComplaints";
+import TrackComplaint from "./components/TrackComplaint";
 import Charts from "./components/Charts";
 
 // import  Bubble from "./components/Charts/components/bubble";
@@ -28,6 +29,7 @@ function App() {
                 <Route path="profile/complaints" element={<ListComplaints />} />
               </Route>
               <Route path="analytics" element={<Analytics />} />
+              <Route path="track" element={<TrackComplaint />} />
               {/* <Route path="form" element={<Form />} /> */}
               <Route path="dashboard" element={<Dashboard />} />
               {/* <Route path="auth" element={<LoginSignUp />} /> */}

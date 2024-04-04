@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import "./Home.css";
 import MenuIcon from "@mui/icons-material/Menu";
+import { isJsonString } from "../../utilityFunctions";
 
 const Home = () => {
   const [img, setimg] = useState(1);
@@ -30,15 +31,6 @@ const Home = () => {
   }
   function currentSlide(v) {
     setimg(v);
-  }
-
-  function isJsonString(str) {
-    try {
-      JSON.parse(str);
-    } catch (e) {
-      return false;
-    }
-    return true;
   }
 
   const getAnalyticData = async () => {

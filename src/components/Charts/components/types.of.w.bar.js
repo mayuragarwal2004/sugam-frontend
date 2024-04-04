@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Pie,Bar } from "react-chartjs-2";
 import { Chart, registerables } from 'chart.js';
+import { isJsonString } from "../../../utilityFunctions";
 Chart.register(...registerables);
 
 function BarChart_w() {
-    function isJsonString(str) {
-        try {
-          JSON.parse(str);
-        } catch (e) {
-          return false;
-        }
-        return true;
-      }
     const [data, setData] = useState({
         labels: ['Dry Waste', 'Plant Waste', 'Construction Waste', 'Wet Waste', 'Clothes','Sanitary Waste','Medical Waste'],
         datasets: [

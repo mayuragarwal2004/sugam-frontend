@@ -3,9 +3,10 @@ import { useAuth } from "../../context/auth/AuthState";
 import ResolvedFormImageInput from "./ResolvedFormImageInput";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../base";
+import { Button } from "@mui/material";
 
 const ResolvedForm = (props) => {
-  const { data, activeMarker } = props;
+  const { data, activeMarker, handleResolveFormClose } = props;
   const [img, setimg] = useState(null);
   const { currentUser, currentUserRole } = useAuth();
 
@@ -18,6 +19,7 @@ const ResolvedForm = (props) => {
     fetch(`/sugam/user/markComplete?id=${data[activeMarker].id}&url=${img}`)
       .then((response) => {
         console.log(response);
+        handleResolveFormClose(true);
       })
       .then(console.log("submitted"));
   }
@@ -30,9 +32,9 @@ const ResolvedForm = (props) => {
         <ResolvedFormImageInput img={img} setimg={setimg} />
       </div>
       <div>
-        <button onClick={handleSubmit} id="submitbtn">
+        <Button onClick={handleSubmit} id="submitbtn">
           Submit
-        </button>
+        </Button>
       </div>
     </>
   );

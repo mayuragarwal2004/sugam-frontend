@@ -318,8 +318,6 @@ function Analytics() {
     };
   }, []);
 
-  console.log(currentLocation);
-
   return (
     <>
       <FullScreen handle={fullscreenHandle}>
@@ -355,6 +353,7 @@ function Analytics() {
                   {queryData && (
                     <Map
                       data={queryData}
+                      getNewData={getNewData}
                       activeMarker={activeMarker}
                       setActiveMarker={setActiveMarker}
                       handleActiveMarker={handleActiveMarker}
