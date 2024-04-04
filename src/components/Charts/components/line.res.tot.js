@@ -103,7 +103,7 @@
 
         return (
             <div>
-                <div style={{height:'400px',width:'600px'}}>
+                <div style={{height:'300px',width:'600px'}}>
                     <Line data={data} />
                 </div>
             </div>

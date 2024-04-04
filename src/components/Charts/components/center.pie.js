@@ -26,7 +26,7 @@ function PieChart() {
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                data: [],
+                data: [12,34,45,2,34,45,5],
             },
         ],
     });
