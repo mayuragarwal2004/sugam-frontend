@@ -3,16 +3,18 @@ import React from "react";
 import { useState } from "react";
 import "./General.css";
 
-const General = ({ apiKey }) => {
+const General = () => {
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = () => {
     // navigator.clipboard.writeText("");
-    navigator.share({
-      title: 'SUGAM',
-      text: 'Complaint here',
-      url: 'https://www.example.com'
-    })
+    navigator
+      .share({
+        title: "SUGAM",
+        text: "Complaint here",
+        url: "https://www.example.com",
+      })
+      .catch(console.error);
     setCopied(true);
     setTimeout(() => {
       setCopied(false);

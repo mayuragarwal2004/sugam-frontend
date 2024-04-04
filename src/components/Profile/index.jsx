@@ -51,82 +51,92 @@ const Profile = () => {
 
   return (
     <div
-      className="div-carduser"
       style={{
-        padding: "20%",
-        paddingRight: "20%",
-        paddingTop: "3%",
-        paddingBottom: "10%",
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "fixed",
         background: "rgb(160 216 200 / 100%)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "30px 0",
       }}
     >
-      <Card
-        extra={"items-center w-full h-full p-[16px] bg-cover"}
+      <div
+        className="div-carduser"
         style={{
-          display: "flex",
-          justifyContent: "center",
-          backgroundColor: "#fff",
+          // padding: "20%",
+          // paddingRight: "20%",
+          // paddingTop: "3%",
+          // paddingBottom: "10%",
+          width: "80%",
         }}
       >
-        {/* Background and profile */}
-        <div
-          className="relative mt-1 flex h-32 w-full justify-center rounded-xl bg-cover"
-          style={{ backgroundImage: `url(banner.png)` }}
-        >
-          <div className="absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400 dark:!border-navy-700">
-            {/* <img className="h-full w-full rounded-full" src={avatar} alt="" /> */}
-          </div>
-        </div>
-
-        {/* Name and position */}
-        <div className="mt-16 flex flex-col items-center">
-          <h4
-            className="text-xl font-bold text-navy-700"
-            style={{ color: "black" }}
-          >
-            {currentUser.username}
-          </h4>
-          {/* <p className="text-base font-normal text-gray-600">Product Manager</p> */}
-        </div>
-
-        {/* Post followers */}
-        <div
-          className="mb-3 mt-6 profile-div md:!gap-14"
+        <Card
+          extra={"items-center w-full h-full p-[16px] bg-cover"}
           style={{
-            gap: "4px",
-            ...(window.innerWidth <= 400 && { display: "block" }),
+            display: "flex",
+            justifyContent: "center",
+            backgroundColor: "#fff",
           }}
         >
-          <div className="flex flex-col items-center justify-center">
-            <p className="text-2xl font-bold text-navy-700 dark:text-white">
-              {userData && userData.Complete + userData.Pending}
-            </p>
-            <p className="text-sm font-normal text-gray-600">
-              Compaints Registered
-            </p>
+          {/* Background and profile */}
+          <div
+            className="relative mt-1 flex h-32 w-full justify-center rounded-xl bg-cover"
+            style={{ backgroundImage: `url(banner.png)` }}
+          >
+            <div className="absolute -bottom-12 flex h-[87px] w-[87px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400 dark:!border-navy-700">
+              {/* <img className="h-full w-full rounded-full" src={avatar} alt="" /> */}
+            </div>
           </div>
-          <div className="flex flex-col items-center justify-center">
-            <p className="text-2xl font-bold text-navy-700 dark:text-white">
-              {userData && userData.Complete}
-            </p>
-            <p className="text-sm font-normal text-gray-600">
-              Complaints Solved
-            </p>
+
+          {/* Name and position */}
+          <div className="mt-16 flex flex-col items-center">
+            <h4
+              className="text-xl font-bold text-navy-700"
+              style={{ color: "black" }}
+            >
+              {currentUser.username}
+            </h4>
+            {/* <p className="text-base font-normal text-gray-600">Product Manager</p> */}
           </div>
-          <div className="flex flex-col items-center justify-center">
-            <p className="text-2xl font-bold text-navy-700 dark:text-white">
-              {userData && userData.Pending}
-            </p>
-            <p className="text-sm font-normal text-gray-600">
-              Complaints pending
-            </p>
+
+          {/* Post followers */}
+          <div
+            className="mb-3 mt-6 profile-div md:!gap-14"
+            style={{
+              gap: "4px",
+              ...(window.innerWidth <= 400 && { display: "block" }),
+            }}
+          >
+            <div className="flex flex-col items-center justify-center">
+              <p className="text-2xl font-bold text-navy-700 dark:text-white">
+                {userData && userData.Complete + userData.Pending}
+              </p>
+              <p className="text-sm font-normal text-gray-600">
+                Compaints Registered
+              </p>
+            </div>
+            <div className="flex flex-col items-center justify-center">
+              <p className="text-2xl font-bold text-navy-700 dark:text-white">
+                {userData && userData.Complete}
+              </p>
+              <p className="text-sm font-normal text-gray-600">
+                Complaints Solved
+              </p>
+            </div>
+            <div className="flex flex-col items-center justify-center">
+              <p className="text-2xl font-bold text-navy-700 dark:text-white">
+                {userData && userData.Pending}
+              </p>
+              <p className="text-sm font-normal text-gray-600">
+                Complaints pending
+              </p>
+            </div>
           </div>
+        </Card>
+        <div className="generalinfo" style={{ paddingTop: "40px" }}>
+          {userData && <General />}
         </div>
-      </Card>
-      <div className="generalinfo" style={{ paddingTop: "40px" }}>
-        {userData && <General apiKey="kl" />}
       </div>
     </div>
   );

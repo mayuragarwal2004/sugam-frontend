@@ -16,9 +16,19 @@ const ResolvedForm = (props) => {
       alert("Please select an image");
       return;
     }
-    fetch(`/sugam/user/markComplete?id=${data[activeMarker].id}&url=${img}`)
-      .then((response) => {
-        console.log(response);
+    fetch("/sugam/user/markComplete", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: data[activeMarker].id,
+        url: img,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
         handleResolveFormClose(true);
       })
       .then(console.log("submitted"));
