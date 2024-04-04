@@ -7,7 +7,12 @@ const General = ({ apiKey }) => {
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(apiKey);
+    // navigator.clipboard.writeText("");
+    navigator.share({
+      title: 'SUGAM',
+      text: 'Complaint here',
+      url: 'https://www.example.com'
+    })
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
@@ -27,7 +32,7 @@ const General = ({ apiKey }) => {
             className="absolute top-2 right-2 bg-blue-500 px-2 py-1 rounded hover:bg-blue-600 transition"
             onClick={copyToClipboard}
           >
-            {copied ? "Copied" : "Share"}
+            {copied ? "Share" : "Share"}
           </button>
         </div>
       </div>
