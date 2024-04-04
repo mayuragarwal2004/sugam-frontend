@@ -7,7 +7,7 @@ import Line_res_tot from "./components/line.res.tot";
 import BarChart_w from "./components/types.of.w.bar";
 import { Bubble } from "react-chartjs-2";
 
-const Index = () => {
+const Charts = () => {
   function isJsonString(str) {
     try {
       JSON.parse(str);
@@ -29,14 +29,14 @@ const Index = () => {
         .read()
         .then(({ value, done }) => {
           const decodedValue = new TextDecoder().decode(value);
-          console.log(decodedValue);
+          console.log({decodedValue});
           console.log({ value });
           if (isJsonString(decodedValue)) {
-            const data = JSON.parse(decodedValue)[0];
+            const data = JSON.parse(decodedValue);
             console.log({ data });
-            setNumber1(data.total);
-            setNumber2(data.complete);
-            setNumber3(data.pending);
+            setNumber1(data?.total || 0);
+            setNumber2(data?.resolved || 0);
+            setNumber3(data?.pending || 0);
           }
         });
     });
@@ -264,4 +264,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Charts;
