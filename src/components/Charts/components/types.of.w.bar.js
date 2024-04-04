@@ -9,7 +9,7 @@ function BarChart_w() {
         labels: ['Wet Waste', 'Plant Waste', 'Construction Waste','Clothes','Dry Waste','Medical Waste','Sanitary Waste'],
         datasets: [
             {
-                label: "Types of Wastes",
+                label: "Types of Wastes (in %)",
                 fill: false,
                 lineTension: 0.1,
                 backgroundColor: [

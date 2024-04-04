@@ -218,6 +218,7 @@ function Analytics() {
   }, [
     citygeojson,
     complaintStatus,
+    sortByWardOption,
     sortByTimeOption,
     sortBySeverityOption,
     sortByTypeOption,
