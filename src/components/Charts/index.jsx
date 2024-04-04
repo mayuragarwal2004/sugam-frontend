@@ -35,7 +35,7 @@ const Charts = () => {
             const data = JSON.parse(decodedValue);
             console.log({ data });
             setNumber1(data?.total || 0);
-            setNumber2(data?.resolved || 0);
+            setNumber2(data?.complete || 0);
             setNumber3(data?.pending || 0);
           }
         });
