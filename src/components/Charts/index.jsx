@@ -9,19 +9,34 @@ import BarChart_w from "./components/types.of.w.bar";
 import { Bubble } from 'react-chartjs-2';
 
 const index = () => {
-  const [number1, setNumber1] = useState(null);
-  const [number2, setNumber2] = useState(null);
-  const [number3, setNumber3] = useState(null);
-
-  useEffect(() => {
-      fetch('/sugam/charts/total_com')
-          .then(response => response.json())
-          .then(data => {
-              setNumber1(data.total); 
-              setNumber2(data.resolved); 
-              setNumber3(data.pending); 
-          });
-  }, []);
+  function isJsonString(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+useEffect(() => {
+  fetch('/sugam/charts/total_com')
+      .then((response) => {
+          console.log(response);
+          response.body
+              .getReader()
+              .read()
+              .then(({ value, done }) => {
+                  const decodedValue = new TextDecoder().decode(value);
+                  console.log(decodedValue);
+                  console.log({ value });
+                  if (isJsonString(decodedValue)) {
+                      const data = JSON.parse(decodedValue);
+                      setNumber1(data.total); 
+                      setNumber2(data.resolved); 
+                      setNumber3(data.pending); 
+                  }
+              });
+      });
+}, []);
 
   return (
     <>
