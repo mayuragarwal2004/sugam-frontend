@@ -22,7 +22,7 @@ const General = ({ apiKey }) => {
           <p className="text-sm text-gray-600">
             Share about your contributions on SUGAM!!
           </p>
-          <p className="text-base font-medium text-navy-700">{apiKey}</p>
+          {/* <p className="text-base font-medium text-navy-700">{apiKey}</p> */}
           <button
             className="absolute top-2 right-2 bg-blue-500 px-2 py-1 rounded hover:bg-blue-600 transition"
             onClick={copyToClipboard}

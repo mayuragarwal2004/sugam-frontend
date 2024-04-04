@@ -47,8 +47,8 @@ function Analytics() {
   const [map, setMap] = useState(null);
   const [sortByTimeOption, setsortByTimeOption] = useState("24 hours");
   const [sortByTimeValue, setsortByTimeValue] = useState([
-    dayjs("2022-04-17"),
-    dayjs("2022-04-21"),
+    dayjs(),
+    dayjs().add(1, "day"),
   ]);
   const [complaintStatus, setcomplaintStatus] = useState({
     completed: true,
@@ -236,6 +236,8 @@ function Analytics() {
     } else if (sortByTimeOption === "1 week") {
       time1 = dayjs().subtract(1, "week").toISOString();
     }
+
+    console.log({ time1, time2 })
 
     if (sortBySeverityOption.low) {
       severity.push("LOW");

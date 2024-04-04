@@ -194,7 +194,7 @@ export default function Map(props) {
                           />
                         </div>
                         <p>
-                          <b>Name: </b> {doc.fullname}
+                          <b>Name: </b> {doc.userID}
                           <br />
                           <b>Components Of Garbage: </b>{" "}
                           {doc.wasteType.map((x, i) =>
@@ -204,14 +204,26 @@ export default function Map(props) {
                           <b>Chronic Site: </b>
                           {parseInt(doc.wasteType) > 3 ? "Yes" : "No"}
                           <br />
-                          <b>How often the site is cleaned: </b>{" "}
-                          {doc.siteCleanFrequency}
-                          <br />
-                          <b>Recycle% : </b> {doc.wasteRecyclable}
-                          <br />
-                          <b>Since when is garbage overflowing?: </b>
-                          {doc.siteUncleanDuration}
-                          <br />
+                          {doc.siteCleanFrequency && (
+                            <>
+                              <b>How often the site is cleaned: </b>{" "}
+                              {doc.siteCleanFrequency}
+                              <br />
+                            </>
+                          )}
+                          {doc.wasteRecyclable && (
+                            <>
+                              <b>Recycle% : </b> {doc.wasteRecyclable}
+                              <br />
+                            </>
+                          )}
+                          {doc.siteUncleanDuration && (
+                            <>
+                              <b>Since when is garbage overflowing?: </b>
+                              {doc.siteUncleanDuration}
+                              <br />
+                            </>
+                          )}
                           There is{" "}
                           {doc.dustbin === "Yes" ? (
                             <>

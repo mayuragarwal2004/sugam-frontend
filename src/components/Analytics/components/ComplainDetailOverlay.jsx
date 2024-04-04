@@ -23,7 +23,7 @@ const ComplainDetailOverlay = (props) => {
                 {doc.notValid && (
                   <p>Not Valid Reported: {doc.notValid.length}</p>
                 )}
-                <b>Name: </b> {doc.fullname}
+                <b>Name: </b> {doc.userID}
                 <br />
                 <b>Components Of Garbage: </b>{" "}
                 {doc.wasteType.map((x, i) =>

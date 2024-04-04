@@ -37,7 +37,7 @@ const currentAvatarColor =
 const Layout = () => {
   const [anchorElNav, setAnchorElNav] = React.useState("");
   const [anchorElUser, setAnchorElUser] = React.useState("");
-  const { currentUser, currentUserRole } = useAuth();
+  const { currentUser, getUserData } = useAuth();
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
@@ -58,6 +58,7 @@ const Layout = () => {
   const handleLogout = () => {
     // clear cookies and refresh
     fetch("/sugam/api/logout").then(() => {
+      getUserData();
       navigate("/login");
     });
   };
