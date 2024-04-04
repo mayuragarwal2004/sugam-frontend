@@ -25,6 +25,7 @@ import Checkbox from "@mui/material/Checkbox";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 // sort by ward
 // sort by address
@@ -60,6 +61,7 @@ function Analytics() {
   const [citygeojson, setcitygeojson] = useState();
   const [showgeojson, setshowgeojson] = useState(false);
   const [activeWard, setactiveWard] = useState();
+  const [route, setRoute] = useState({ result: null, ishidden: true });
   const [sortBySeverityOption, setsortBySeverityOption] = useState({
     low: true,
     medium: true,
@@ -206,6 +208,21 @@ function Analytics() {
   useEffect(() => {
     getGeoJson();
   }, []);
+
+  useEffect(() => {
+    console.log({ citygeojson });
+    if (citygeojson) {
+      setActiveMarker(null);
+      getNewData();
+    }
+  }, [
+    citygeojson,
+    complaintStatus,
+    sortByTimeOption,
+    sortBySeverityOption,
+    sortByTypeOption,
+    sortByAddessOption,
+  ]);
 
   const getNewData = () => {
     const status = [];
@@ -368,12 +385,51 @@ function Analytics() {
                       showgeojson={showgeojson}
                       handlePolygonClick={handlePolygonClick}
                       currentLocation={currentLocation}
+                      route={route}
+                      setRoute={setRoute}
                     />
                   )}
                 </>
               </GoogleMap>
             )}
           </div>
+          {!route.ishidden && route.result && (
+            <div className="direction-location-widget">
+              <Box
+                aria-label="previous question"
+                style={{ height: "fit-content" }}
+                onClick={() => {
+                  if (currentLocation.lat !== 0 && currentLocation.lng !== 0)
+                    map.setCenter(currentLocation);
+                  else alert("Location not available");
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    fontSize: "30px",
+                  }}
+                >
+                  <div>
+                    <IconButton
+                      aria-label="previous question"
+                      style={{ height: "fit-content" }}
+                      onClick={() => {
+                        setRoute({ result: null, ishidden: true });
+                        setActiveMarker(null);
+                      }}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
+                  <div>{route.result.routes[0].legs[0].distance.text}</div>
+                  <div>{route.result.routes[0].legs[0].duration.text}</div>
+                </div>
+                {route.result.routes[0].legs[0].end_address}
+              </Box>
+            </div>
+          )}
           <div className="user-location-widget">
             <IconButton
               aria-label="previous question"
@@ -713,6 +769,7 @@ function Analytics() {
                           }
                           if (e.target.value === 0) {
                             setshowgeojson(false);
+                            setgeojson(citygeojson);
                             setsortByWardOption(-1);
                           }
                         }}
@@ -774,7 +831,7 @@ function Analytics() {
         </div>
       </FullScreen>
 
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      {/* <div style={{ display: "flex", justifyContent: "center" }}>
         <Button
           onClick={fullscreenHandle.enter}
           sx={{ margin: "10px" }}
@@ -782,7 +839,7 @@ function Analytics() {
         >
           Enter FUll Screen
         </Button>
-      </div>
+      </div> */}
       {/* {queryData && <ComplainCards data={queryData} />} */}
     </>
   );

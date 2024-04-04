@@ -201,6 +201,17 @@
   padding: 10px;
 }
 
+.direction-location-widget{
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  z-index: 10;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  max-width: 300px;
+}
+
 .main-map-overlay {
   position: initial;
   height: calc(var(--maps-body-height) - 90px);

@@ -28,9 +28,9 @@ function App() {
                 <Route path="profile" element={<Profile />} />
                 <Route path="profile/complaints" element={<ListComplaints />} />
                 <Route path="complaints" element={<Complaints />} />
+                <Route path="analytics" element={<Analytics />} />
+                <Route path="track" element={<TrackComplaint />} />
               </Route>
-              <Route path="analytics" element={<Analytics />} />
-              <Route path="track" element={<TrackComplaint />} />
               {/* <Route path="form" element={<Form />} /> */}
               <Route path="dashboard" element={<Dashboard />} />
               {/* <Route path="auth" element={<LoginSignUp />} /> */}

@@ -147,6 +147,10 @@ nav div {
   color: #000000;
 }
 
+.sugam-logo-img{
+  height: 24px;
+}
+
 /* Responsive Css Code created by : Shift Code Design */
 
 @media (max-width: 991px) {
@@ -181,5 +185,23 @@ nav div {
   }
   .col-lg-3 {
     margin-top: 0% !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .mobile{
+    display: none;
+  }
+  .desktop{
+    display: block;
+  }
+}
+
+@media (min-width: 900px) {
+  .mobile{
+    display: block;
+  }
+  .desktop{
+    display: none;
   }
 }

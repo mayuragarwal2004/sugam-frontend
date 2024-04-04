@@ -68,7 +68,7 @@ const Layout = () => {
       <AppBar position="static" sx={{ backgroundColor: "#0ca074e1" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            <img src="sugam_logo.png" className="sugam-logo-img mobile" alt="logo" />
             <Typography
               variant="h6"
               noWrap
@@ -131,14 +131,18 @@ const Layout = () => {
                     <Typography textAlign="center">About Us</Typography>
                   </MenuItem>
                 </Link>
-                <Link to="track">
+                <Link to="profile/complaints">
                   <MenuItem onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">Track</Typography>
                   </MenuItem>
                 </Link>
               </Menu>
             </Box>
-            <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+            <img
+              src="sugam_logo.png"
+              className="sugam-logo-img desktop"
+              alt="logo"
+            />
             <Typography
               variant="h5"
               noWrap
@@ -173,7 +177,7 @@ const Layout = () => {
                   <Typography textAlign="center">About Us</Typography>
                 </MenuItem>
               </Link>
-              <Link to="track">
+              <Link to="profile/complaints">
                 <MenuItem onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">Track</Typography>
                 </MenuItem>
@@ -315,7 +319,7 @@ const Layout = () => {
                         <Link to="">Home</Link>
                       </li>
                       <li>
-                        <Link to="dashboard">Dashboard</Link>
+                        <Link to="charts">Dashboard</Link>
                       </li>
                     </ul>
                   </div>

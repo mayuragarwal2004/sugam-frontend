@@ -4,6 +4,7 @@ import {
   InfoWindowF,
   PolygonF,
   MarkerClusterer,
+  DirectionsRenderer,
 } from "@react-google-maps/api";
 import greencircle from "./analytics/greencircle.png";
 import bluecircle from "./analytics/bluecircle.png";
@@ -36,6 +37,8 @@ export default function Map(props) {
     handlePolygonClick,
     currentLocation,
     getNewData,
+    route,
+    setRoute,
   } = props;
   const [open, setOpen] = useState({
     state: false,
@@ -85,8 +88,29 @@ export default function Map(props) {
 
   console.log({ open });
 
+  console.log({ activeMarker });
+
+  async function handleClick() {
+    // eslint-disable-next-line no-undef
+    const directionsService = new google.maps.DirectionsService();
+    const result = await directionsService.route({
+      origin: currentLocation,
+      destination: {
+        lat: data[activeMarker].coordY,
+        lng: data[activeMarker].coordX,
+      },
+      // eslint-disable-next-line no-undef
+      travelMode: google.maps.TravelMode.DRIVING,
+      provideRouteAlternatives: true,
+    });
+    setRoute({ result: result, ishidden: false });
+  }
+
+  console.log({ route });
+
   return (
     <>
+      {!route.ishidden && <DirectionsRenderer directions={route.result} />}
       <MapWidgets />
       {open.state && (
         <AnalyticsConfirmation
@@ -125,9 +149,6 @@ export default function Map(props) {
             }}
           />
         ))}
-      {currentLocation.lat && (
-        <Marker position={currentLocation} icon={bluecircle} />
-      )}
       <MarkerClusterer>
         {(clusterer) =>
           data.map((doc, i) => {
@@ -224,34 +245,60 @@ export default function Map(props) {
                               <br />
                             </>
                           )}
-                          There is{" "}
-                          {doc.dustbin === "Yes" ? (
+                          {doc.dustbin && (
                             <>
-                              <b>a dustbin nearby, which is </b>
-                              {doc.dustbinFilled === "Yes" ? (
-                                <b>filled up</b>
+                              There is{" "}
+                              {doc.dustbin === "Yes" ? (
+                                <>
+                                  <b>a dustbin nearby, which is </b>
+                                  {doc.dustbinFilled === "Yes" ? (
+                                    <b>filled up</b>
+                                  ) : (
+                                    <b>not filled up.</b>
+                                  )}
+                                </>
                               ) : (
-                                <b>not filled up.</b>
+                                <b>not a dustbin nearby.</b>
                               )}
-                            </>
-                          ) : (
-                            <b>not a dustbin nearby.</b>
-                          )}
-                          <br />
-                          PMC is{" "}
-                          {doc.pmcCleanSite ? (
-                            <>
-                              <b>seen cleaning</b> in this area.{" "}
-                              {doc.garbageCollected}
-                            </>
-                          ) : (
-                            <>
-                              <b>not seen cleaning</b> in this area.
+                              <br />
                             </>
                           )}
-                          <br />
-                          <b>Site Category: </b> {doc.siteCategory}
+                          {doc.pmcCleanSite && (
+                            <>
+                              PMC is{" "}
+                              {doc.pmcCleanSite ? (
+                                <>
+                                  <b>seen cleaning</b> in this area.{" "}
+                                  {doc.garbageCollected}
+                                </>
+                              ) : (
+                                <>
+                                  <b>not seen cleaning</b> in this area.
+                                </>
+                              )}
+                              <br />
+                            </>
+                          )}
+                          {doc.siteCategory && (
+                            <>
+                              <b>Site Category: </b> {doc.siteCategory}
+                            </>
+                          )}
                         </p>
+                      </div>
+                      <div className="row">
+                        <a
+                          href={`https://www.google.com/maps?q=${doc.coordY},${doc.coordX}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Button variant="contained">
+                            Open in Google Maps
+                          </Button>
+                        </a>
+                        <Button onClick={handleClick} variant="contained">
+                          Get Directions
+                        </Button>
                       </div>
                     </>
                   </InfoWindowF>
@@ -261,6 +308,9 @@ export default function Map(props) {
           })
         }
       </MarkerClusterer>
+      {currentLocation.lat && (
+        <Marker position={currentLocation} icon={bluecircle} />
+      )}
     </>
   );
 }
