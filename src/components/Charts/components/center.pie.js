@@ -4,6 +4,15 @@ import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
 function PieChart() {
+    function isJsonString(str) {
+        try {
+          JSON.parse(str);
+        } catch (e) {
+          return false;
+        }
+        return true;
+      }
+    
     const [data, setData] = useState({
         labels: [],
         datasets: [
@@ -11,11 +20,11 @@ function PieChart() {
                 label: "My First dataset",
                 fill: false,
                 lineTension: 0.1,
-                backgroundColor: ["rgba(75,192,192,0.4)","rgba(255,159,64,0.6)"],
+                backgroundColor: ["rgba(75,192,192,0.4)", "rgba(255,159,64,0.6)"],
                 borderColor: "rgba(75,192,192,1)",
                 borderCapStyle: "butt",
                 borderDash: [],
-                borderDashOffset: 0.0,  
+                borderDashOffset: 0.0,
                 borderJoinStyle: "miter",
                 pointBorderColor: "rgba(75,192,192,1)",
                 pointBackgroundColor: "#fff",
@@ -35,27 +44,41 @@ function PieChart() {
         async function loadPieData() {
             try {
                 const response = await fetch("/sugam/charts/pie_center", {
-                    method: "POST",
+                    method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: "",
+                  
                 });
 
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
+                // if (!response.ok) {
+                //     throw new Error("Network response was not ok");
+                // }
 
-                const responseData = await response.json();
-                setData((prevData) => ({
-                    ...prevData,
-                    datasets: [
-                        {
-                            ...prevData.datasets[0],
-                            data: responseData,
-                        },
-                    ],
-                }));
+                response.body
+                    .getReader()
+                    .read()
+                    .then(({ value, done }) => {
+                        console.log(new TextDecoder().decode(value));
+                        console.log({ value });
+                        if (isJsonString(new TextDecoder().decode(value))) {
+                            return JSON.parse(new TextDecoder().decode(value));
+                        }
+                        return "";
+                    })
+                    .then((responseData) => {
+                        console.log(responseData);
+                        setData((prevData) => ({
+                            ...prevData,
+                            datasets: [
+                                {
+                                    ...prevData.datasets[0],
+                                    data: responseData,
+                                },
+                            ],
+                        }));
+                    });
+
             } catch (error) {
                 console.error('There has been a problem with your fetch operation:', error);
             }

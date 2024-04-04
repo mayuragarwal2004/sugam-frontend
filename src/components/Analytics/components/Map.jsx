@@ -6,6 +6,7 @@ import {
   MarkerClusterer,
 } from "@react-google-maps/api";
 import greencircle from "./analytics/greencircle.png";
+import bluecircle from "./analytics/bluecircle.png";
 import redcircle from "./analytics/redcircle.png";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
@@ -33,6 +34,7 @@ export default function Map(props) {
     handleActiveWard,
     showgeojson,
     handlePolygonClick,
+    currentLocation,
   } = props;
   const [open, setOpen] = useState({
     state: false,
@@ -118,6 +120,9 @@ export default function Map(props) {
             }}
           />
         ))}
+      {currentLocation.lat && (
+        <Marker position={currentLocation} icon={bluecircle} />
+      )}
       <MarkerClusterer>
         {(clusterer) =>
           data.map((doc, i) => {
@@ -192,11 +197,10 @@ export default function Map(props) {
                           )}
                           <br />
                           <b>Chronic Site: </b>
-                          {parseInt(doc.wasteType) > 3
-                            ? "Yes"
-                            : "No"}
+                          {parseInt(doc.wasteType) > 3 ? "Yes" : "No"}
                           <br />
-                          <b>How often the site is cleaned: </b> {doc.siteCleanFrequency}
+                          <b>How often the site is cleaned: </b>{" "}
+                          {doc.siteCleanFrequency}
                           <br />
                           <b>Recycle% : </b> {doc.wasteRecyclable}
                           <br />
@@ -229,8 +233,7 @@ export default function Map(props) {
                             </>
                           )}
                           <br />
-                          <b>Site Category: </b>{" "}
-                          {doc.siteCategory}
+                          <b>Site Category: </b> {doc.siteCategory}
                         </p>
                       </div>
                     </>
