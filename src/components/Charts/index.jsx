@@ -22,7 +22,7 @@ const Index = () => {
   const [number3, setNumber3] = useState(null);
   // console.log({number1},{number2},{number3});
   useEffect(() => {
-    fetch("/sugam/charts/res_tot").then((response) => {
+    fetch("/sugam/charts/counters").then((response) => {
       // console.log(response);
       response.body
         .getReader()
