@@ -59,8 +59,13 @@ const CardMain = ({ data }) => {
     return month + " " + day + ", " + year;
   }
 
+  console.log({ check: data.resolvedImageURL });
+
   return (
-    <Card sx={{ maxWidth: 300, minWidth: 280 }}>
+    <Card
+      sx={{ maxWidth: 300, minWidth: 280 }}
+      style={{ height: "fit-content" }}
+    >
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"></Avatar>
@@ -70,7 +75,7 @@ const CardMain = ({ data }) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title={data.status}
+        title={data.invalidComplaintMessage ? "INVALID" : data.status}
         subheader={formatDate(data.timestamp)}
       />
       <CardMedia
@@ -84,9 +89,6 @@ const CardMain = ({ data }) => {
         <Typography variant="body2" color="text.secondary"></Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
@@ -101,7 +103,14 @@ const CardMain = ({ data }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
+          {/* <Typography paragraph>Method:</Typography> */}
+          {data.resolvedImageURL && <CardMedia
+            component="img"
+            style={{ height: "194px", objectFit: "contain" }}
+            // height="194"
+            image={data.resolvedImageURL}
+            alt="image data"
+          />}
           <Typography paragraph>
             <p>
               {data.invalidComplaintMessage && (
@@ -115,8 +124,12 @@ const CardMain = ({ data }) => {
               {data.wasteType.map((x, i) =>
                 data.wasteType.length - 1 === i ? x : x + ", "
               )}
-              <br />
-              <b>Recycle% : </b> {data.wasteRecyclable}
+              {data.wasteRecyclable && (
+                <>
+                  <br />
+                  <b>Recycle% : </b> {data.wasteRecyclable}
+                </>
+              )}
               {data.siteUncleanDuration && (
                 <>
                   <br />

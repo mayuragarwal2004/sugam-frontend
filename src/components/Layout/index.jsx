@@ -68,7 +68,7 @@ const Layout = () => {
       <AppBar position="static" sx={{ backgroundColor: "#0ca074e1" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <img src="sugam_logo.png" className="sugam-logo-img mobile" alt="logo" />
+            <img src="/sugam_logo.png" className="sugam-logo-img mobile" alt="logo" />
             <Typography
               variant="h6"
               noWrap
@@ -139,7 +139,7 @@ const Layout = () => {
               </Menu>
             </Box>
             <img
-              src="sugam_logo.png"
+              src="/sugam_logo.png"
               className="sugam-logo-img desktop"
               alt="logo"
             />
