@@ -1,4 +1,4 @@
-import React from 'react';
+
 import React, { useEffect, useState } from 'react';
 import Card from "../Dashboard/DashboardComponents/components/card";
 import General from "../Dashboard/DashboardComponents/General";
@@ -8,7 +8,7 @@ import Line_res_tot from "./components/line.res.tot";
 import BarChart_w from "./components/types.of.w.bar";
 import { Bubble } from 'react-chartjs-2';
 
-const index = () => {
+const Index = () => {
   function isJsonString(str) {
     try {
         JSON.parse(str);
@@ -16,8 +16,14 @@ const index = () => {
         return false;
     }
     return true;
-}
+} 
+
+
+const [number1, setNumber1] = useState(null);
+const [number2, setNumber2] = useState(null);
+const [number3, setNumber3] = useState(null);
 useEffect(() => {
+ 
   fetch('/sugam/charts/total_com')
       .then((response) => {
           console.log(response);
@@ -63,7 +69,7 @@ useEffect(() => {
         {/* Background and profile */}
         <div
           className="relative mt-1 flex h-32 w-full justify-center rounded-xl bg-cover"
-          style={{ backgroundImage: `url(images.jpeg)`,height:'80px' }}
+          style={{ backgroundImage: `url(images.jpeg)` }}
         >
           <div style={{color:"green",fontSize:"40px",textAlign:"justify"}}>Bhavesh Agone here</div>
         </div>
@@ -106,7 +112,7 @@ useEffect(() => {
         {/* Background and profile */}
         <div
           className="relative mt-1 flex h-32 w-full justify-center rounded-xl bg-cover"
-          style={{ backgroundImage: `url(images.jpeg)`,height:'80px' }}
+          style={{ backgroundImage: `url(images.jpeg)` }}
         >
           <div style={{color:"green",fontSize:"40px",textAlign:"justify"}}>Bhavesh Agone here</div>
         </div>
@@ -147,9 +153,9 @@ useEffect(() => {
         {/* Background and profile */}
         <div
           className="relative mt-1 flex h-32 w-full justify-center rounded-xl bg-cover"
-          style={{ backgroundImage: `url(images.jpeg)`,height:'80px' }}
+          style={{ backgroundImage: `url(images.jpeg)` }}
         >
-          <div style={{color:"green",fontSize:"20px",textAlign:"justify"}}>Bhavesh Agone here</div>
+          <div style={{color:"green",fontSize:"40px",textAlign:"justify"}}>Bhavesh Agone here</div>
         </div>
 
         {/* Name and position */}
@@ -178,56 +184,15 @@ useEffect(() => {
           </div>
         </div>
       </Card>
-      <Card
-        extra={"items-center w-full h-full p-[16px] bg-cover"}
-        style={{
-          maxWidth:'300px',
-          margin:'10px',
-          width: 'calc(100% - 20px)',
-          display: "flex",
-          justifyContent: "center",
-          backgroundColor: "#fff",
-        }}
-      >
-        <BarChart_w></BarChart_w>
-      </Card>
+
       
     </div>
-    <div className="chartsdisplay" style={{display:'flex',flexWrap:'wrap',justifyContent: 'center',overflow:'auto',padding:'20px', background: "rgb(160 216 200 / 100%)"}}>
+    <div className="chartsdisplay" style={{display:'flex',overflow:'auto',padding:'20px', background: "rgb(160 216 200 / 100%)"}}>
 
     <Card
         extra={"items-center w-full h-full p-[16px] bg-cover"}
         style={{
-          maxWidth:'300px',
-          margin:'10px',
-          width: 'calc(100% - 20px)',
-          display: "flex",
-          justifyContent: "center",
-          backgroundColor: "#fff",
-        }}
-      >
-       <PieChart></PieChart>
-      </Card>
-
-      <Card
-        extra={"items-center w-full h-full p-[16px] bg-cover"}
-        style={{
-          maxWidth:'600px',
-          maxHeight:'350px',
-          margin:'10px',
-          width: 'calc(100% - 20px)',
-          display: "flex",
-          justifyContent: "center",
-          backgroundColor: "#fff",
-        }}
-      >
-        <Line_res_tot></Line_res_tot>
-      </Card>
-
-    <Card
-        extra={"items-center w-full h-full p-[16px] bg-cover"}
-        style={{
-        maxWidth:'88%',
+        maxWidth:'300px',
           margin:'10px',
           width: 'calc(100% - 20px)',
           display: "flex",
@@ -238,9 +203,42 @@ useEffect(() => {
         <Bubblechart></Bubblechart>
       </Card>
       
-      
-      
-      
+      <Card
+        extra={"items-center w-full h-full p-[16px] bg-cover"}
+        style={{
+          margin:'10px',
+          width: 'calc(100% - 20px)',
+          display: "flex",
+          justifyContent: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+       <PieChart></PieChart>
+      </Card>
+      <Card
+        extra={"items-center w-full h-full p-[16px] bg-cover"}
+        style={{
+          margin:'10px',
+          width: 'calc(100% - 20px)',
+          display: "flex",
+          justifyContent: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <Line_res_tot></Line_res_tot>
+      </Card>
+      <Card
+        extra={"items-center w-full h-full p-[16px] bg-cover"}
+        style={{
+          margin:'10px',
+          width: 'calc(100% - 20px)',
+          display: "flex",
+          justifyContent: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <BarChart_w></BarChart_w>
+      </Card>
       
       
       
@@ -249,4 +247,4 @@ useEffect(() => {
   )
 }
 
-export default index
+export default Index
