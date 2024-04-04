@@ -51,9 +51,10 @@ useEffect(() => {
       className="div-carduser"
       style={{
         display: 'flex',
-        flexWrap: 'nowrap',
+        flexWrap: 'wrap',
+        justifyContent:'center',
         gap: '10px',
-        padding: "5%",
+        padding: "3px",
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "fixed",
         background: "rgb(160 216 200 / 100%)",
@@ -62,9 +63,11 @@ useEffect(() => {
     <Card
         extra={"items-center w-full h-full p-[16px] bg-cover"}
         style={{
+          maxWidth: "15%",
           display: "flex",
           justifyContent: "center",
           backgroundColor: "#fff",
+          height: "250px",
         }}
       >
         {/* Background and profile */}
@@ -72,7 +75,7 @@ useEffect(() => {
           className="relative mt-1 flex h-32 w-full justify-center rounded-xl bg-cover"
           style={{ backgroundImage: `url(images.jpeg)`,height:'80px' }}
         >
-          <div style={{color:"green",fontSize:"40px",textAlign:"justify"}}>Bhavesh Agone here</div>
+          <div style={{color:"green",fontSize:"20px",textAlign:"justify"}}>Bhavesh Agone here</div>
         </div>
 
         {/* Name and position */}
@@ -105,9 +108,11 @@ useEffect(() => {
       <Card
         extra={"items-center w-full h-full p-[16px] bg-cover"}
         style={{
+          maxWidth: "15%",
           display: "flex",
           justifyContent: "center",
           backgroundColor: "#fff",
+          height: "250px",
         }}
       >
         {/* Background and profile */}
@@ -115,7 +120,7 @@ useEffect(() => {
           className="relative mt-1 flex h-32 w-full justify-center rounded-xl bg-cover"
           style={{ backgroundImage: `url(images.jpeg)`,height:'80px' }}
         >
-          <div style={{color:"green",fontSize:"40px",textAlign:"justify"}}>Bhavesh Agone here</div>
+          <div style={{color:"green",fontSize:"20px",textAlign:"justify"}}>Bhavesh Agone here</div>
         </div>
 
         {/* Name and position */}
@@ -146,9 +151,11 @@ useEffect(() => {
       </Card><Card
         extra={"items-center w-full h-full p-[16px] bg-cover"}
         style={{
+          maxWidth: "15%",
           display: "flex",
           justifyContent: "center",
           backgroundColor: "#fff",
+          height: "250px",
         }}
       >
         {/* Background and profile */}
@@ -188,28 +195,32 @@ useEffect(() => {
       <Card
         extra={"items-center w-full h-full p-[16px] bg-cover"}
         style={{
-          maxWidth:'300px',
-          margin:'10px',
+          minWidth:'30%',
+          minHeight:'240px',
+          maxWidth:'38%',
+          // maxWidth:'600px',
+          // justifyContent: 'space-around',
+          // margin:'10px',
           width: 'calc(100% - 20px)',
           display: "flex",
           justifyContent: "center",
           backgroundColor: "#fff",
+          height: "250px",
         }}
       >
-        <BarChart_w></BarChart_w>
+        <BarChart_w></BarChart_w>        
       </Card>
       
     </div>
-    <div className="chartsdisplay" style={{display:'flex',flexWrap:'wrap',justifyContent: 'center',overflow:'auto',padding:'20px', background: "rgb(160 216 200 / 100%)"}}>
+    <div className="chartsdisplay" style={{display:'flex',flexWrap:'wrap',justifyContent: 'center',overflow:'auto',padding:'2px', background: "rgb(160 216 200 / 100%)"}}>
 
     <Card
         extra={"items-center w-full h-full p-[16px] bg-cover"}
         style={{
-          maxWidth:'300px',
+          maxWidth:'30%',
           margin:'10px',
           width: 'calc(100% - 20px)',
           display: "flex",
-          justifyContent: "center",
           backgroundColor: "#fff",
         }}
       >
@@ -219,7 +230,7 @@ useEffect(() => {
       <Card
         extra={"items-center w-full h-full p-[16px] bg-cover"}
         style={{
-          maxWidth:'600px',
+          maxWidth:'60%',
           maxHeight:'350px',
           margin:'10px',
           width: 'calc(100% - 20px)',
@@ -242,7 +253,8 @@ useEffect(() => {
           backgroundColor: "#fff",
         }}
       >
-        <BarChart_w></BarChart_w>
+        <Bubblechart></Bubblechart>
+        
       </Card>
       
       
