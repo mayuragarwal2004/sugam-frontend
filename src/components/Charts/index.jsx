@@ -52,7 +52,7 @@ const Index = () => {
           flexWrap: "wrap",
           justifyContent: "center",
           gap: "10px",
-          padding: "3px",
+          // padding: "3px",
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",
           background: "rgb(160 216 200 / 100%)",
