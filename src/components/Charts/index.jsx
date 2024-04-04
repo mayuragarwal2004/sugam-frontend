@@ -22,11 +22,12 @@ const Index = () => {
 const [number1, setNumber1] = useState(null);
 const [number2, setNumber2] = useState(null);
 const [number3, setNumber3] = useState(null);
+// console.log({number1},{number2},{number3});
 useEffect(() => {
  
-  fetch('/sugam/charts/total_com')
+  fetch('/sugam/charts/res_tot')
       .then((response) => {
-          console.log(response);
+          // console.log(response);
           response.body
               .getReader()
               .read()
@@ -35,12 +36,13 @@ useEffect(() => {
                   console.log(decodedValue);
                   console.log({ value });
                   if (isJsonString(decodedValue)) {
-                      const data = JSON.parse(decodedValue);
-                      setNumber1(data.total); 
-                      setNumber2(data.resolved); 
-                      setNumber3(data.pending); 
+                    const data = JSON.parse(decodedValue)[0];
+                    console.log({ data });
+                    setNumber1(data.total); 
+                    setNumber2(data.resolved); 
+                    setNumber3(data.pending); 
                   }
-              });
+              }); 
       });
 }, []);
 

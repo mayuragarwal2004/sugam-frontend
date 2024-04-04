@@ -6,10 +6,10 @@ Chart.register(...registerables);
 
 function BarChart_w() {
     const [data, setData] = useState({
-        labels: ['Dry Waste', 'Plant Waste', 'Construction Waste', 'Wet Waste', 'Clothes','Sanitary Waste','Medical Waste'],
+        labels: ['Wet Waste', 'Plant Waste', 'Construction Waste','Clothes','Dry Waste','Medical Waste','Sanitary Waste'],
         datasets: [
             {
-                label: "My First dataset",
+                label: "Types of Wastes",
                 fill: false,
                 lineTension: 0.1,
                 backgroundColor: [
@@ -18,7 +18,10 @@ function BarChart_w() {
                     'rgba(255, 206, 86, 0.2)',
                     'rgba(75, 192, 192, 0.2)',
                     'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(128, 0, 0, 0.2)',    // Maroon
+
+
                   ],
                 borderColor: "rgba(75,192,192,1)",
                 borderCapStyle: "butt",
@@ -42,7 +45,7 @@ function BarChart_w() {
     useEffect(() => {
         async function loadPieData() {
             try {
-                const response = await fetch("/sugam/charts/bar_types", {
+                const response = await fetch("/sugam/charts/wastes", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -62,20 +65,27 @@ function BarChart_w() {
                         if (isJsonString(new TextDecoder().decode(value))) {
                             return JSON.parse(new TextDecoder().decode(value));
                         }
-                        return "";
-                    })
-                    .then((responseData) => {
-                        console.log(responseData);
-                        setData((prevData) => ({
-                            ...prevData,
-                            datasets: [
-                                {
-                                    ...prevData.datasets[0],
-                                    data: responseData,
-                                },
-                            ],
-                        }));
-                    });
+                        })
+                        .then((responseData) => {
+                            // if(!Array.isArray(responseData)) return;
+                            const total = responseData.total;
+                            responseData.total=undefined;
+                            const newdata = Object.values(responseData).map((value) => (value / total) * 100);
+                            console.log({newdata});
+                            setData((prevData) => ({
+                                ...prevData,
+                                datasets: [
+                                    {
+                                        ...prevData.datasets[0],
+                                        data: newdata,
+                                    },
+                                ],
+                            }));
+                        });
+
+                       
+                        
+                    
             } catch (error) {
                 console.error('There has been a problem with your fetch operation:', error);
             }
