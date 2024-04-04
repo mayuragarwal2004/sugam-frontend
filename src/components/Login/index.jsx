@@ -24,7 +24,7 @@ const Login = () => {
     // Add logic here to handle the register button click
     console.log("Register button clicked");
     fetch(
-      `/sugam/api/register?user=${username}&pass=${password}&username=${"abc"}`,
+      `/sugam/api/register?user=${username}&pass=${password}&username=${username}`,
       {
         method: "GET",
         headers: {
