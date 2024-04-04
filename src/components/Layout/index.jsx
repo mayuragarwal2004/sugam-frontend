@@ -189,7 +189,7 @@ const Layout = () => {
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <AvatarImage
-                      name={currentUser.displayName}
+                      name={currentUser.username}
                       // photoURL={currentUser.photoURL}
                       currentAvatarColor={currentAvatarColor}
                     />

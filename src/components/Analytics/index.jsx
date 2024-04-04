@@ -252,6 +252,8 @@ function Analytics() {
       time1 = dayjs().subtract(4, "day").toISOString();
     } else if (sortByTimeOption === "1 week") {
       time1 = dayjs().subtract(1, "week").toISOString();
+    } else if (sortByTimeOption === "all time") {
+      time1 = dayjs(0).toISOString();
     }
 
     console.log({ time1, time2 });
@@ -315,7 +317,10 @@ function Analytics() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setqueryData(data);
+        if (Array.isArray(data)) {
+          setqueryData(data);
+          console.log({ data });
+        }
       });
   };
 
@@ -702,6 +707,7 @@ function Analytics() {
                         <MenuItem value={"2 days"}>Last 2 day</MenuItem>
                         <MenuItem value={"4 days"}>Last 4 days</MenuItem>
                         <MenuItem value={"1 week"}>Last 1 week</MenuItem>
+                        <MenuItem value={"all time"}>All time</MenuItem>
                         <MenuItem value={"custom"}>Custom Time Input</MenuItem>
                       </Select>
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
