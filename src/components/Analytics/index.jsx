@@ -211,7 +211,7 @@ function Analytics() {
     const status = [];
     const locations = [];
     const severity = [];
-    const type = [];
+    const wasteType = [];
     var time1 = sortByTimeValue[0].unix();
     var time2 = sortByTimeValue[1].unix();
     if (complaintStatus.completed) {
@@ -222,8 +222,8 @@ function Analytics() {
     }
 
     if (sortByTimeOption === "custom") {
-      time1 = sortByTimeValue[0].startOf('day').toISOString();
-      time2 = sortByTimeValue[1].endOf('day').toISOString();
+      time1 = sortByTimeValue[0].startOf("day").toISOString();
+      time2 = sortByTimeValue[1].endOf("day").toISOString();
     } else {
       time2 = dayjs().toISOString();
     }
@@ -237,7 +237,7 @@ function Analytics() {
       time1 = dayjs().subtract(1, "week").toISOString();
     }
 
-    console.log({ time1, time2 })
+    console.log({ time1, time2 });
 
     if (sortBySeverityOption.low) {
       severity.push("LOW");
@@ -250,25 +250,25 @@ function Analytics() {
     }
 
     if (sortByTypeOption["dry waste"]) {
-      type.push("DRY");
+      wasteType.push("DRY");
     }
     if (sortByTypeOption["wet waste"]) {
-      type.push("WET");
+      wasteType.push("WET");
     }
     if (sortByTypeOption["construction waste"]) {
-      type.push("CONSTRUCTION");
+      wasteType.push("CONSTRUCTION");
     }
     if (sortByTypeOption["plant waste"]) {
-      type.push("PLANT");
+      wasteType.push("PLANT");
     }
     if (sortByTypeOption.clothes) {
-      type.push("CLOTHES");
+      wasteType.push("CLOTHES");
     }
     if (sortByTypeOption["medical waste"]) {
-      type.push("MEDICAL");
+      wasteType.push("MEDICAL");
     }
     if (sortByTypeOption["sanitary waste"]) {
-      type.push("SANITARY");
+      wasteType.push("SANITARY");
     }
 
     citygeojson.map((ward) => {
@@ -284,8 +284,10 @@ function Analytics() {
     if (locations.length > 0 && sortByAddessOption !== 0)
       reqbody.locations = locations;
 
-    if (type.length > 0) reqbody.type = type;
+    if (wasteType.length > 0) reqbody.wasteType = wasteType;
     if (process.env.REACT_APP_FRONTEND_ONLY === "true") return;
+
+    console.log({ reqbody });
 
     fetch("/sugam/analytics/getQuery", {
       method: "POST",
