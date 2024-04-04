@@ -97,7 +97,7 @@ function BarChart_w() {
     console.log({data});
 
     return (
-        <div>
+        <div style={{minWidth:'400px'}}>
             <div>
                 <Bar data={data} />
             </div>

@@ -543,12 +543,13 @@ div.mySlides > img {
     padding-right: 25px;
     padding-bottom: 20px;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     height: 500px;
   }
   
   .card {
+    /* padding: 40px; */
     position: relative;
   }
   .before-card {

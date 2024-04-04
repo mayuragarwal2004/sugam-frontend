@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import Card from "../Dashboard/DashboardComponents/components/card";
 import General from "../Dashboard/DashboardComponents/General";
@@ -52,9 +51,10 @@ useEffect(() => {
       className="div-carduser"
       style={{
         display: 'flex',
-        flexWrap: 'nowrap',
+        flexWrap: 'wrap',
+        justifyContent:'center',
         gap: '10px',
-        padding: "5%",
+        padding: "3px",
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "fixed",
         background: "rgb(160 216 200 / 100%)",
@@ -63,9 +63,11 @@ useEffect(() => {
     <Card
         extra={"items-center w-full h-full p-[16px] bg-cover"}
         style={{
+          maxWidth: "15%",
           display: "flex",
           justifyContent: "center",
           backgroundColor: "#fff",
+          height: "250px",
         }}
       >
         {/* Background and profile */}
@@ -98,9 +100,11 @@ useEffect(() => {
       <Card
         extra={"items-center w-full h-full p-[16px] bg-cover"}
         style={{
+          maxWidth: "15%",
           display: "flex",
           justifyContent: "center",
           backgroundColor: "#fff",
+          height: "250px",
         }}
       >
         {/* Background and profile */}
@@ -131,9 +135,11 @@ useEffect(() => {
       </Card><Card
         extra={"items-center w-full h-full p-[16px] bg-cover"}
         style={{
+          maxWidth: "15%",
           display: "flex",
           justifyContent: "center",
           backgroundColor: "#fff",
+          height: "250px",
         }}
       >
         {/* Background and profile */}
@@ -162,40 +168,46 @@ useEffect(() => {
           </div>
         </div>
       </Card>
-
-      
-    </div>
-    <div className="chartsdisplay" style={{display:'flex',overflow:'auto',padding:'20px', background: "rgb(160 216 200 / 100%)"}}>
-
-    <Card
+      <Card
         extra={"items-center w-full h-full p-[16px] bg-cover"}
         style={{
-        maxWidth:'300px',
-          margin:'10px',
+          minWidth:'30%',
+          minHeight:'240px',
+          maxWidth:'38%',
+          // maxWidth:'600px',
+          // justifyContent: 'space-around',
+          // margin:'10px',
           width: 'calc(100% - 20px)',
           display: "flex",
           justifyContent: "center",
           backgroundColor: "#fff",
+          height: "250px",
         }}
       >
-        <Bubblechart></Bubblechart>
+        <BarChart_w></BarChart_w>        
       </Card>
       
-      <Card
+    </div>
+    <div className="chartsdisplay" style={{display:'flex',flexWrap:'wrap',justifyContent: 'center',overflow:'auto',padding:'2px', background: "rgb(160 216 200 / 100%)"}}>
+
+    <Card
         extra={"items-center w-full h-full p-[16px] bg-cover"}
         style={{
+          maxWidth:'30%',
           margin:'10px',
           width: 'calc(100% - 20px)',
           display: "flex",
-          justifyContent: "center",
           backgroundColor: "#fff",
         }}
       >
        <PieChart></PieChart>
       </Card>
+
       <Card
         extra={"items-center w-full h-full p-[16px] bg-cover"}
         style={{
+          maxWidth:'60%',
+          maxHeight:'350px',
           margin:'10px',
           width: 'calc(100% - 20px)',
           display: "flex",
@@ -205,9 +217,11 @@ useEffect(() => {
       >
         <Line_res_tot></Line_res_tot>
       </Card>
-      <Card
+
+    <Card
         extra={"items-center w-full h-full p-[16px] bg-cover"}
         style={{
+        maxWidth:'88%',
           margin:'10px',
           width: 'calc(100% - 20px)',
           display: "flex",
@@ -215,7 +229,8 @@ useEffect(() => {
           backgroundColor: "#fff",
         }}
       >
-        <BarChart_w></BarChart_w>
+        <Bubblechart></Bubblechart>
+        
       </Card>
       
       

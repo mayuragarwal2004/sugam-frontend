@@ -517,9 +517,9 @@ const Complaints = () => {
           )}
           <div
             className="paraComplaint"
-            style={{ display: "flex", width: "100%", marginTop: "20px" }}
+            style={{ display: "flex", width: "100%", margin:"20px" }}
           >
-            <p>Let us go green to get our planet clean</p>
+            <p style={{margin:"20px"}}>Let us go green to get our planet clean</p>
           </div>
         </div>
       </div>
