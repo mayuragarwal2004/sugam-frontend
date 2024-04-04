@@ -1,5 +1,5 @@
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useEffect, useState } from 'react';
 import Card from "../Dashboard/DashboardComponents/components/card";
 import General from "../Dashboard/DashboardComponents/General";
 import Bubblechart from "./components/bubble";
@@ -8,7 +8,7 @@ import Line_res_tot from "./components/line.res.tot";
 import BarChart_w from "./components/types.of.w.bar";
 import { Bubble } from 'react-chartjs-2';
 
-const Index = () => {
+const index = () => {
   function isJsonString(str) {
     try {
         JSON.parse(str);
@@ -16,18 +16,11 @@ const Index = () => {
         return false;
     }
     return true;
-} 
-
-
-const [number1, setNumber1] = useState(null);
-const [number2, setNumber2] = useState(null);
-const [number3, setNumber3] = useState(null);
-// console.log({number1},{number2},{number3});
+}
 useEffect(() => {
- 
-  fetch('/sugam/charts/res_tot')
+  fetch('/sugam/charts/total_com')
       .then((response) => {
-          // console.log(response);
+          console.log(response);
           response.body
               .getReader()
               .read()
@@ -36,13 +29,12 @@ useEffect(() => {
                   console.log(decodedValue);
                   console.log({ value });
                   if (isJsonString(decodedValue)) {
-                    const data = JSON.parse(decodedValue)[0];
-                    console.log({ data });
-                    setNumber1(data.total); 
-                    setNumber2(data.resolved); 
-                    setNumber3(data.pending); 
+                      const data = JSON.parse(decodedValue);
+                      setNumber1(data.total); 
+                      setNumber2(data.resolved); 
+                      setNumber3(data.pending); 
                   }
-              }); 
+              });
       });
 }, []);
 
@@ -71,7 +63,7 @@ useEffect(() => {
         {/* Background and profile */}
         <div
           className="relative mt-1 flex h-32 w-full justify-center rounded-xl bg-cover"
-          style={{ backgroundImage: `url(images.jpeg)` }}
+          style={{ backgroundImage: `url(images.jpeg)`,height:'80px' }}
         >
           <div style={{color:"green",fontSize:"40px",textAlign:"justify"}}>Bhavesh Agone here</div>
         </div>
@@ -114,7 +106,7 @@ useEffect(() => {
         {/* Background and profile */}
         <div
           className="relative mt-1 flex h-32 w-full justify-center rounded-xl bg-cover"
-          style={{ backgroundImage: `url(images.jpeg)` }}
+          style={{ backgroundImage: `url(images.jpeg)`,height:'80px' }}
         >
           <div style={{color:"green",fontSize:"40px",textAlign:"justify"}}>Bhavesh Agone here</div>
         </div>
@@ -155,9 +147,9 @@ useEffect(() => {
         {/* Background and profile */}
         <div
           className="relative mt-1 flex h-32 w-full justify-center rounded-xl bg-cover"
-          style={{ backgroundImage: `url(images.jpeg)` }}
+          style={{ backgroundImage: `url(images.jpeg)`,height:'80px' }}
         >
-          <div style={{color:"green",fontSize:"40px",textAlign:"justify"}}>Bhavesh Agone here</div>
+          <div style={{color:"green",fontSize:"20px",textAlign:"justify"}}>Bhavesh Agone here</div>
         </div>
 
         {/* Name and position */}
@@ -186,52 +178,10 @@ useEffect(() => {
           </div>
         </div>
       </Card>
-
-      
-    </div>
-    <div className="chartsdisplay" style={{display:'flex',overflow:'auto',padding:'20px', background: "rgb(160 216 200 / 100%)"}}>
-
-    <Card
-        extra={"items-center w-full h-full p-[16px] bg-cover"}
-        style={{
-        maxWidth:'300px',
-          margin:'10px',
-          width: 'calc(100% - 20px)',
-          display: "flex",
-          justifyContent: "center",
-          backgroundColor: "#fff",
-        }}
-      >
-        <Bubblechart></Bubblechart>
-      </Card>
-      
       <Card
         extra={"items-center w-full h-full p-[16px] bg-cover"}
         style={{
-          margin:'10px',
-          width: 'calc(100% - 20px)',
-          display: "flex",
-          justifyContent: "center",
-          backgroundColor: "#fff",
-        }}
-      >
-       <PieChart></PieChart>
-      </Card>
-      <Card
-        extra={"items-center w-full h-full p-[16px] bg-cover"}
-        style={{
-          margin:'10px',
-          width: 'calc(100% - 20px)',
-          display: "flex",
-          justifyContent: "center",
-          backgroundColor: "#fff",
-        }}
-      >
-        <Line_res_tot></Line_res_tot>
-      </Card>
-      <Card
-        extra={"items-center w-full h-full p-[16px] bg-cover"}
-        style={{
+          maxWidth:'300px',
           margin:'10px',
           width: 'calc(100% - 20px)',
           display: "flex",
@@ -242,6 +192,56 @@ useEffect(() => {
         <BarChart_w></BarChart_w>
       </Card>
       
+    </div>
+    <div className="chartsdisplay" style={{display:'flex',flexWrap:'wrap',justifyContent: 'center',overflow:'auto',padding:'20px', background: "rgb(160 216 200 / 100%)"}}>
+
+    <Card
+        extra={"items-center w-full h-full p-[16px] bg-cover"}
+        style={{
+          maxWidth:'300px',
+          margin:'10px',
+          width: 'calc(100% - 20px)',
+          display: "flex",
+          justifyContent: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+       <PieChart></PieChart>
+      </Card>
+
+      <Card
+        extra={"items-center w-full h-full p-[16px] bg-cover"}
+        style={{
+          maxWidth:'600px',
+          maxHeight:'350px',
+          margin:'10px',
+          width: 'calc(100% - 20px)',
+          display: "flex",
+          justifyContent: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <Line_res_tot></Line_res_tot>
+      </Card>
+
+    <Card
+        extra={"items-center w-full h-full p-[16px] bg-cover"}
+        style={{
+        maxWidth:'88%',
+          margin:'10px',
+          width: 'calc(100% - 20px)',
+          display: "flex",
+          justifyContent: "center",
+          backgroundColor: "#fff",
+        }}
+      >
+        <Bubblechart></Bubblechart>
+      </Card>
+      
+      
+      
+      
+      
       
       
     </div>
@@ -249,4 +249,4 @@ useEffect(() => {
   )
 }
 
-export default Index
+export default index
