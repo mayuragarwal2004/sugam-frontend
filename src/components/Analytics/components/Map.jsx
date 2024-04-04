@@ -203,7 +203,7 @@ export default function Map(props) {
                           </StyledButton>
                         </div>
                       </div>
-                      <div className="row">
+                      <div className="row" style={{ alignItems: "center", padding: "10px" }}>
                         <div className="column">
                           <img
                             src={doc.imageURL}
@@ -225,6 +225,13 @@ export default function Map(props) {
                           <b>Chronic Site: </b>
                           {parseInt(doc.wasteType) > 3 ? "Yes" : "No"}
                           <br />
+                          {doc.location && (
+                            <>
+                              <b>Ward: </b>{" "}
+                              {doc.location}
+                              <br />
+                            </>
+                          )}
                           {doc.siteCleanFrequency && (
                             <>
                               <b>How often the site is cleaned: </b>{" "}
@@ -286,17 +293,24 @@ export default function Map(props) {
                           )}
                         </p>
                       </div>
-                      <div className="row">
+                      <div className="row" style={{ alignItems: "center", padding: 0 }}>
                         <a
                           href={`https://www.google.com/maps?q=${doc.coordY},${doc.coordX}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <Button variant="contained">
+                          <Button
+                            variant="contained"
+                            style={{ margin: "2px" }}
+                          >
                             Open in Google Maps
                           </Button>
                         </a>
-                        <Button onClick={handleClick} variant="contained">
+                        <Button
+                          onClick={handleClick}
+                          variant="contained"
+                          style={{ margin: "2px" }}
+                        >
                           Get Directions
                         </Button>
                       </div>
