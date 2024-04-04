@@ -35,7 +35,7 @@ const Index = () => {
             const data = JSON.parse(decodedValue)[0];
             console.log({ data });
             setNumber1(data.total);
-            setNumber2(data.resolved);
+            setNumber2(data.complete);
             setNumber3(data.pending);
           }
         });
