@@ -1,4 +1,5 @@
 import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from "../Dashboard/DashboardComponents/components/card";
 import General from "../Dashboard/DashboardComponents/General";
 import Bubblechart from "./components/bubble";
@@ -8,6 +9,20 @@ import BarChart_w from "./components/types.of.w.bar";
 import { Bubble } from 'react-chartjs-2';
 
 const index = () => {
+  const [number1, setNumber1] = useState(null);
+  const [number2, setNumber2] = useState(null);
+  const [number3, setNumber3] = useState(null);
+
+  useEffect(() => {
+      fetch('/sugam/charts/total_com')
+          .then(response => response.json())
+          .then(data => {
+              setNumber1(data.total); 
+              setNumber2(data.resolved); 
+              setNumber3(data.pending); 
+          });
+  }, []);
+
   return (
     <>
     <div
@@ -58,9 +73,9 @@ const index = () => {
             <p className="text-2xl font-bold text-navy-700 dark:text-white">
               {/* {userData && userData.Complete + userData.Pending} */}
             </p>
-            <p className=" font-normal text-gray-600" style={{fontSize:"60px"}}>
-              101
-            </p>
+            <p className="text-2xl font-bold text-navy-700 dark:text-white">
+                    {number1}
+                </p>
           </div>
         </div>
       </Card>
@@ -101,9 +116,9 @@ const index = () => {
             <p className="text-2xl font-bold text-navy-700 dark:text-white">
               {/* {userData && userData.Complete + userData.Pending} */}
             </p>
-            <p className=" font-normal text-gray-600" style={{fontSize:"60px"}}>
-              101
-            </p>
+            <p className="text-2xl font-bold text-navy-700 dark:text-white">
+                    {number2}
+                </p>
           </div>
         </div>
       </Card><Card
@@ -142,9 +157,9 @@ const index = () => {
             <p className="text-2xl font-bold text-navy-700 dark:text-white">
               {/* {userData && userData.Complete + userData.Pending} */}
             </p>
-            <p className=" font-normal text-gray-600" style={{fontSize:"60px"}}>
-              101
-            </p>
+            <p className="text-2xl font-bold text-navy-700 dark:text-white">
+                    {number3}
+                </p>
           </div>
         </div>
       </Card>
