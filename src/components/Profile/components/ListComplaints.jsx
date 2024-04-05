@@ -13,7 +13,7 @@ const ListComplaints = () => {
           .getReader()
           .read()
           .then(({ value, done }) => {
-            const text = new TextDecoder().decode(value)
+            const text = new TextDecoder().decode(value);
             if (isJsonString(text)) {
               console.log(JSON.parse(text));
               setData(JSON.parse(text));
@@ -34,10 +34,11 @@ const ListComplaints = () => {
   console.log({ data });
 
   return (
-    <div className="categories">
+    <div className="categories" style={{ minHeight: "80vh" }}>
       {data &&
         data.length > 0 &&
         data.map((carddata, i) => <Card data={carddata} key={i} />)}
+      {(!data || data.length === 0) && <>No data Found</>}
     </div>
   );
 };

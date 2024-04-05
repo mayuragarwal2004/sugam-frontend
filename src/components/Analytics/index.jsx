@@ -210,6 +210,13 @@ function Analytics() {
   }, []);
 
   useEffect(() => {
+    document.querySelector("body").style.overflow = "hidden";
+    return () => {
+      document.querySelector("body").style.overflow = "auto";
+    };
+  }, []);
+
+  useEffect(() => {
     console.log({ citygeojson });
     if (citygeojson) {
       setActiveMarker(null);

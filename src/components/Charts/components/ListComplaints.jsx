@@ -32,10 +32,11 @@ const ListComplaints = () => {
   }, []);
 
   return (
-    <div className="categories">
+    <div className="categories" style={{ height: "80vh" }}>
       {data &&
         data.length > 0 &&
         data.map((carddata) => <Card data={carddata} />)}
+      {(!data || data.length === 0) && <>No data Found</>}
     </div>
   );
 };
