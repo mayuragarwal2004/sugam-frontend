@@ -280,7 +280,7 @@ const Layout = () => {
                         <br />
                         <a href="#">vaishnavi.mahindrakar22@vit.edu</a>
                         <br />
-                        <a href="#">ankush.devangad22@vit.edu</a>
+                        <a href="#">ankush.devangan22@vit.edu</a>
                       </li>
                     </ul>
                   </div>
