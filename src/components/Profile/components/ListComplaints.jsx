@@ -6,7 +6,7 @@ const ListComplaints = () => {
   const [data, setData] = useState({});
 
   const getUserData = () => {
-    fetch("/sugam/user/getIssues")
+    fetch("/java/api/userspace/complaints")
       .then((response) => {
         console.log(response);
         response.body

@@ -80,7 +80,7 @@ const Complaints = () => {
     reqBody.latitude = formData.location.latitude;
     reqBody.imageURL = formData.imageURL;
     reqBody.severity = formData.severity;
-    reqBody.wasteType = formData.majorComponent;
+    reqBody.types = formData.majorComponent;
 
     if (formData.percentRecycled !== "") {
       reqBody.wasteRecyclable = formData.percentRecycled;
@@ -264,6 +264,7 @@ const Complaints = () => {
                             name="option"
                             id={option.value}
                             className="ansList"
+                            checked={formData.majorComponent.includes(option.value)}
                             onChange={(e) => {
                               setFormData((prev) => {
                                 let newwasteType = prev.majorComponent.slice(); // Create a copy of the current array
@@ -297,6 +298,7 @@ const Complaints = () => {
                             type="radio"
                             name="option"
                             id={option.value}
+                            checked={formData.percentRecycled === option.value}
                             className="ansList"
                             onChange={(e) =>
                               setFormData({
@@ -323,6 +325,7 @@ const Complaints = () => {
                             name="option"
                             id={option.value}
                             className="ansList"
+                            checked={formData.sinceWhen === option.value}
                             onChange={(e) =>
                               setFormData({
                                 ...formData,
@@ -349,6 +352,7 @@ const Complaints = () => {
                             name="option"
                             id={option.value}
                             className="ansList"
+                            checked={formData.category === option.value}
                             onChange={(e) =>
                               setFormData({
                                 ...formData,
@@ -373,6 +377,7 @@ const Complaints = () => {
                             type="radio"
                             name="isdustbin"
                             id="dustbin-yes"
+                            checked={formData.isdustbin === true}
                             className="ansList"
                             onChange={(e) =>
                               setFormData({ ...formData, isdustbin: true })
@@ -388,6 +393,7 @@ const Complaints = () => {
                             name="isdustbin"
                             id="dustbin-no"
                             className="ansList"
+                            checked={formData.isdustbin === false}
                             onChange={(e) =>
                               setFormData({ ...formData, isdustbin: false })
                             }
@@ -409,6 +415,7 @@ const Complaints = () => {
                               name="isdustbinOverflowing"
                               id="overflow-yes"
                               className="ansList"
+                              checked={formData.isdustbinOverflowing === true}
                               onChange={(e) =>
                                 setFormData({
                                   ...formData,
@@ -426,6 +433,7 @@ const Complaints = () => {
                               name="isdustbinOverflowing"
                               id="overflow-no"
                               className="ansList"
+                              checked={formData.isdustbinOverflowing === false}
                               onChange={(e) =>
                                 setFormData({
                                   ...formData,
@@ -452,6 +460,7 @@ const Complaints = () => {
                           name="option"
                           id="a"
                           className="ansList"
+                          checked={formData.isPMCcollecting === true}
                           onChange={(e) => {
                             setFormData({ ...formData, isPMCcollecting: true });
                           }}
@@ -465,6 +474,7 @@ const Complaints = () => {
                           type="radio"
                           name="option"
                           id="b"
+                          checked={formData.isPMCcollecting === false}
                           className="ansList"
                           onChange={(e) => {
                             setFormData({

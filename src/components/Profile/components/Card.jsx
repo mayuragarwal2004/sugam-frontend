@@ -121,8 +121,8 @@ const CardMain = ({ data }) => {
               {data.severity}
               <br />
               <b>Components Of Garbage: </b>{" "}
-              {data.wasteType.map((x, i) =>
-                data.wasteType.length - 1 === i ? x : x + ", "
+              {data.types.map((x, i) =>
+                data.types.length - 1 === i ? x : x + ", "
               )}
               {data.wasteRecyclable && (
                 <>

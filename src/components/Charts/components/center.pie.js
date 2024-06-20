@@ -35,13 +35,7 @@ function PieChart() {
     useEffect(() => {
         async function loadPieData() {
             try {
-                const response = await fetch("/sugam/charts/pie_center", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                  
-                });
+                const response = await fetch("/java/api/analytics/issues");
 
                 // if (!response.ok) {
                 //     throw new Error("Network response was not ok");
@@ -65,7 +59,7 @@ function PieChart() {
                             datasets: [
                                 {
                                     ...prevData.datasets[0],
-                                    data: responseData,
+                                    data: [responseData?.COMPLETE || 0, responseData?.PENDING || 0],
                                 },
                             ],
                         }));

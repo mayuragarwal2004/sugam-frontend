@@ -1,0 +1,138 @@
+/* @font-face {
+    font-family: Arial;
+    src: url("../../../public/fonts/Arial-font/ARIBL0.ttf");
+  } */
+
+.dashboard-container {
+  width: 95%;
+  max-width: 800px;
+  background-color: aliceblue;
+  padding: 20px;
+  border-radius: 20px;
+  margin: auto;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dashboard-header button:hover {
+  letter-spacing: 0px;
+}
+
+.dashboard-header-right {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.dashboard-header-greeting {
+  text-transform: none;
+  font-size: 20px;
+}
+
+.dashboard-header-role {
+  top: -10px;
+  position: relative;
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: solid rgb(134, 134, 134) 2px;
+  margin-left: 10px;
+}
+
+.dashboard-switch-user {
+  padding: 10px;
+  border-radius: 20px;
+  letter-spacing: 0px;
+  height: fit-content;
+  border: 2px rgb(1, 1, 90) solid;
+  background-color: transparent;
+  transition: 0.3s;
+}
+
+.dashboard-switch-user:hover {
+  letter-spacing: 0px;
+  color: white;
+  background-color: rgb(1, 1, 90);
+}
+
+.dashboard-body-card-container-child {
+  display: flex;
+  justify-content: center;
+}
+.dashboard-body-card {
+  color: black;
+  margin: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  width: 30%;
+  background-color: #cbe37c;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.dashboard-body-card-number {
+  font-size: xxx-large;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #087e00;
+}
+
+.dashboard-body-card-text {
+  font-size: large;
+}
+
+#addrole-submitbtn {
+  background: #2f4ad0;
+  margin: 16px 0 16px 0;
+  padding: 8px 16px;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 8px 6px -6px #555;
+}
+
+@media screen and (max-width: 700px) {
+  .dashboard-body-card-number {
+    font-size: xx-large;
+  }
+
+  .dashboard-body-card-text {
+    font-size: medium;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .dashboard-body-card {
+    width: 100%;
+  }
+  .dashboard-header{
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .dashboard-body-card {
+    width: 100%;
+    margin:3px;
+  }
+  .dashboard-body-card-number {
+    font-size: xx-large;
+  }
+
+  .dashboard-body-card-text {
+    font-size: smaller;
+  }
+}

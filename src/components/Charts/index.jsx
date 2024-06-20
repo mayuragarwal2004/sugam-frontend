@@ -22,7 +22,7 @@ const Charts = () => {
   const [number3, setNumber3] = useState(null);
   // console.log({number1},{number2},{number3});
   useEffect(() => {
-    fetch("/sugam/charts/counters").then((response) => {
+    fetch("/java/api/analytics/issues").then((response) => {
       // console.log(response);
       response.body
         .getReader()
@@ -33,10 +33,10 @@ const Charts = () => {
           console.log({ value });
           if (isJsonString(decodedValue)) {
             const data = JSON.parse(decodedValue);
-            console.log({ data });
-            setNumber1(data?.total || 0);
-            setNumber2(data?.complete || 0);
-            setNumber3(data?.pending || 0);
+            console.log({ newdata: data });
+            setNumber1(data?.TOTAL || 0);
+            setNumber2(data?.COMPLETE || 0);
+            setNumber3(data?.PENDING || 0);
           }
         });
     });
@@ -204,7 +204,7 @@ const Charts = () => {
             height: "250px",
           }}
         >
-          <BarChart_w></BarChart_w>
+          <BarChart_w />
         </Card>
       </div>
       <div
@@ -228,7 +228,7 @@ const Charts = () => {
             backgroundColor: "#fff",
           }}
         >
-          <PieChart></PieChart>
+          <PieChart />
         </Card>
 
         <Card
@@ -243,7 +243,7 @@ const Charts = () => {
             backgroundColor: "#fff",
           }}
         >
-          <Line_res_tot></Line_res_tot>
+          <Line_res_tot />
         </Card>
 
         {/* <Card

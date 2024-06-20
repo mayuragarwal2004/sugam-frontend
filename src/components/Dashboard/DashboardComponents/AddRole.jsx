@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import PhoneNumber from "../PhoneNumber";
-import { useAuth } from "../context/auth/AuthState";
+// import PhoneNumber from "../PhoneNumber";
+import { useAuth } from "../../context/auth/AuthState";
 import Select from "react-select";
 import roles from "./Roles.json";
 import Alert from "@mui/material/Alert";
@@ -40,7 +40,7 @@ const AddRole = () => {
   return (
     <div style={{ maxWidth: "300px", margin: "auto" }}>
       <div>
-        {setCurrentRole !== {} &&
+        {currentRole &&
         <Select
           className="basic-single"
           classNamePrefix="select"
@@ -50,7 +50,8 @@ const AddRole = () => {
         />}
       </div>
       <div>
-        <PhoneNumber value={num} setValue={handleNumNewChange} />
+        {/* <PhoneNumber value={num} setValue={handleNumNewChange} /> */}
+        <div>hi</div>
       </div>
       <div style={{ display: "flex", justifyContent: "space-evenly" }}>
         <button typeof="button" id="addrole-submitbtn" onClick={handleAddRole}>

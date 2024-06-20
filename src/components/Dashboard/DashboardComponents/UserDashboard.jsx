@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
-import { db } from "../base";
-import { useAuth } from "../context/auth/AuthState";
+import { db } from "../../../base";
+import { useAuth } from "../../context/auth/AuthState";
 import {
   getFirestore,
   addDoc,
@@ -36,7 +36,7 @@ const UserDashboard = () => {
     // console.log(querySnapshot.data().count);
   }
   useEffect(() => {
-    getcomplaintcount();
+    // getcomplaintcount();
   }, [])
   return (
     <>

@@ -58,7 +58,7 @@ function Line_res_tot() {
   useEffect(() => {
     async function loadPieData() {
       try {
-        const response = await fetch("/sugam/charts/res_tot", {
+        const response = await fetch("/java/api/analytics/res_tot", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
