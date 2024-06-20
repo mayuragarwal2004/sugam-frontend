@@ -76,8 +76,8 @@ const Complaints = () => {
     // Logic to handle form submission
     console.log("Form submitted!");
     const reqBody = {};
-    reqBody.coordX = formData.location.longitude;
-    reqBody.coordY = formData.location.latitude;
+    reqBody.longitude = formData.location.longitude;
+    reqBody.latitude = formData.location.latitude;
     reqBody.imageURL = formData.imageURL;
     reqBody.severity = formData.severity;
     reqBody.wasteType = formData.majorComponent;
@@ -104,7 +104,7 @@ const Complaints = () => {
     console.log({ reqBody });
 
     axios
-      .post("/sugam/user/complaint", reqBody, {
+      .post("/java/api/userspace/complain", reqBody, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -234,6 +234,8 @@ const Complaints = () => {
                           <input
                             type="radio"
                             name="option"
+                            checked={formData.severity === option.value}
+                            value={option.value}
                             id={option.value}
                             className="ansList"
                             onChange={(e) =>

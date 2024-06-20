@@ -13,8 +13,8 @@ const TrackComplaint = () => {
     severity: "MEDIUM",
     timestamp: "2024-04-02T14:57:11.000+00:00",
     status: "PENDING",
-    coordX: 73.8729804,
-    coordY: 18.4832227,
+    longitude: 73.8729804,
+    latitude: 18.4832227,
     wasteType: ["CONSTRUCTION"],
     resolvedTime: null,
     dustbinNearby: false,
@@ -69,6 +69,7 @@ const TrackComplaint = () => {
         </Button>
       </div>
       <div className="track-data-view">
+        
         
       </div>
     </div>

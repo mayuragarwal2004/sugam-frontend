@@ -96,8 +96,8 @@ export default function Map(props) {
     const result = await directionsService.route({
       origin: currentLocation,
       destination: {
-        lat: data[activeMarker].coordY,
-        lng: data[activeMarker].coordX,
+        lat: data[activeMarker].latitude,
+        lng: data[activeMarker].longitude,
       },
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.DRIVING,
@@ -155,7 +155,7 @@ export default function Map(props) {
             return (
               <Marker
                 key={i}
-                position={{ lng: doc.coordX, lat: doc.coordY }}
+                position={{ lng: doc.longitude, lat: doc.latitude }}
                 onClick={() => handleActiveMarker(i)}
                 clusterer={clusterer}
                 icon={doc.status === "COMPLETE" ? greencircle : redcircle}
@@ -295,7 +295,7 @@ export default function Map(props) {
                       </div>
                       <div className="row" style={{ alignItems: "center", padding: 0 }}>
                         <a
-                          href={`https://www.google.com/maps?q=${doc.coordY},${doc.coordX}`}
+                          href={`https://www.google.com/maps?q=${doc.latitude},${doc.longitude}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >

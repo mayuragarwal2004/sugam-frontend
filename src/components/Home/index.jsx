@@ -34,7 +34,7 @@ const Home = () => {
   }
 
   const getAnalyticData = async () => {
-    fetch("/sugam/api/footer")
+    fetch("/java/api/analytics/footer")
       .then((response) => {
         console.log(response);
         response.body

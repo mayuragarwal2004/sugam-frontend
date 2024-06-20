@@ -12,7 +12,7 @@ const AuthState = (props) => {
   console.log({ currentUser, currentUserRole });
 
   const getUserData = () => {
-    fetch("/sugam/api/get")
+    fetch("/java/api/userspace/get")
       .then((response) => {
         console.log(response);
         response.body
@@ -28,7 +28,7 @@ const AuthState = (props) => {
           })
           .then((data) => {
             console.log(data);
-            if (data && data.userID) {
+            if (data && data.username) {
               setcurrentUser(data);
               if (data.status) {
                 setcurrentUserRole(data.status);

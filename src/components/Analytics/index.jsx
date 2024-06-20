@@ -316,7 +316,7 @@ function Analytics() {
 
     console.log({ reqbody });
 
-    fetch("/sugam/analytics/getQuery", {
+    fetch("/java/api/adminspace/getComplaints", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

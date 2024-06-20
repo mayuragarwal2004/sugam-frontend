@@ -23,34 +23,45 @@ const Login = () => {
   const handleRegisterSubmit = () => {
     // Add logic here to handle the register button click
     console.log("Register button clicked");
-    fetch(
-      `/sugam/api/register?user=${username}&pass=${password}&username=${username}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch("/java/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        password,
+        email: username,
+        phone: "1234567890",
+      }),
+    })
       .then((response) => {
         console.log(response);
+        if (response.ok) {
+          setAlertData({
+            open: true,
+            message: "registration successful.",
+            severity: "success",
+          });
+          getUserData();
+          return;
+        }
+
         response.body
           .getReader()
           .read()
           .then(({ value, done }) => {
             console.log(new TextDecoder().decode(value));
-
-            if (
-              new TextDecoder().decode(value) === "true" ||
-              new TextDecoder().decode(value) === true
-            ) {
+            try {
+              let jsonval = JSON.parse(new TextDecoder().decode(value));
+              console.log(jsonval);
               setAlertData({
                 open: true,
-                message: "registration successful.",
-                severity: "success",
+                message: jsonval.desc,
+                severity: "error",
               });
-              getUserData();
-            } else {
+            } catch (e) {
+              console.log(e);
               setAlertData({
                 open: true,
                 message: "registration failed.",
@@ -70,7 +81,7 @@ const Login = () => {
 
     // Add logic here to handle form submission
     console.log("Form submitted");
-    fetch(`/sugam/api/authenticate?user=${username}&pass=${password}`, {
+    fetch(`/java/api/authenticate?username=${username}&password=${password}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

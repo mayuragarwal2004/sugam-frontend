@@ -124,7 +124,7 @@ export default function Map(props) {
             return (
               <Marker
                 key={i}
-                position={{ lat: doc.coordX, lng: doc.coordY }}
+                position={{ lat: doc.longitude, lng: doc.latitude }}
                 onClick={() => handleActiveMarker(i)}
                 clusterer={clusterer}
                 icon={doc.status === "COMPLETE" ? greencircle : redcircle}
