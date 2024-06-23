@@ -14,6 +14,7 @@ import TrackComplaint from "./components/TrackComplaint";
 import Charts from "./components/Charts";
 
 import Bubble from "./components/Charts/components/bubble";
+import NoPage from "./NoPage";
 
 function App() {
   return (
@@ -38,7 +39,7 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="aboutUs" element={<AboutUs />} />
               <Route path="charts" element={<Charts />} />
-              {/* <Route path="*" element={<NoPage />} /> */}
+              <Route path="*" element={<NoPage />} />
             </Route>
           </Routes>
         </div>
