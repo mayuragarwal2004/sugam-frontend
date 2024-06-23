@@ -95,31 +95,28 @@ const Login = () => {
     })
       .then((response) => {
         console.log(response);
-        response.body
-          .getReader()
-          .read()
-          .then(({ value, done }) => {
-            console.log(new TextDecoder().decode(value));
-            if (
-              new TextDecoder().decode(value) === "true" ||
-              new TextDecoder().decode(value) === true
-            ) {
-              setAlertData({
-                open: true,
-                message: "login successful.",
-                severity: "success",
-              });
-              getUserData();
-            } else {
-              setAlertData({
-                open: true,
-                message: "login failed.",
-                severity: "error",
-              });
-            }
+        if(response.ok){
+          setAlertData({
+            open: true,
+            message: "Login successful.",
+            severity: "success",
           });
+          getUserData();
+          return;
+        } else {
+          setAlertData({
+            open: true,
+            message: "Login failed.",
+            severity: "error",
+          });
+        }
       })
       .catch((error) => {
+        setAlertData({
+          open: true,
+          message: "Login failed.",
+          severity: "error",
+        });
         console.error("Error:", error);
         // Handle errors here if needed
       });
