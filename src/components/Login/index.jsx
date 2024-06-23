@@ -82,7 +82,7 @@ const Login = () => {
     // Add logic here to handle form submission
     console.log("Form submitted");
     fetch(`java/api/auth/login_page`, {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
