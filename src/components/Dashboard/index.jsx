@@ -60,7 +60,9 @@ const Dashboard = () => {
                 <span className="dashboard-header-greeting">
                   Hi {currentUser?.username}
                 </span>
-                <span className="dashboard-header-role">{currentUser?.username}</span>
+                {/* <span className="dashboard-header-role">
+                  {currentUser?.username}
+                </span> */}
               </span>
               <div className="dashboard-header-right">
                 {currentUser && (
@@ -74,6 +76,7 @@ const Dashboard = () => {
                 </button> */}
               </div>
             </div>
+            <AdminDashboard />
             {currentUserRole === "" && <UserDashboard />}
             {currentUserRole === "Officer" && <OfficerDashboard />}
             {currentUserRole === "SubOfficer" && <SubOfficerDashboard />}

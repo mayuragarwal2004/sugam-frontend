@@ -6,6 +6,7 @@ import PieChart from "./components/center.pie";
 import Line_res_tot from "./components/line.res.tot";
 import BarChart_w from "./components/types.of.w.bar";
 import { Bubble } from "react-chartjs-2";
+import PieApexCharts from "./components/PieApexCharts";
 
 const Charts = () => {
   function isJsonString(str) {
@@ -29,7 +30,7 @@ const Charts = () => {
         .read()
         .then(({ value, done }) => {
           const decodedValue = new TextDecoder().decode(value);
-          console.log({decodedValue});
+          console.log({ decodedValue });
           console.log({ value });
           if (isJsonString(decodedValue)) {
             const data = JSON.parse(decodedValue);
@@ -48,6 +49,8 @@ const Charts = () => {
         className="div-carduser"
         style={{
           paddingTop: "20px",
+          maxWidth: "1200px",
+          margin: "auto",
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
@@ -56,12 +59,15 @@ const Charts = () => {
           backgroundRepeat: "no-repeat",
           backgroundAttachment: "fixed",
           background: "rgb(160 216 200 / 100%)",
+          alignItems: "center",
         }}
       >
+        {/* Total Card */}
         <Card
           extra={"items-center w-full h-full p-[16px] bg-cover"}
           style={{
-            maxWidth: "15%",
+            // maxWidth: "15%",
+            width: "190px",
             display: "flex",
             justifyContent: "center",
             backgroundColor: "#fff",
@@ -101,11 +107,12 @@ const Charts = () => {
             </div>
           </div>
         </Card>
-
+        {/* Resolved Card */}
         <Card
           extra={"items-center w-full h-full p-[16px] bg-cover"}
           style={{
-            maxWidth: "15%",
+            width: "190px",
+            // maxWidth: "15%",
             display: "flex",
             justifyContent: "center",
             backgroundColor: "#fff",
@@ -145,10 +152,12 @@ const Charts = () => {
             </div>
           </div>
         </Card>
+        {/* Pending Card */}
         <Card
           extra={"items-center w-full h-full p-[16px] bg-cover"}
           style={{
-            maxWidth: "15%",
+            width: "190px",
+            // maxWidth: "15%",
             display: "flex",
             justifyContent: "center",
             backgroundColor: "#fff",
@@ -188,26 +197,55 @@ const Charts = () => {
             </div>
           </div>
         </Card>
+        {/* Bar Chart */}
         <Card
           extra={"items-center w-full h-full p-[16px] bg-cover"}
           style={{
-            minWidth: "30%",
+            width: "fit-content",
+            // minWidth: "30%",
             minHeight: "240px",
-            maxWidth: "38%",
-            // maxWidth:'600px',
-            // justifyContent: 'space-around',
-            // margin:'10px',
-            width: "calc(100% - 20px)",
+            overflow: "auto",
             display: "flex",
             justifyContent: "center",
             backgroundColor: "#fff",
             height: "250px",
+            margin: "10px",
           }}
         >
           <BarChart_w />
         </Card>
+        {/* Pie Chart */}
+        <Card
+          extra={"items-center w-full h-full p-[16px] bg-cover"}
+          style={{
+            width: "fit-content",
+            display: "flex",
+            backgroundColor: "#fff",
+            overflow: "auto",
+            margin: "10px",
+          }}
+        >
+          <PieChart />
+          {/* <PieApexCharts /> */}
+        </Card>
+
+        {/* line chart */}
+        <Card
+          extra={"items-center w-full h-full p-[16px] bg-cover"}
+          style={{
+            width: "fit-content",
+            maxHeight: "350px",
+            margin: "10px",
+            display: "flex",
+            justifyContent: "center",
+            backgroundColor: "#fff",
+            overflow: "auto",
+          }}
+        >
+          <Line_res_tot />
+        </Card>
       </div>
-      <div
+      {/* <div
         className="chartsdisplay"
         style={{
           display: "flex",
@@ -221,34 +259,6 @@ const Charts = () => {
         <Card
           extra={"items-center w-full h-full p-[16px] bg-cover"}
           style={{
-            maxWidth: "30%",
-            margin: "10px",
-            width: "calc(100% - 20px)",
-            display: "flex",
-            backgroundColor: "#fff",
-          }}
-        >
-          <PieChart />
-        </Card>
-
-        <Card
-          extra={"items-center w-full h-full p-[16px] bg-cover"}
-          style={{
-            maxWidth: "60%",
-            maxHeight: "350px",
-            margin: "10px",
-            width: "calc(100% - 20px)",
-            display: "flex",
-            justifyContent: "center",
-            backgroundColor: "#fff",
-          }}
-        >
-          <Line_res_tot />
-        </Card>
-
-        {/* <Card
-          extra={"items-center w-full h-full p-[16px] bg-cover"}
-          style={{
             maxWidth: "88%",
             margin: "10px",
             width: "calc(100% - 20px)",
@@ -258,8 +268,8 @@ const Charts = () => {
           }}
         >
           <Bubblechart></Bubblechart>
-        </Card> */}
-      </div>
+        </Card>
+      </div> */}
     </>
   );
 };

@@ -13,13 +13,14 @@ const Profile = () => {
   const { currentUser } = useAuth();
   // const currentUser = { displayName: "Sugam User" };
   const [userData, setUserData] = useState({
-    Complete: 6,
-    Pending: 19,
+    TOTAL: 0,
+    COMPLETE: 0,
+    PENDING: 0,
   });
 
   async function getUserData() {
     ///sugam/user/getIssueSum
-    fetch("/sugam/user/getIssueSum")
+    fetch("/java/api/userspace/issueSum")
       .then((response) => {
         console.log(response);
         response.body
@@ -110,7 +111,7 @@ const Profile = () => {
           >
             <div className="flex flex-col items-center justify-center">
               <p className="text-2xl font-bold text-navy-700 dark:text-white">
-                {userData && userData.Complete + userData.Pending}
+                {userData && userData.TOTAL}
               </p>
               <p className="text-sm font-normal text-gray-600">
                 Compaints Registered
@@ -118,7 +119,7 @@ const Profile = () => {
             </div>
             <div className="flex flex-col items-center justify-center">
               <p className="text-2xl font-bold text-navy-700 dark:text-white">
-                {userData && userData.Complete}
+                {userData && userData.COMPLETE}
               </p>
               <p className="text-sm font-normal text-gray-600">
                 Complaints Solved
@@ -126,7 +127,7 @@ const Profile = () => {
             </div>
             <div className="flex flex-col items-center justify-center">
               <p className="text-2xl font-bold text-navy-700 dark:text-white">
-                {userData && userData.Pending}
+                {userData && userData.PENDING}
               </p>
               <p className="text-sm font-normal text-gray-600">
                 Complaints pending

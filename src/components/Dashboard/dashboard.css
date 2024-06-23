@@ -5,7 +5,7 @@
 
 .dashboard-container {
   width: 95%;
-  max-width: 800px;
+  /* max-width: 800px; */
   background-color: aliceblue;
   padding: 20px;
   border-radius: 20px;
@@ -135,4 +135,54 @@
   .dashboard-body-card-text {
     font-size: smaller;
   }
+}
+
+.worker-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.worker-table table{
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.worker-table th {
+  background-color: #4e64d3;
+  color: white;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.worker-table td {
+  padding: 10px;
+  text-align: center;
+}
+
+.worker-table tr:nth-child(even) {
+  background-color: #dcdcdc;
+}
+
+.worker-table tr:hover(even) {
+  background-color: #f1f1f1;
+}
+
+.worker-table tr:hover{
+  background-color: #a2a2a2;
+}
+
+.worker-table tr {
+  border-bottom: 1px solid #ddd;
+}
+
+
+.worker-table th,
+.worker-table td {
+  border: 1px solid #ddd;
+}
+
+.worker-table svg{
+  margin: 0;
 }

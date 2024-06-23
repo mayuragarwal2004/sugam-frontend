@@ -24,7 +24,7 @@ const NotValidForm = (props) => {
       alert("Please select a reason");
       return;
     }
-    fetch(`/sugam/user/markInvalid?id=${data[activeMarker].id}&msg=${value}`)
+    fetch(`/java/api/adminspace/markInvalid?id=${data[activeMarker].id}&msg=${value}`)
       .then((response) => {
         handleResolveFormClose(true);
         console.log(response);

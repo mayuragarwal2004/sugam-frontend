@@ -218,12 +218,12 @@ export default function Map(props) {
                           <b>Name: </b> {doc.userID}
                           <br />
                           <b>Components Of Garbage: </b>{" "}
-                          {doc.wasteType.map((x, i) =>
-                            doc.wasteType.length - 1 === i ? x : x + ", "
+                          {doc.types.map((x, i) =>
+                            doc.types.length - 1 === i ? x : x + ", "
                           )}
                           <br />
                           <b>Chronic Site: </b>
-                          {parseInt(doc.wasteType) > 3 ? "Yes" : "No"}
+                          {parseInt(doc.types) > 3 ? "Yes" : "No"}
                           <br />
                           {doc.location && (
                             <>

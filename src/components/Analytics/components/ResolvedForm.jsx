@@ -16,7 +16,7 @@ const ResolvedForm = (props) => {
       alert("Please select an image");
       return;
     }
-    fetch("/sugam/user/markComplete", {
+    fetch("/java/api/adminspace/markComplete", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,13 +25,11 @@ const ResolvedForm = (props) => {
         id: data[activeMarker].id,
         url: img,
       }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+    }).then((response) => {
+      if (response.ok) {
         handleResolveFormClose(true);
-      })
-      .then(console.log("submitted"));
+      }
+    });
   }
 
   return (
