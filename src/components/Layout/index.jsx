@@ -57,7 +57,7 @@ const Layout = () => {
 
   const handleLogout = () => {
     // clear cookies and refresh
-    fetch("/java/api/logout").then(() => {
+    fetch("/java/api/auth/logout").then(() => {
       getUserData();
       navigate("/login");
     });
