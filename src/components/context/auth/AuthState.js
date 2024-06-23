@@ -15,6 +15,10 @@ const AuthState = (props) => {
     fetch("/java/api/userspace/get")
       .then((response) => {
         console.log(response);
+        if (response.status > 200) {
+          setcurrentUser(null);
+          return;
+        }
         response.body
           .getReader()
           .read()
@@ -39,7 +43,8 @@ const AuthState = (props) => {
           });
       })
       .catch((error) => {
-        console.error("Error:", error);
+        setcurrentUser(null);
+        // console.error("Error:", error);
         // Handle errors here if needed
       });
   };
