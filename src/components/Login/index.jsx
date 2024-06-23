@@ -79,14 +79,19 @@ const Login = () => {
   const handleLoginSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
 
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("password", password);
+    formData.append("submit", "submit");
+
     // Add logic here to handle form submission
     console.log("Form submitted");
     fetch(`java/api/auth/login_page`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: `username=${username}&password=${password}&submit=submit`
+      body: formData,
+      redirect: "manual",
     })
       .then((response) => {
         console.log(response);
