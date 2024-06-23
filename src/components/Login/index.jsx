@@ -84,7 +84,7 @@ const Login = () => {
     fetch(`java/api/auth/login_page`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       body: `username=${username}&password=${password}&submit=submit`
     })
