@@ -576,6 +576,102 @@ function Analytics() {
                     )}
                   </div>
                   <div
+                    className={`left-panel-row ${
+                      activeFilters.location ? "" : "inactive"
+                    }`}
+                    style={{ margin: "10px 0" }}
+                  >
+                    <div
+                      className="left-panel-row-title"
+                      onClick={() => {
+                        setactiveFilters({
+                          ...activeFilters,
+                          location: !activeFilters.location,
+                        });
+                      }}
+                    >
+                      <div className="title-main">Sort by Location</div>
+                      <ExpandMoreIcon className="arrow-icon" />
+                    </div>
+                    <div
+                      className="left-panel-row-body"
+                      style={{ marginTop: "10px" }}
+                    >
+                      <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">
+                          View data by
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={sortByAddessOption}
+                          label="View data by"
+                          onChange={(e) => {
+                            setsortByAddessOption(e.target.value);
+                            setshowgeojson(true);
+                            if (e.target.value === 2) {
+                              map.setCenter(center);
+                              map.setZoom(13);
+                            }
+                            if (e.target.value === 1) {
+                              setgeojson(citygeojson);
+                            }
+                            if (e.target.value === 0) {
+                              setshowgeojson(false);
+                              setgeojson(citygeojson);
+                              setsortByWardOption(-1);
+                            }
+                          }}
+                        >
+                          <MenuItem value={0}>No Sort</MenuItem>
+                          <MenuItem value={1}>Ward</MenuItem>
+                          <MenuItem value={2}>City</MenuItem>
+                        </Select>
+                      </FormControl>
+                      {sortByAddessOption === 1 && (
+                        <FormControl fullWidth style={{ marginTop: "10px" }}>
+                          <InputLabel id="demo-simple-select-label">
+                            Choose Ward
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={sortByWardOption}
+                            label="Choose Ward"
+                            onChange={(e) => {
+                              setsortByWardOption(e.target.value);
+                              if (e.target.value === -1) {
+                                setgeojson(citygeojson);
+                                setshowgeojson(true);
+                              } else if (e.target.value === -2) {
+                                // get current ward
+                                setshowgeojson(false);
+                              } else {
+                                setshowgeojson(true);
+
+                                setgeojson(() =>
+                                  filterGeoJSONByWardNo(e.target.value)
+                                );
+                              }
+                            }}
+                          >
+                            <MenuItem value={-1}>Select Ward</MenuItem>
+                            <MenuItem value={-2}>Get Current Ward</MenuItem>
+                            {citygeojson &&
+                              citygeojson.map((shape, index) => (
+                                <MenuItem
+                                  value={shape.properties["WardZone"]}
+                                  key={index}
+                                >
+                                  {shape.properties["WardZone"]}
+                                </MenuItem>
+                              ))}
+                          </Select>
+                        </FormControl>
+                      )}
+                    </div>
+                  </div>
+                  <div
                     className="left-panel-row-title"
                     onClick={() => {
                       setactiveFilters({
@@ -832,102 +928,6 @@ function Analytics() {
                         )}
                       </LocalizationProvider>
                     </FormControl>
-                  </div>
-                </div>
-                <div
-                  className={`left-panel-row ${
-                    activeFilters.location ? "" : "inactive"
-                  }`}
-                  style={{ marginTop: "10px" }}
-                >
-                  <div
-                    className="left-panel-row-title"
-                    onClick={() => {
-                      setactiveFilters({
-                        ...activeFilters,
-                        location: !activeFilters.location,
-                      });
-                    }}
-                  >
-                    <div className="title-main">Sort by Location</div>
-                    <ExpandMoreIcon className="arrow-icon" />
-                  </div>
-                  <div
-                    className="left-panel-row-body"
-                    style={{ marginTop: "10px" }}
-                  >
-                    <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">
-                        View data by
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={sortByAddessOption}
-                        label="View data by"
-                        onChange={(e) => {
-                          setsortByAddessOption(e.target.value);
-                          setshowgeojson(true);
-                          if (e.target.value === 2) {
-                            map.setCenter(center);
-                            map.setZoom(13);
-                          }
-                          if (e.target.value === 1) {
-                            setgeojson(citygeojson);
-                          }
-                          if (e.target.value === 0) {
-                            setshowgeojson(false);
-                            setgeojson(citygeojson);
-                            setsortByWardOption(-1);
-                          }
-                        }}
-                      >
-                        <MenuItem value={0}>No Sort</MenuItem>
-                        <MenuItem value={1}>Ward</MenuItem>
-                        <MenuItem value={2}>City</MenuItem>
-                      </Select>
-                    </FormControl>
-                    {sortByAddessOption === 1 && (
-                      <FormControl fullWidth style={{ marginTop: "10px" }}>
-                        <InputLabel id="demo-simple-select-label">
-                          Choose Ward
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={sortByWardOption}
-                          label="Choose Ward"
-                          onChange={(e) => {
-                            setsortByWardOption(e.target.value);
-                            if (e.target.value === -1) {
-                              setgeojson(citygeojson);
-                              setshowgeojson(true);
-                            } else if (e.target.value === -2) {
-                              // get current ward
-                              setshowgeojson(false);
-                            } else {
-                              setshowgeojson(true);
-
-                              setgeojson(() =>
-                                filterGeoJSONByWardNo(e.target.value)
-                              );
-                            }
-                          }}
-                        >
-                          <MenuItem value={-1}>Select Ward</MenuItem>
-                          <MenuItem value={-2}>Get Current Ward</MenuItem>
-                          {citygeojson &&
-                            citygeojson.map((shape, index) => (
-                              <MenuItem
-                                value={shape.properties["WardZone"]}
-                                key={index}
-                              >
-                                {shape.properties["WardZone"]}
-                              </MenuItem>
-                            ))}
-                        </Select>
-                      </FormControl>
-                    )}
                   </div>
                 </div>
                 <Button onClick={getNewData}>Get Data</Button>
