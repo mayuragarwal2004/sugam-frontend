@@ -113,7 +113,7 @@ export default function Map(props) {
   }
 
   useEffect(() => {
-    const trackCountRef = ref(db, 'tracker/');
+    const trackCountRef = ref(db, "tracker/");
     onValue(trackCountRef, (snapshot) => {
       const data = snapshot.val();
       const newData = [];
@@ -169,12 +169,14 @@ export default function Map(props) {
             }}
           />
         ))}
-      {trackerData.map((val, i) => <MarkerF
-        key={i}
-        position={{ lng: val.lng, lat: val.lat }}
-        // onClick={() => handleActiveMarker(i)}
-        icon={garbageTruck}
-      />)}
+      {trackerData.map((val, i) => (
+        <MarkerF
+          key={i}
+          position={{ lng: val.lng, lat: val.lat }}
+          // onClick={() => handleActiveMarker(i)}
+          icon={garbageTruck}
+        />
+      ))}
       <MarkerClusterer>
         {(clusterer) =>
           data.map((doc, i) => {
@@ -277,6 +279,12 @@ export default function Map(props) {
                           )}
                         </div>
                         <p>
+                          <span style={{ color: "white" }}>
+                            <b>Reported By ID: </b> {doc.id}
+                            <br />
+                          </span>
+                          <b>Reported By: </b> {doc.username}
+                          <br />
                           <b>Reported On: </b> {doc.reported}
                           <br />
                           <b>Components Of Garbage: </b>{" "}
