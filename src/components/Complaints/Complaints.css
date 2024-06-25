@@ -217,7 +217,7 @@ div#showscore {
   margin-bottom: 30px;
 }
 svg {
-  fill: #fff;
+  /* fill: #fff; */
   /* height: 9px; */
   /* margin-right: 6px; */
 }

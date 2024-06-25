@@ -16,7 +16,6 @@ function BarChart_w() {
       "Sanitary Waste",
     ],
     datasets: [
-      
       {
         label: "Types of Wastes (in %)",
         fill: false,
@@ -75,11 +74,11 @@ function BarChart_w() {
             let newdata = [
               responseData?.WET,
               responseData?.PLANT,
-                responseData?.CONSTRUCTION,
-                responseData?.CLOTHES,
-                responseData?.DRY,
-                responseData?.MEDICAL,
-                responseData?.SANITARY,
+              responseData?.CONSTRUCTION,
+              responseData?.CLOTHES,
+              responseData?.DRY,
+              responseData?.MEDICAL,
+              responseData?.SANITARY,
             ];
 
             setData((prevData) => ({

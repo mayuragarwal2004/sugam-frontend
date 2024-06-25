@@ -31,11 +31,8 @@ const Charts = () => {
         .read()
         .then(({ value, done }) => {
           const decodedValue = new TextDecoder().decode(value);
-          console.log({ decodedValue });
-          console.log({ value });
           if (isJsonString(decodedValue)) {
             const data = JSON.parse(decodedValue);
-            console.log({ newdata: data });
             setNumber1(data?.TOTAL || 0);
             setNumber2(data?.COMPLETE || 0);
             setNumber3(data?.PENDING || 0);
@@ -213,7 +210,7 @@ const Charts = () => {
             margin: "10px",
           }}
         >
-          <BarChart />
+          <BarChart_w />
         </Card>
         {/* Pie Chart */}
         <Card

@@ -73,15 +73,12 @@ function Line_res_tot() {
           .getReader()
           .read()
           .then(({ value, done }) => {
-            console.log(new TextDecoder().decode(value));
-            console.log({ value });
             if (isJsonString(new TextDecoder().decode(value))) {
               return JSON.parse(new TextDecoder().decode(value));
             }
             return "";
           })
           .then((responseData) => {
-            console.log(responseData);
             var resolved = [];
             var total = [];
             if (!Array.isArray(responseData)) return;

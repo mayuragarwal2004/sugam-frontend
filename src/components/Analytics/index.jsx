@@ -208,15 +208,7 @@ function Analytics() {
   useEffect(() => {
     getGeoJson();
   }, []);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    document.querySelector("body").style.overflow = "hidden";
-    return () => {
-      document.querySelector("body").style.overflow = "auto";
-    };
-  }, []);
-
+  
   useEffect(() => {
     console.log({ citygeojson });
     if (citygeojson) {

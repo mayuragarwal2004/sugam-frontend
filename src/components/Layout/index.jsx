@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import "./Layout.css";
 import { useAuth } from "../context/auth/AuthState";
 
@@ -39,6 +39,7 @@ const Layout = () => {
   const [anchorElUser, setAnchorElUser] = React.useState("");
   const { currentUser, getUserData } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -62,6 +63,17 @@ const Layout = () => {
       navigate("/login");
     });
   };
+
+  React.useEffect(() => {
+    if (location.pathname === "/analytics") {
+      console.log("gandagi");
+      window.scrollTo(0, 0);
+      document.querySelector("body").style.overflow = "hidden";
+    } else {
+      console.log("cleanup check");
+      document.querySelector("body").style.overflow = "auto";
+    }
+  }, [location]);
 
   return (
     <div className="navbar-parent">
