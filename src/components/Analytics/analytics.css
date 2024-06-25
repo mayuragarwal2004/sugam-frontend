@@ -51,6 +51,12 @@
   flex-wrap: wrap;
 }
 
+#infoWindowBody img {
+  max-width: 150px;
+  max-height: 150px;
+
+}
+
 .analytics-form-overlay {
   padding: 20px;
   border: solid 4px;

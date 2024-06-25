@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState, useEffect, useContext } from "react";
 import {
   Marker,
@@ -11,12 +12,13 @@ import bluecircle from "./analytics/bluecircle.png";
 import redcircle from "./analytics/redcircle.png";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-import { View, StyleSheet, Alert } from "react-native";
 import AuthContext from "../../context/auth/AuthContext";
 import { useAuth } from "../../context/auth/AuthState";
 import AnalyticsConfirmation from "./AnalyticsConfirmation";
 import ImageOverlay from "./ImageOverlay";
 import MapWidgets from "./MapWidgets";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 // import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -169,42 +171,72 @@ export default function Map(props) {
                   >
                     <>
                       <div className="row1">
-                        <div style={{ margin: "0px 5px" }}>
-                          <StyledButton
-                            size="small"
-                            variant="contained"
-                            color="error"
-                            onClick={() => {
-                              setOpen((prev) => ({
-                                ...prev,
-                                state: true,
-                                lastClicked: "Not Valid",
-                              }));
-                              setlastClicked("Not Valid");
-                            }}
-                          >
-                            Report Not Valid
-                          </StyledButton>
-                        </div>
-                        <div style={{ margin: "0px 5px" }}>
-                          <StyledButton
-                            size="small"
-                            variant="contained"
-                            color="success"
-                            onClick={() => {
-                              setOpen((prev) => ({
-                                ...prev,
-                                state: true,
-                                lastClicked: "Resolved",
-                              }));
-                            }}
-                          >
-                            Resolved
-                          </StyledButton>
-                        </div>
+                        {doc.status === "COMPLETE" ? (
+                          <>
+                            {doc.resolvedImageURL ? (
+                              <Alert variant="filled" severity="success">
+                                  Complaint has been resolved.
+                              </Alert>
+                            ) : (
+                              <Alert variant="filled" severity="warning">
+                                <AlertTitle>
+                                  Complaint has been flagged as invalid.
+                                </AlertTitle>
+                                Reason: {doc.invalidComplaintMessage}
+                              </Alert>
+                            )}
+                          </>
+                        ) : (
+                          <>
+                            <div style={{ margin: "0px 5px" }}>
+                              <StyledButton
+                                size="small"
+                                variant="contained"
+                                color="error"
+                                onClick={() => {
+                                  setOpen((prev) => ({
+                                    ...prev,
+                                    state: true,
+                                    lastClicked: "Not Valid",
+                                  }));
+                                  setlastClicked("Not Valid");
+                                }}
+                              >
+                                Report Not Valid
+                              </StyledButton>
+                            </div>
+                            <div style={{ margin: "0px 5px" }}>
+                              <StyledButton
+                                size="small"
+                                variant="contained"
+                                color="success"
+                                onClick={() => {
+                                  setOpen((prev) => ({
+                                    ...prev,
+                                    state: true,
+                                    lastClicked: "Resolved",
+                                  }));
+                                }}
+                              >
+                                Resolved
+                              </StyledButton>
+                            </div>
+                          </>
+                        )}
                       </div>
-                      <div className="row" style={{ alignItems: "center", padding: "10px" }}>
-                        <div className="column">
+                      <div
+                        className={doc.resolvedImageURL ? "column" : "row"}
+                        style={{
+                          alignItems: "center",
+                          padding: "10px",
+                          width: "100%",
+                        }}
+                        id="infoWindowBody"
+                      >
+                        <div
+                          className={doc.resolvedImageURL ? "row" : "column"}
+                          style={{ padding: 0 }}
+                        >
                           <img
                             src={doc.imageURL}
                             loading="lazy"
@@ -213,9 +245,15 @@ export default function Map(props) {
                             style={{ float: "left" }}
                             onClick={() => imgClick(doc.imageURL)}
                           />
+                          {doc.resolvedImageURL && (
+                            <img
+                              src={doc.resolvedImageURL}
+                              alt="Resolved Image"
+                            />
+                          )}
                         </div>
                         <p>
-                          <b>Name: </b> {doc.userID}
+                          <b>Reported On: </b> {doc.reported}
                           <br />
                           <b>Components Of Garbage: </b>{" "}
                           {doc.types.map((x, i) =>
@@ -227,8 +265,7 @@ export default function Map(props) {
                           <br />
                           {doc.location && (
                             <>
-                              <b>Ward: </b>{" "}
-                              {doc.location}
+                              <b>Ward: </b> {doc.location}
                               <br />
                             </>
                           )}
@@ -293,16 +330,16 @@ export default function Map(props) {
                           )}
                         </p>
                       </div>
-                      <div className="row" style={{ alignItems: "center", padding: 0 }}>
+                      <div
+                        className="row"
+                        style={{ alignItems: "center", padding: 0 }}
+                      >
                         <a
                           href={`https://www.google.com/maps?q=${doc.latitude},${doc.longitude}`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <Button
-                            variant="contained"
-                            style={{ margin: "2px" }}
-                          >
+                          <Button variant="contained" style={{ margin: "2px" }}>
                             Open in Google Maps
                           </Button>
                         </a>

@@ -353,6 +353,9 @@ function Analytics() {
     };
   }, []);
 
+  console.log({ queryData });
+  console.log(queryData.filter((val) => val.status === "COMPLETE").length);
+
   return (
     <>
       <FullScreen handle={fullscreenHandle}>
@@ -482,6 +485,96 @@ function Analytics() {
                   }`}
                   style={{ marginBottom: "10px" }}
                 >
+                  <div
+                    style={{
+                      marginBottom: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <div style={{ textAlign: "center" }}>
+                        Complaints Resolved
+                      </div>
+                      <div>
+                        {
+                          queryData.filter((val) => val.status === "COMPLETE")
+                            .length
+                        }
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        borderLeft: "1px solid #B6B6B6",
+                        height: "100px",
+                      }}
+                    ></div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <div style={{ textAlign: "center" }}>
+                        Complaints Unresolved
+                      </div>
+                      <div>
+                        {
+                          queryData.filter((val) => val.status === "PENDING")
+                            .length
+                        }
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ marginBottom: "10px" }}>
+                    {activeFilters.location &&
+                    activeFilters.severity &&
+                    activeFilters.status &&
+                    activeFilters.time &&
+                    activeFilters.type ? (
+                      <Button
+                        variant="outlined"
+                        onClick={() =>
+                          setactiveFilters({
+                            status: false,
+                            time: false,
+                            location: false,
+                            severity: false,
+                            type: false,
+                          })
+                        }
+                        style={{ width: "100%" }}
+                      >
+                        Hide All
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="outlined"
+                        onClick={() =>
+                          setactiveFilters({
+                            status: true,
+                            time: true,
+                            location: true,
+                            severity: true,
+                            type: true,
+                          })
+                        }
+                        style={{ width: "100%" }}
+                      >
+                        Collapse All
+                      </Button>
+                    )}
+                  </div>
                   <div
                     className="left-panel-row-title"
                     onClick={() => {
@@ -625,6 +718,7 @@ function Analytics() {
                   className={`left-panel-row ${
                     activeFilters.severity ? "" : "inactive"
                   }`}
+                  style={{ marginBottom: "10px" }}
                 >
                   <div
                     className="left-panel-row-title"
@@ -683,7 +777,6 @@ function Analytics() {
                 >
                   <div
                     className="left-panel-row-title"
-                    style={{ marginTop: "20px" }}
                     onClick={() => {
                       setactiveFilters({
                         ...activeFilters,
@@ -745,10 +838,10 @@ function Analytics() {
                   className={`left-panel-row ${
                     activeFilters.location ? "" : "inactive"
                   }`}
+                  style={{ marginTop: "10px" }}
                 >
                   <div
                     className="left-panel-row-title"
-                    style={{ marginTop: "20px" }}
                     onClick={() => {
                       setactiveFilters({
                         ...activeFilters,

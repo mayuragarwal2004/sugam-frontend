@@ -24,7 +24,19 @@ const NotValidForm = (props) => {
       alert("Please select a reason");
       return;
     }
-    fetch(`/java/api/adminspace/markInvalid?id=${data[activeMarker].id}&msg=${value}`)
+    fetch(
+      `/java/api/adminspace/markInvalid`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: data[activeMarker].id,
+          msg: value,
+        }),
+      }
+    )
       .then((response) => {
         handleResolveFormClose(true);
         console.log(response);

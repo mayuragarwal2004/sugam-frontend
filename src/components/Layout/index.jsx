@@ -68,7 +68,7 @@ const Layout = () => {
       <AppBar position="static" sx={{ backgroundColor: "#0ca074e1" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <img src="/sugam_logo.png" className="sugam-logo-img mobile" alt="logo" />
+            {/* <img src="/sugam_logo.png" className="sugam-logo-img mobile" alt="logo" /> */}
             <Typography
               variant="h6"
               noWrap
@@ -79,12 +79,12 @@ const Layout = () => {
                 display: { xs: "none", md: "flex" },
                 fontFamily: "monospace",
                 fontWeight: 700,
-                letterSpacing: ".3rem",
+                // letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
               }}
             >
-              SUGAM
+              Clean City Connect
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -138,11 +138,11 @@ const Layout = () => {
                 </Link>
               </Menu>
             </Box>
-            <img
+            {/* <img
               src="/sugam_logo.png"
               className="sugam-logo-img desktop"
               alt="logo"
-            />
+            /> */}
             <Typography
               variant="h5"
               noWrap
@@ -159,7 +159,7 @@ const Layout = () => {
                 textDecoration: "none",
               }}
             >
-              SUGAM
+              Clean City Connect
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               <Link to="complaints">
@@ -260,7 +260,7 @@ const Layout = () => {
                       alt=""
                       className="img-fluid"
                     />
-                    <p>SUGAM ...Steping toward the clean city!!</p>
+                    <p>Clean City Connect ...Steping toward the clean city!!</p>
                     <ul className="contact-details">
                       <li>
                         <i className="fas fa-phone-alt"></i> Call Us:

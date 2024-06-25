@@ -10,7 +10,7 @@ const General = () => {
     // navigator.clipboard.writeText("");
     navigator
       .share({
-        title: "SUGAM",
+        title: "Clean City Connect",
         text: "Complaint here",
         url: "https://www.example.com",
       })
@@ -27,7 +27,7 @@ const General = () => {
       <div className="grid grid-cols-1 gap-4 px-2">
         <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
           <p className="text-sm text-gray-600">
-            Share about your contributions on SUGAM!!
+            Share about your contributions on Clean City Connect!!
           </p>
           {/* <p className="text-base font-medium text-navy-700">{apiKey}</p> */}
           <button
