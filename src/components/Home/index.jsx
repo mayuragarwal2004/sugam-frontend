@@ -93,7 +93,7 @@ const Home = () => {
           }}
         >
           <h1 style={{ fontFamily: "initial", fontSize: "50px" }}>
-            Welcome to SUGAM
+            Welcome to CCC
           </h1>
           <br />
           <p>Get a step ahead toward clean city!!!</p>
@@ -192,9 +192,8 @@ const Home = () => {
         <div className="home-content-container1">
           <div className="home-container1">
             <h1 className="home-text12">
-              <span className="home-text13">Complain</span>
+              <span className="home-text13">Complaint</span>
               <br />
-              <span>Here</span>
               <br />
             </h1>
             <span className="home-text17">
