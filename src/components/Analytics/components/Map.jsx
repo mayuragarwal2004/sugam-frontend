@@ -9,6 +9,7 @@ import {
 } from "@react-google-maps/api";
 import greencircle from "./analytics/greencircle.png";
 import bluecircle from "./analytics/bluecircle.png";
+import garbageTruck from "./analytics/garbage-truck.png";
 import redcircle from "./analytics/redcircle.png";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
@@ -20,6 +21,8 @@ import MapWidgets from "./MapWidgets";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 // import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import { db } from "../../../base";
+import { ref, onValue } from "firebase/database";
 
 const StyledButton = styled(Button)(({ theme }) => ({
   lineHeight: 1.1,
@@ -109,6 +112,20 @@ export default function Map(props) {
     setRoute({ result: result, ishidden: false });
   }
 
+  useEffect(() => {
+    const trackCountRef = ref(db, 'tracker/');
+    onValue(trackCountRef, (snapshot) => {
+      const data = snapshot.val();
+      const newData = [];
+      Object.keys(data).forEach((x) => {
+        newData.push({ id: x, ...data[x] });
+      });
+      setTrackerData(newData);
+    });
+  }, []);
+
+  console.log({ trackerData });
+
   console.log({ route });
 
   return (
@@ -152,6 +169,12 @@ export default function Map(props) {
             }}
           />
         ))}
+      {trackerData.map((val, i) => <MarkerF
+        key={i}
+        position={{ lng: val.lng, lat: val.lat }}
+        // onClick={() => handleActiveMarker(i)}
+        icon={garbageTruck}
+      />)}
       <MarkerClusterer>
         {(clusterer) =>
           data.map((doc, i) => {
@@ -176,7 +199,7 @@ export default function Map(props) {
                           <>
                             {doc.resolvedImageURL ? (
                               <Alert variant="filled" severity="success">
-                                  Complaint has been resolved.
+                                Complaint has been resolved.
                               </Alert>
                             ) : (
                               <Alert variant="filled" severity="warning">
