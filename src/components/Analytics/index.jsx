@@ -6,7 +6,7 @@ import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import { app } from "../../base";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import Button from "@mui/material/Button";
-import punegeojson from "./pune.geojson";
+import punegeojson from "./chennai.geojson";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Box from "@mui/material/Box";
@@ -188,9 +188,9 @@ function Analytics() {
   const filterGeoJSONByWardNo = (wardNo) => {
     const filteredData = [];
     citygeojson.map((shape, index) => {
-      if (shape.properties["ward"] === wardNo) {
+      if (shape.properties["WardZone"] === wardNo) {
         filteredData.push(shape);
-        setsortByWardOption(shape.properties["ward"]);
+        setsortByWardOption(shape.properties["WardZone"]);
         if (filteredData.length === 1) {
           map.setCenter(shape.center);
           map.setZoom(15);
@@ -301,7 +301,7 @@ function Analytics() {
 
     citygeojson.map((ward) => {
       if (ward.properties.ward === sortByWardOption)
-        locations.push(ward.properties["name-mr"]);
+        locations.push(ward.properties["WardZone"]);
     });
     const reqbody = {
       status: status,
@@ -919,10 +919,10 @@ function Analytics() {
                           {citygeojson &&
                             citygeojson.map((shape, index) => (
                               <MenuItem
-                                value={shape.properties["ward"]}
+                                value={shape.properties["WardZone"]}
                                 key={index}
                               >
-                                {shape.properties["name-mr"]}
+                                {shape.properties["WardZone"]}
                               </MenuItem>
                             ))}
                         </Select>

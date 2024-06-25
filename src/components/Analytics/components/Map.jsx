@@ -165,7 +165,7 @@ export default function Map(props) {
             onClick={() => {
               console.log("shape");
               console.log(shape.properties);
-              handlePolygonClick(shape.properties.ward);
+              handlePolygonClick(shape.properties.WardZone);
             }}
           />
         ))}
