@@ -12,9 +12,10 @@ import AboutUs from "./components/Aboutus";
 import ListComplaints from "./components/Profile/components/ListComplaints";
 import TrackComplaint from "./components/TrackComplaint";
 import Charts from "./components/Charts";
-
+import Barchart from "./components/Charts/components/Barchart";
 import Bubble from "./components/Charts/components/bubble";
 import NoPage from "./NoPage";
+import Root from "./components/Root/Root";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route index element={<Home />} />
               {/* <Route path="about" element={<About />} /> */}
               <Route path="" element={<RequireAuth />}>
+                <Route path="root" element={<Root />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="profile/complaints" element={<ListComplaints />} />
                 <Route path="complaints" element={<Complaints />} />
@@ -34,6 +36,7 @@ function App() {
               </Route>
               {/* <Route path="form" element={<Form />} /> */}
               <Route path="dashboard" element={<Dashboard />} />
+              
               {/* <Route path="auth" element={<LoginSignUp />} /> */}
               <Route path="testing" element={<Bubble />} />
               <Route path="login" element={<Login />} />
@@ -41,8 +44,10 @@ function App() {
               <Route path="charts" element={<Charts />} />
               <Route path="*" element={<NoPage />} />
             </Route>
+            <Route path="/barchart" element={<Barchart />} />
           </Routes>
         </div>
+
       </BrowserRouter>
     </>
   );

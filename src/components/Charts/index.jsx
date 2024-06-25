@@ -7,6 +7,7 @@ import Line_res_tot from "./components/line.res.tot";
 import BarChart_w from "./components/types.of.w.bar";
 import { Bubble } from "react-chartjs-2";
 import PieApexCharts from "./components/PieApexCharts";
+import BarChart from "./components/Barchart";
 
 const Charts = () => {
   function isJsonString(str) {
@@ -208,11 +209,11 @@ const Charts = () => {
             display: "flex",
             justifyContent: "center",
             backgroundColor: "#fff",
-            height: "250px",
+            height: "400px",
             margin: "10px",
           }}
         >
-          <BarChart_w />
+          <BarChart />
         </Card>
         {/* Pie Chart */}
         <Card

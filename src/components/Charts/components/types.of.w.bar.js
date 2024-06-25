@@ -16,6 +16,7 @@ function BarChart_w() {
       "Sanitary Waste",
     ],
     datasets: [
+      
       {
         label: "Types of Wastes (in %)",
         fill: false,
