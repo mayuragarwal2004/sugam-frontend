@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import PhoneNumber from "../PhoneNumber";
 import { useAuth } from "../../context/auth/AuthState";
 import Alert from "@mui/material/Alert";
@@ -14,6 +14,11 @@ const AddRole = () => {
   const [currentRole, setCurrentRole] = useState();
   const { currentUser } = useAuth();
   const [inputData, setInputData] = useState({
+    username: {
+      value: "",
+      error: false,
+      helperText: "",
+    },
     email: {
       value: "",
       error: false,
@@ -79,25 +84,50 @@ const AddRole = () => {
   };
 
   function handleAddRole() {
-    return;
-    if (num.valid && roleSelect && currentUser) {
+    // return;
+    if (inputData.username && inputData.email && inputData.password) {
       const postData = {
-        currentUser: currentUser.uid,
-        phoneNumber: num.phone,
-        role: roleSelect,
+        username: inputData.username.value,
+        email: inputData.email.value,
+        password: inputData.password.value,
+        phone: 123456789,
       };
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(postData),
       };
-      fetch("/api", requestOptions)
-        .then((response) => response.json())
-        .then((data) => setalert(data));
+      fetch("/java/api/managerspace/addAdmin", requestOptions).then(
+        (response) => {
+          if (response.ok) {
+            getWorkerList();
+            setalert("data");
+          }
+        }
+      );
     } else {
       console.log("invalid");
     }
   }
+
+  const getWorkerList = () => {
+    try {
+      fetch("/java/api/managerspace/getWorkerStats")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setWorkerList(data);
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getWorkerList();
+  }, []);
+
+  console.log({ workerList });
 
   return (
     <>
@@ -123,13 +153,32 @@ const AddRole = () => {
         >
           {/* <PhoneNumber value={num} setValue={handleNumNewChange} /> */}
           <TextField
+            error={inputData.username.error}
+            id="outlined-username-input"
+            label="Worker Username"
+            value={inputData.username.value}
+            helperText={inputData.username.helperText}
+            autoComplete="off"
+            inputProps={{ autoComplete: "off" }}
+            onChange={(e) => {
+              setInputData({
+                ...inputData,
+                username: {
+                  value: e.target.value,
+                  error: false,
+                  helperText: "",
+                },
+              });
+            }}
+          />
+          <TextField
             error={inputData.email.error}
             id="outlined-email-input"
             label="Worker Email"
             value={inputData.email.value}
             helperText={inputData.email.helperText}
             autoComplete="off"
-            inputProps={{ autocomplete: "off" }}
+            inputProps={{ autoComplete: "off" }}
             onChange={(e) => {
               setInputData({
                 ...inputData,
@@ -199,7 +248,7 @@ const AddRole = () => {
           </thead>
           <tbody>
             {workerList.map((worker, i) => (
-              <tr>
+              <tr key={i}>
                 <td>
                   <Checkbox
                     checked={worker.checked}
@@ -207,9 +256,9 @@ const AddRole = () => {
                     inputProps={{ "aria-label": "controlled" }}
                   />
                 </td>
-                <td>{worker.email}</td>
-                <td>{worker.role}</td>
-                <td>{worker.complaintsSolved}</td>
+                <td>{worker.emp}</td>
+                <td>Worker</td>
+                <td>{worker.val}</td>
                 <td>
                   <IconButton aria-label="delete">
                     <DeleteIcon style={{ margin: "0" }} />

@@ -119,7 +119,7 @@ function Analytics() {
     setactiveWard(ward);
   };
 
-  const center = useMemo(() => ({ lat: 18.4807627, lng: 73.8724301 }), []);
+  const center = useMemo(() => ({ lat: 12.966359, lng: 80.208297 }), []);
   const [queryData, setqueryData] = useState([]);
 
   useEffect(() => {

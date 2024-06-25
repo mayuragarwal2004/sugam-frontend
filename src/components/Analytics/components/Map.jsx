@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState, useEffect, useContext } from "react";
 import {
-  Marker,
+  MarkerF,
   InfoWindowF,
   PolygonF,
   MarkerClusterer,
@@ -155,7 +155,7 @@ export default function Map(props) {
         {(clusterer) =>
           data.map((doc, i) => {
             return (
-              <Marker
+              <MarkerF
                 key={i}
                 position={{ lng: doc.longitude, lat: doc.latitude }}
                 onClick={() => handleActiveMarker(i)}
@@ -354,13 +354,13 @@ export default function Map(props) {
                     </>
                   </InfoWindowF>
                 ) : null}
-              </Marker>
+              </MarkerF>
             );
           })
         }
       </MarkerClusterer>
       {currentLocation.lat && (
-        <Marker position={currentLocation} icon={bluecircle} />
+        <MarkerF position={currentLocation} icon={bluecircle} />
       )}
     </>
   );

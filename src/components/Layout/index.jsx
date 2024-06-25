@@ -221,7 +221,7 @@ const Layout = () => {
                       <Typography textAlign="center">About Us</Typography>
                     </MenuItem>
                   </Link>
-                  <Link to="charts">
+                  <Link to="dashboard">
                     <MenuItem onClick={handleCloseNavMenu}>
                       <Typography textAlign="center">Dashboard</Typography>
                     </MenuItem>
@@ -319,7 +319,7 @@ const Layout = () => {
                         <Link to="">Home</Link>
                       </li>
                       <li>
-                        <Link to="charts">Dashboard</Link>
+                        <Link to="dashboard">Dashboard</Link>
                       </li>
                     </ul>
                   </div>

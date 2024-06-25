@@ -76,7 +76,7 @@ const CardMain = ({ data }) => {
           </IconButton>
         }
         title={data.invalidComplaintMessage ? "INVALID" : data.status}
-        subheader={formatDate(data.timestamp)}
+        subheader={formatDate(new Date(data.reported))}
       />
       <CardMedia
         component="img"

@@ -219,7 +219,7 @@ div#showscore {
 svg {
   fill: #fff;
   height: 9px;
-  margin-right: 6px;
+  /* margin-right: 6px; */
 }
 .field:focus-within label {
   color: #000;
