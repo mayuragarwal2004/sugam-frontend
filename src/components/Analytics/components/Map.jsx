@@ -50,6 +50,7 @@ export default function Map(props) {
   const [currImg, setCurrImg] = useState(null);
   const [activeDocID, setActiveDocID] = useState(null);
   const [lastClicked, setlastClicked] = useState(null);
+  const [trackerData, setTrackerData] = useState([]);
 
   function imgClick(src) {
     setCurrImg(src);

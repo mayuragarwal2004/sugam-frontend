@@ -490,7 +490,7 @@ function Analytics() {
                       marginBottom: "10px",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "center",
+                      justifyContent: "space-around",
                     }}
                   >
                     <div
