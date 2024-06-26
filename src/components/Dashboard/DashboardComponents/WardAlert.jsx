@@ -12,8 +12,8 @@ const WardAlert = () => {
 
   const alertValue = {
     0: "#008000c2", // green
-    12: "orange",
-    24: "#ff4343", //red
+    6: "orange",
+    12: "#ff4343", //red
     1000000: "#ff4343", //red
   };
 
