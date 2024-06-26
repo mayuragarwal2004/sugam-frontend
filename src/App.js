@@ -16,6 +16,7 @@ import Barchart from "./components/Charts/components/Barchart";
 import Bubble from "./components/Charts/components/bubble";
 import NoPage from "./NoPage";
 import Root from "./components/Root/Root";
+import SingleComplaint from "./components/Profile/components/SingleComplaint";
 
 function App() {
   return (
@@ -30,13 +31,17 @@ function App() {
                 <Route path="root" element={<Root />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="profile/complaints" element={<ListComplaints />} />
+                <Route
+                  path="profile/complaints/:id"
+                  element={<SingleComplaint />}
+                />
                 <Route path="complaints" element={<Complaints />} />
                 <Route path="analytics" element={<Analytics />} />
                 <Route path="track" element={<TrackComplaint />} />
               </Route>
               {/* <Route path="form" element={<Form />} /> */}
               <Route path="dashboard" element={<Dashboard />} />
-              
+
               {/* <Route path="auth" element={<LoginSignUp />} /> */}
               <Route path="testing" element={<Bubble />} />
               <Route path="login" element={<Login />} />
@@ -47,7 +52,6 @@ function App() {
             <Route path="/barchart" element={<Barchart />} />
           </Routes>
         </div>
-
       </BrowserRouter>
     </>
   );
